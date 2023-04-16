@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> My Modules </ion-title>
+    <ion-icon
+      name="person-circle"
+      slot="end"
+      size="large"
+      (click)="showProfile()"
+      style="margin-right: 10px; color: #3880ff"
+    >
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large"> My Modules</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let module of newModules">
+      {{module.moduleName}}
+    </ion-item>
+  </ion-list>
+</ion-content>

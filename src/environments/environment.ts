@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  // create a variable to hold the url to the php_ionic folder -> json-data-modules.php file
+  urlModules: 'http://localhost:8888/php_ionic/json-data-modules.php',
 };
 
 /*

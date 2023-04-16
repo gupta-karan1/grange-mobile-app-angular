@@ -1,0 +1,42 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab1" #tab1>
+      <!-- Below is the code that changes the icon based on the selected state of
+      the tab.
+      The icon is set to the school icon if the tab is selected and the school-outline icon if the tab is not selected. -->
+      <!-- Icon source: https://ionic.io/ionicons  -->
+      <ion-icon
+        [name]="tab1.selected ? 'library' : 'library-outline'"
+      ></ion-icon>
+      <ion-label>Modules</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab2" #tab2>
+      <!-- Below is the code that changes the icon based on the selected state of
+      the tab.
+      The icon is set to the person icon if the tab is selected and the person-outline icon if the tab is not selected. -->
+      <ion-icon [name]="tab2.selected ? 'people' : 'people-outline'"></ion-icon>
+      <ion-label>Classroom</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3" #tab3>
+      <!-- Below is the code that changes the icon based on the selected state of
+      the tab.
+      The icon is set to the calendar icon if the tab is selected and the calendar-outline icon if the tab is not selected. -->
+      <ion-icon
+        [name]="tab3.selected ? 'people-circle' : 'people-circle-outline'"
+      ></ion-icon>
+      <ion-label>Lecturers</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+<!-- below code adds a floating action button that will allow students to add a new module or a new classmate to their profile page -->
+<!-- Source:https://ionicframework.com/docs/api/fab  -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button><ion-icon name="add"></ion-icon></ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button><ion-icon name="library"></ion-icon> </ion-fab-button>
+    <ion-fab-button><ion-icon name="person-add"></ion-icon> </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

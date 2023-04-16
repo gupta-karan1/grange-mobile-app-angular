@@ -1,0 +1,11 @@
+// below code is to change the background color of the tab bar to white
+ion-tab-bar {
+   --background: #fff;
+  }
+
+  ion-fab {
+    position: fixed;
+    right: 10px;
+    bottom: 65px;
+  }
+
