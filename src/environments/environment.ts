@@ -7,6 +7,9 @@ export const environment = {
 
   // create a variable to hold the url to the php_ionic folder -> json-data-modules.php file
   urlModules: 'http://localhost:8888/php_ionic/json-data-modules.php',
+
+  // create a variable to hold random images api url
+  urlRandomImages: 'https://picsum.photos',
 };
 
 /*

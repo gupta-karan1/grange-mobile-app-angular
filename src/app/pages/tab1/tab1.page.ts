@@ -5,9 +5,13 @@ import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
 // import module service
-import { ModuleServiceService } from '../../services/module-service.service';
+import {
+  ModuleServiceService,
+  Module,
+} from '../../services/module-service.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -23,7 +27,10 @@ export class Tab1Page implements OnInit {
   urlModules = environment.urlModules;
 
   // inject module service into the constructor
-  constructor(private moduleService: ModuleServiceService) {}
+  constructor(
+    private moduleService: ModuleServiceService,
+    private route: Router
+  ) {}
 
   // call the getModuleData() method when the page loads
   ngOnInit() {
@@ -45,7 +52,5 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  showProfile() {
-    console.log('show profile');
-  }
+  urlRandomImages = environment.urlRandomImages;
 }

@@ -11,9 +11,53 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
+  <!-- <ion-list [inset]="true">
     <ion-item *ngFor="let lecturer of newLecturers">
       {{lecturer.firstName}} {{lecturer.lastName}}
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+  <!-- display lecturer list as an accordian component which can show lecturer detail when clicked on and expanded -->
+  <ion-accordion-group expand="inset">
+    <ion-accordion *ngFor="let lecturer of newLecturers">
+      <ion-item slot="header" color="light">
+        <ion-label>{{lecturer.firstName}} {{lecturer.lastName}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-list>
+          <!-- mailto will allow students to email lecturers directly from here -->
+          <ion-item href="mailto:{{lecturer.email}}">
+            <ion-label>email: {{lecturer.email}} </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>moduleNo1: {{lecturer.moduleNo1}} </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>moduleNo2: {{lecturer.moduleNo2}} </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>staffNumber: {{lecturer.staffNumber}} </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <!-- buttons to edit and delete lecturer -->
+        <ion-row>
+          <ion-col size="5">
+            <ion-button expand="full" color="danger" shape="round">
+              <ion-icon
+                slot="icon-only"
+                name="trash-outline"
+              ></ion-icon> </ion-button
+          ></ion-col>
+          <ion-col size="5">
+            <ion-button color="secondary" expand="full" shape="round">
+              <ion-icon
+                slot="icon-only"
+                name="create-outline"
+              ></ion-icon> </ion-button
+          ></ion-col>
+        </ion-row>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>

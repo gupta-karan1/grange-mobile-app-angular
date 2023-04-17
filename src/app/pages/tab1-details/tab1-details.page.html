@@ -1,0 +1,107 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Module Details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Module Details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-img [src]="urlRandomImages + '/200'"></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>Module Name</ion-card-subtitle>
+      <ion-card-title>{{module.moduleName}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>General Information</ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-label>Due Date: {{module.dueDate}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Credits: {{module.credits}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Module No.: {{module.moduleNo}}</ion-label>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+      <br />
+      <ion-list>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Contact</ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-label>Website: {{module.website}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-button
+              (click)="openHomePage()"
+              expand="block"
+              fill="clear"
+              shape="round"
+            >
+              Visit Website
+            </ion-button>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+    </ion-card-content>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="full" color="danger" shape="round">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Delete
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="full" color="secondary" shape="round">
+          <ion-icon slot="start" name="create-outline"></ion-icon>
+          Edit
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Location</ion-card-title>
+      <ion-card-subtitle>{{module.moduleName}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Location: {{module.location}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Room: {{module.room}}</ion-label>
+        </ion-item>
+
+        <!-- will probably use these values to display a map using external maps api -->
+        <ion-item>
+          <ion-label>Latitude: {{module.lat}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Longitude: {{module.lat}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Map:</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

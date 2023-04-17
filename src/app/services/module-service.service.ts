@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 // export interface Module
 // the interface is used to define the structure of the data
 export interface Module {
+  [key: string]: any;
   credits: string;
   dueDate: string;
   lat: string;
@@ -34,5 +36,19 @@ export class ModuleServiceService {
   // Module is the interface defined above
   getModules(): Observable<Module> {
     return this.http.get<Module>(this.urlModules);
+  }
+
+  // created  a method to get only the object from modules array that has the moduleNo property that matches the moduleNo parameter
+  // this will create a details page for each module
+  //using angular pipe to filter the data
+  getModuleDetails(moduleNo: string): Observable<Module> {
+    return this.http.get<Module>(this.urlModules).pipe(
+      map((result) => {
+        let module = result['modules'].filter(
+          (m: any) => m.moduleNo == moduleNo
+        );
+        return module && module.length ? module[0] : null;
+      })
+    );
   }
 }

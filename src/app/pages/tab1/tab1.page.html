@@ -5,7 +5,6 @@
       name="person-circle"
       slot="end"
       size="large"
-      (click)="showProfile()"
       style="margin-right: 10px; color: #3880ff"
     >
     </ion-icon>
@@ -19,9 +18,29 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-item *ngFor="let module of newModules">
-      {{module.moduleName}}
+  <!-- <ion-list>
+    <ion-item
+      [routerLink]="['/tabs/tab1-details', module.moduleNo]"
+      button
+      *ngFor="let module of newModules; let i = index"
+    >
+      <h2>{{i+1}}. {{module.moduleName}}</h2>
+      <ion-img [src]="urlRandomImages + '/200'"></ion-img>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+  <ion-card
+    [routerLink]="['/tabs/tab1-details', module.moduleNo]"
+    button
+    *ngFor="let module of newModules; let i = index"
+  >
+    <ion-img [src]="urlRandomImages + '/200'"></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>Due: {{module.dueDate}}</ion-card-subtitle>
+      <ion-card-title>{{i+1}}. {{module.moduleName}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{module.location}} | Room: {{module.room}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
