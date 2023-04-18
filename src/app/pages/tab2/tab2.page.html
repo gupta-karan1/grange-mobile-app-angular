@@ -1,10 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> My Classroom </ion-title>
-  </ion-toolbar>
-
-  <ion-toolbar>
-    <ion-searchbar></ion-searchbar>
+    <ion-icon
+      name="person-circle"
+      slot="end"
+      size="large"
+      style="margin-right: 10px; color: #3880ff"
+      routerLink="/tabs/my-profile"
+      button
+    >
+    </ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -15,13 +20,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- <ion-list [inset]="true">
-    <ion-item *ngFor="let student of newStudents">
-      {{student.firstName}} {{student.lastName}}
-    </ion-item>
-  </ion-list> -->
-
-  <ion-card *ngFor="let student of newStudents">
+  <!-- <ion-card *ngFor="let student of newStudents">
     <ion-card-header>
       <ion-icon size="large" name="person-circle"></ion-icon>
 
@@ -33,16 +32,35 @@
       ID: {{student.studentID}} | Course: {{student.courseID}} | Module 1:
       {{student.moduleNo1}} | Module 2: {{student.moduleNo2}}
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
-  <!-- <ion-list [inset]="true">
+  <ion-list *ngIf="newStudents">
     <ion-item *ngFor="let student of newStudents">
-      <ion-avatar slot="start">
-        <ion-icon size="large" name="person-circle"></ion-icon>
-      </ion-avatar>
       <ion-label>
         <h2>{{student.firstName}} {{student.lastName}}</h2>
+
+        <p>ID: {{student.studentID}}</p>
       </ion-label>
+
+      <ion-icon
+        slot="end"
+        name="create-outline"
+        class="ion-padding-end"
+        [routerLink]="['/tabs/update-student', student.studentID]"
+      ></ion-icon>
+      <ion-icon
+        slot="end"
+        name="trash-outline"
+        (click)="deleteStudent(student.studentID)"
+      ></ion-icon>
     </ion-item>
-  </ion-list> -->
+  </ion-list>
 </ion-content>
+
+<!-- below code adds a floating action button that will allow students to add a new module or a new classmate to their profile page -->
+<!-- Source:https://ionicframework.com/docs/api/fab  -->
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button (click)="openModal()"
+    ><ion-icon name="person-add"></ion-icon
+  ></ion-fab-button>
+</ion-fab>

@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button defaultHref="tab2" color="medium" (click)="dismiss(false)"
+        >Cancel</ion-button
+      >
+    </ion-buttons>
+    <ion-title>Add Student</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addStudent()" [strong]="true">Add</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>First Name</ion-label>
+      <ion-input
+        aria-label="First Name"
+        type="text"
+        [(ngModel)]="newStudent.firstName"
+        placeholder="First Name"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Last Name</ion-label>
+      <ion-input
+        aria-label="Last Name"
+        type="text"
+        [(ngModel)]="newStudent.lastName"
+        placeholder="Last Name"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Student ID</ion-label>
+      <ion-input
+        aria-label="Student ID"
+        type="text"
+        [(ngModel)]="newStudent.studentID"
+        placeholder="Student ID"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Course ID</ion-label>
+      <ion-input
+        aria-label="Course ID"
+        type="text"
+        [(ngModel)]="newStudent.courseID"
+        placeholder="Course ID"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Module No.1</ion-label>
+      <ion-input
+        aria-label="Module No. 1"
+        type="text"
+        [(ngModel)]="newStudent.moduleNo1"
+        placeholder="Module No. 1"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Module No. 2</ion-label>
+      <ion-input
+        aria-label="Module No. 2"
+        type="text"
+        [(ngModel)]="newStudent.moduleNo2"
+        placeholder="Module No. 2"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="addStudent()" expand="full" fill="solid" shape="round">
+    Add Student
+  </ion-button>
+</ion-content>

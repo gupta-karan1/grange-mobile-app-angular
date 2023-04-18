@@ -47,6 +47,9 @@ export class ModuleServiceService {
         let module = result['modules'].filter(
           (m: any) => m.moduleNo == moduleNo
         );
+        // return the module object
+        // if the module object exists, return the module object
+        // if the module object does not exist, return null
         return module && module.length ? module[0] : null;
       })
     );

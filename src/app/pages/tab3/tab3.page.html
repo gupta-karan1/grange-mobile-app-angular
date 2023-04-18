@@ -1,6 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> My Lecturers </ion-title>
+    <ion-icon
+      name="person-circle"
+      slot="end"
+      size="large"
+      style="margin-right: 10px; color: #3880ff"
+      routerLink="/tabs/my-profile"
+      button
+    >
+    </ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +27,7 @@
   </ion-list> -->
 
   <!-- display lecturer list as an accordian component which can show lecturer detail when clicked on and expanded -->
-  <ion-accordion-group expand="inset">
+  <ion-accordion-group expand="inset" *ngIf="newLecturers">
     <ion-accordion *ngFor="let lecturer of newLecturers">
       <ion-item slot="header" color="light">
         <ion-label>{{lecturer.firstName}} {{lecturer.lastName}}</ion-label>

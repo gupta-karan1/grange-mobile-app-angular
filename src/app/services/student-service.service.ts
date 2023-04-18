@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface Student {
+  [key: string]: any;
   courseID: string;
   firstName: string;
   lastName: string;
@@ -15,8 +17,8 @@ export interface Student {
   providedIn: 'root',
 })
 export class StudentServiceService {
-  // create url variable to hold the php_ionic json-data-students.php file
-  urlStudents = 'http://localhost:8888/php_ionic/json-data-students.php';
+  // create a variable to store the url of the json-data-students.php file
+  urlStudents = environment.urlStudents;
 
   // Inject HttpClient into the constructor
   constructor(private http: HttpClient) {}

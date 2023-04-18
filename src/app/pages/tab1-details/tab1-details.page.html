@@ -14,8 +14,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card>
-    <ion-img [src]="urlRandomImages + '/200'"></ion-img>
+  <ion-card *ngIf="module">
+    <ion-img [src]="urlRandomImages + '/300/150'"></ion-img>
     <ion-card-header>
       <ion-card-subtitle>Module Name</ion-card-subtitle>
       <ion-card-title>{{module.moduleName}}</ion-card-title>
@@ -77,7 +77,7 @@
     </ion-row>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="module">
     <ion-card-header>
       <ion-card-title>Location</ion-card-title>
       <ion-card-subtitle>{{module.moduleName}}</ion-card-subtitle>

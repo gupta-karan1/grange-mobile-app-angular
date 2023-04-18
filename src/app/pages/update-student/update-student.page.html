@@ -1,0 +1,138 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button
+        defaultHref="tabs/tab2"
+        color="medium"
+        [routerLink]="['/tabs/tab2']"
+        >Cancel</ion-button
+      >
+    </ion-buttons>
+    <ion-title>Edit Student</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="updateStudentDetails()" [strong]="true"
+        >Save</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Student ID</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Existing: {{student.studentID}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          aria-label="Student ID"
+          type="text"
+          [(ngModel)]="student.studentID"
+          placeholder="Student ID"
+          [value]="student.studentID"
+        ></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>First Name</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Existing: {{student.firstName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          aria-label="First Name"
+          type="text"
+          [(ngModel)]="student.firstName"
+          placeholder="First Name"
+          [value]="student.firstName"
+        ></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Last Name</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Existing: {{student.lastName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          aria-label="Last Name"
+          type="text"
+          [(ngModel)]="student.lastName"
+          placeholder="Last Name"
+          [value]="student.lastName"
+        ></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Course ID</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Existing: {{student.courseID}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          aria-label="Course ID"
+          type="text"
+          [(ngModel)]="student.courseID"
+          placeholder="Last Name"
+          [value]="student.courseID"
+        ></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Module 1</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Existing: {{student.moduleNo1}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          aria-label="Module No. 1"
+          type="text"
+          [(ngModel)]="student.moduleNo1"
+          placeholder="Module No. 1"
+          [value]="student.moduleNo1"
+        ></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Module 2</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Existing: {{student.moduleNo2}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          aria-label="Module No. 2"
+          type="text"
+          [(ngModel)]="student.moduleNo2"
+          placeholder="Module No. 2"
+          [value]="student.moduleNo2"
+        ></ion-input>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+  <ion-button
+    (click)="updateStudentDetails()"
+    expand="full"
+    fill="solid"
+    shape="round"
+  >
+    Update Student
+  </ion-button>
+</ion-content>
