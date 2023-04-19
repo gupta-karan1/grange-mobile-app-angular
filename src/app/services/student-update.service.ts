@@ -10,7 +10,6 @@ import { Student } from 'src/app/services/student-service.service';
   providedIn: 'root',
 })
 export class StudentUpdateService {
-  urlUpdateStudents = 'http://localhost:8888/php_ionic/json-update-student.php';
   urlStudents = environment.urlStudents;
 
   constructor(private http: HttpClient) {}
@@ -29,6 +28,9 @@ export class StudentUpdateService {
       })
     );
   }
+
+  // urlUpdateStudents = 'http://localhost:8888/php_ionic/json-update-student.php';
+  urlUpdateStudents = environment.urlUpdateStudents;
 
   updateStudent(id: any, data: any) {
     // create a function called updateStudent that will subscribe to the updateStudentService and update student details in the database

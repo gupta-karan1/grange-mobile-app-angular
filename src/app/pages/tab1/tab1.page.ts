@@ -52,5 +52,6 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  // store the url of the images from API in a variable
   urlRandomImages = environment.urlRandomImages;
 }

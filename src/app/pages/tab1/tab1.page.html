@@ -42,18 +42,31 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-card
-      [routerLink]="['/tabs/tab1-details', module.moduleNo]"
-      button
-      *ngFor="let module of newModules; let i = index"
-    >
-      <ion-img [src]="urlRandomImages + '/300/150'"></ion-img>
-      <ion-card-header>
+    <ion-card *ngFor="let module of newModules; let i = index">
+      <ion-img
+        [routerLink]="['/tabs/tab1-details', module.moduleNo]"
+        button
+        [src]="urlRandomImages + '/300/150'"
+      ></ion-img>
+
+      <ion-card-header
+        [routerLink]="['/tabs/tab1-details', module.moduleNo]"
+        button
+      >
+        <!-- Added the router link only to header and image so that edit and delete button function separately -->
         <ion-card-subtitle>Due: {{module.dueDate}}</ion-card-subtitle>
         <ion-card-title>{{i+1}}. {{module.moduleName}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        {{module.location}} | Room: {{module.room}}
+        <ion-item lines="none">
+          <ion-icon
+            slot="end"
+            class="ion-margin-end"
+            name="create-outline"
+            size="large"
+          ></ion-icon>
+          <ion-icon slot="end" name="trash-outline"></ion-icon>
+        </ion-item>
       </ion-card-content>
     </ion-card>
   </ion-content>

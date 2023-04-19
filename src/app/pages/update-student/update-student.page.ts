@@ -41,6 +41,8 @@ export class UpdateStudentPage implements OnInit {
       (res: any) => {
         console.log('Success: Student Record is updated' + res); // this is the response from the server
         console.log(res);
+        //reload the window to display the updated data
+        window.location.reload();
       },
       async (err: any) => {
         console.log('Error: Student Record is not updated' + err); // this is the response from the server

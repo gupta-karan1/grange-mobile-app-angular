@@ -11,6 +11,12 @@ export const environment = {
   // create url variable to hold the php_ionic json-data-students.php file
   urlStudents: 'http://localhost:8888/php_ionic/json-data-students.php',
 
+  // create url variable to hold the php_ionic json-data-lecturers.php file
+  urlLecturers: 'http://localhost:8888/php_ionic/json-data-lecturers.php',
+
+  // create a variable to hold the url to the php_ionic folder -> json-update-student.php file
+  urlUpdateStudents: 'http://localhost:8888/php_ionic/json-update-student.php',
+
   // create a variable to hold random images api url
   urlRandomImages: 'https://picsum.photos',
 };
