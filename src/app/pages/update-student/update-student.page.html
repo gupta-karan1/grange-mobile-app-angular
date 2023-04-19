@@ -10,7 +10,9 @@
     </ion-buttons>
     <ion-title>Edit Student</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="updateStudentDetails()" [strong]="true"
+      <ion-button
+        (click)="updateStudentDetails(student.studentID, student)"
+        [strong]="true"
         >Save</ion-button
       >
     </ion-buttons>
@@ -128,7 +130,7 @@
     </ion-item-group>
   </ion-list>
   <ion-button
-    (click)="updateStudentDetails()"
+    (click)="updateStudentDetails(student.studentID, student)"
     expand="full"
     fill="solid"
     shape="round"

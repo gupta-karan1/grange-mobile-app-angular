@@ -24,7 +24,14 @@ import { UpdateStudentPage } from '../update-student/update-student.page';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, AddStudentPage, RouterLink],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    AddStudentPage,
+    RouterLink,
+    UpdateStudentPage,
+  ],
 })
 export class Tab2Page implements OnInit {
   // create 2 variables to store results emitted from observable
