@@ -6,6 +6,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -26,7 +28,9 @@ bootstrapApplication(AppComponent, {
       NgModule,
       CommonModule,
       BrowserModule,
-      FormsModule
+      FormsModule,
+      provideFirebaseApp(() => initializeApp(environment.firebase)),
+      provideFirestore(() => getFirestore())
     ),
     provideRouter(routes),
   ],

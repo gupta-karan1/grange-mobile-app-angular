@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 
 import { StudentUpdateService } from 'src/app/services/student-update.service';
 import { ActivatedRoute } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-student',
@@ -19,7 +19,9 @@ export class UpdateStudentPage implements OnInit {
 
   constructor(
     private studentUpdateService: StudentUpdateService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
@@ -41,12 +43,32 @@ export class UpdateStudentPage implements OnInit {
       (res: any) => {
         console.log('Success: Student Record is updated' + res); // this is the response from the server
         console.log(res);
-        //reload the window to display the updated data
-        window.location.reload();
+        // navigate to the tab2 page
+        this.router.navigate(['/tabs/tab2']);
+        // //reload the window to display the updated data
+        // window.location.reload();
+        // show the toast success message
+        this.showToast('Student Record is updated');
+
+        //reload the window after 3 seconds to display the updated data
+        setTimeout(() => {
+          window.location.reload();
+        }, 2100);
       },
       async (err: any) => {
         console.log('Error: Student Record is not updated' + err); // this is the response from the server
+        // show the toast error message
+        this.showToast('Student Record is not updated');
       }
     );
+  }
+
+  // create a show toast method
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+    });
+    toast.present();
   }
 }

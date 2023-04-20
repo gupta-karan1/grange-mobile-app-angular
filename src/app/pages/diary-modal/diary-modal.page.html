@@ -1,0 +1,36 @@
+<ion-header [translucent]="true"> </ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="note">
+    <ion-item>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input aria-label="title" [(ngModel)]="note.title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Note</ion-label>
+      <ion-textarea
+        aria-label="note"
+        [(ngModel)]="note.text"
+        rows="7"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-button
+      color="danger"
+      class="ion-margin"
+      shape="round"
+      (click)="deleteNote()"
+    >
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
+      Delete</ion-button
+    >
+    <ion-button
+      shape="round"
+      class="ion-margin"
+      color="success"
+      (click)="updateNote()"
+    >
+      <ion-icon slot="start" name="save"></ion-icon> Update</ion-button
+    >
+  </div>
+</ion-content>

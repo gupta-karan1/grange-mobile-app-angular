@@ -4,10 +4,13 @@
       <ion-title>GrangeMobile</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding"
-    >The app for TU Dublin students to view their course modules, classmates,
-    and lecturers. It also allows them to add new classmates, update their
-    existing details and delete them from the list.
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item button routerLink="/tabs/tab3">
+        <ion-label>Lecturers</ion-label>
+        <ion-icon slot="start" name="people-circle"></ion-icon>
+      </ion-item>
+    </ion-list>
   </ion-content>
   <ion-footer>
     <ion-toolbar>
@@ -23,7 +26,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-icon
+      <!-- <ion-icon
         name="person-circle"
         slot="end"
         size="large"
@@ -31,7 +34,7 @@
         routerLink="/tabs/my-profile"
         button
       >
-      </ion-icon>
+      </ion-icon> -->
     </ion-toolbar>
   </ion-header>
 
@@ -57,17 +60,7 @@
         <ion-card-subtitle>Due: {{module.dueDate}}</ion-card-subtitle>
         <ion-card-title>{{i+1}}. {{module.moduleName}}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
-        <ion-item lines="none">
-          <ion-icon
-            slot="end"
-            class="ion-margin-end"
-            name="create-outline"
-            size="large"
-          ></ion-icon>
-          <ion-icon slot="end" name="trash-outline"></ion-icon>
-        </ion-item>
-      </ion-card-content>
+      <ion-card-content> </ion-card-content>
     </ion-card>
   </ion-content>
 </div>

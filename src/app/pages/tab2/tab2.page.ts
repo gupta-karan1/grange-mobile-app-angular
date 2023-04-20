@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddStudentPage } from '../add-student/add-student.page';
+import { ToastController } from '@ionic/angular';
 
 // import student service
 import { StudentServiceService } from '../../services/student-service.service';
@@ -43,7 +44,8 @@ export class Tab2Page implements OnInit {
     private studentService: StudentServiceService,
     private modalCtrl: ModalController,
     private studentDeleteService: StudentDeleteService,
-    private studentUpdateService: StudentUpdateService
+    private studentUpdateService: StudentUpdateService,
+    private toastCtrl: ToastController
   ) {}
 
   // create a method to get the data from the json-data-students.php file
@@ -94,10 +96,21 @@ export class Tab2Page implements OnInit {
         console.log('SUCCESS');
         // call the getStudentData() method
         this.getStudentData();
+        this.showToast('Student Record is deleted');
       },
       (error) => {
         console.log('ERROR');
+        this.showToast('Student Record is not deleted');
       }
     );
+  }
+
+  // create a method to show toast message
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+    });
+    toast.present();
   }
 }

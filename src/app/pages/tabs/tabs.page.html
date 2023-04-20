@@ -19,14 +19,21 @@
       <ion-label>Classroom</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tab3" #tab3>
+    <ion-tab-button tab="diary" #diary>
       <!-- Below is the code that changes the icon based on the selected state of
       the tab.
       The icon is set to the calendar icon if the tab is selected and the calendar-outline icon if the tab is not selected. -->
       <ion-icon
-        [name]="tab3.selected ? 'people-circle' : 'people-circle-outline'"
+        [name]="diary.selected ? 'document' : 'documents-outline'"
       ></ion-icon>
-      <ion-label>Lecturers</ion-label>
+      <ion-label>My Diary</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab4" #tab4>
+      <ion-icon
+        [name]="tab4.selected ? 'person-circle' : 'person-circle-outline'"
+      ></ion-icon>
+      <ion-label>Profile</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

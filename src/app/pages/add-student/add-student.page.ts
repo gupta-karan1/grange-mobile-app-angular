@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { Student } from './../../services/student-service.service';
 import { ModalController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 //import student create service
 import { StudentCreateService } from '../../services/student-create.service';
@@ -35,7 +36,8 @@ export class AddStudentPage implements OnInit {
 
   constructor(
     private modalCtrl: ModalController, // inject the modal controller
-    private studentCreateService: StudentCreateService // inject the student create service
+    private studentCreateService: StudentCreateService, // inject the student create service
+    private toastCtrl: ToastController // inject the toast controller
   ) {}
 
   ngOnInit() {}
@@ -45,10 +47,12 @@ export class AddStudentPage implements OnInit {
       (res) => {
         console.log('Success: Student Record is added' + res); // this is the response from the server
         this.dismiss(true); // dismiss the modal and return true
+        this.showToast('Student Record is added'); // show a toast message
       },
       async (err) => {
         console.log('Error: Student Record is not added' + err); // this is the response from the server
         this.dismiss(false); // dismiss the modal and return false
+        this.showToast('Student Record is not added'); // show a toast message
       }
     );
 
@@ -75,5 +79,16 @@ export class AddStudentPage implements OnInit {
       // if the student is not added to the database
       this.modalCtrl.dismiss(); // dismiss the modal
     }
+  }
+
+  // create a method to show a toast message
+  async showToast(message: string) {
+    // the message is passed as a parameter
+    const toast = await this.toastCtrl.create({
+      // create a toast
+      message: message, // set the message
+      duration: 2000, // set the duration
+    });
+    toast.present(); // present the toast
   }
 }

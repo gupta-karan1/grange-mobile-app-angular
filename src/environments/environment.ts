@@ -19,6 +19,16 @@ export const environment = {
 
   // create a variable to hold random images api url
   urlRandomImages: 'https://picsum.photos',
+
+  //firebase API key
+  firebase: {
+    apiKey: 'AIzaSyCrXIhp80PuJPZSVaTudQE86L9Ao_-9m7k',
+    authDomain: 'grange-mobile-karan.firebaseapp.com',
+    projectId: 'grange-mobile-karan',
+    storageBucket: 'grange-mobile-karan.appspot.com',
+    messagingSenderId: '446380689792',
+    appId: '1:446380689792:web:ff8bbbaa88af2b27df1965',
+  },
 };
 
 /*

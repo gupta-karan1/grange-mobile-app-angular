@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>My Diary</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Diary</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Added a segment to the page to allow the user to switch between different pages -->
+
+  <!-- Added segments from ionic framework to segment the page into three separate pages all accessible via a segment nav on top -->
+
+  <ion-segment [(ngModel)]="selectTabs">
+    <!-- ngModel is used to bind the value of the segment to the selectTabs variable -->
+    <ion-segment-button value="schedule">
+      <ion-label>Schedule</ion-label>
+      <ion-icon name="calendar-outline"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button value="tasks">
+      <ion-label>Tasks</ion-label>
+      <ion-icon name="checkbox-outline"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button value="notes">
+      <ion-label>Notes</ion-label>
+      <ion-icon name="document-text-outline"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Added ngIf below to display data specific to the selected segment -->
+  <div *ngIf="selectTabs === 'schedule'">
+    <h3>Schedule</h3>
+  </div>
+  <div *ngIf="selectTabs === 'tasks'">
+    <h3>Tasks</h3>
+  </div>
+  <div *ngIf="selectTabs === 'notes'">
+    <h3 class="ion-margin">Notes</h3>
+    <ion-card *ngFor="let note of notes">
+      <ion-card-header (click)="openNote(note)">
+        <ion-card-subtitle>time stamp</ion-card-subtitle>
+        <ion-card-title>{{note.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content> </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="checkbox-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button size="large" (click)="addNote()">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
