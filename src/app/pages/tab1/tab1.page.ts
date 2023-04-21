@@ -11,7 +11,6 @@ import {
 } from '../../services/module-service.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -27,10 +26,7 @@ export class Tab1Page implements OnInit {
   urlModules = environment.urlModules;
 
   // inject module service into the constructor
-  constructor(
-    private moduleService: ModuleServiceService,
-    private route: Router
-  ) {}
+  constructor(private moduleService: ModuleServiceService) {}
 
   // call the getModuleData() method when the page loads
   ngOnInit() {

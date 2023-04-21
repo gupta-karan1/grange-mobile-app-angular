@@ -10,12 +10,13 @@ export interface Module {
   [key: string]: any;
   credits: string;
   dueDate: string;
-  lat: string;
-  long: string;
+  lat: number;
+  long: number;
   moduleName: string;
   moduleNo: string;
   room: string;
   website: string;
+  location: string;
 }
 
 @Injectable({

@@ -20,6 +20,10 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'map',
+        loadComponent: () => import('../map/map.page').then((m) => m.MapPage),
+      },
+      {
         path: 'tab2',
         loadComponent: () =>
           import('../tab2/tab2.page').then((m) => m.Tab2Page),
@@ -52,6 +56,13 @@ export const routes: Routes = [
         path: 'diary',
         loadComponent: () =>
           import('../diary/diary.page').then((m) => m.DiaryPage),
+      },
+      {
+        path: 'diary-modal',
+        loadComponent: () =>
+          import('../diary-modal/diary-modal.page').then(
+            (m) => m.DiaryModalPage
+          ),
       },
       {
         path: '',

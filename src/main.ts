@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
+//import leaflet
+import * as L from 'leaflet';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
