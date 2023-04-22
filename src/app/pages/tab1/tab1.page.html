@@ -1,102 +1,62 @@
-<ion-menu contentId="main-content">
-  <ion-header>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> My Modules </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="newModules">
+  <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title>GrangeMobile</ion-title>
+      <ion-title size="large"> My Modules</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">
-    <ion-list>
-      <ion-item detail="true" button routerLink="/tabs/tab3">
-        <ion-label>My Lecturers</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/tab3">
-        <ion-label>Explore Modules</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/tab2">
-        <ion-label>My Classroom</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/diary">
-        <ion-label>My Diary</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/tab4">
-        <ion-label>My Profile</ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-  <ion-footer>
-    <ion-item class="ion-margin" lines="none">
-      <ion-toggle [enableOnOffLabels]="true">Switch to Dark Mode</ion-toggle>
-    </ion-item>
-    <ion-toolbar>
-      <ion-label class="ion-margin"> Karan Gupta | D22124440</ion-label>
-    </ion-toolbar>
-  </ion-footer>
-</ion-menu>
+  <ion-title class="ion-margin-top"> My Modules </ion-title>
 
-<div class="ion-page" id="main-content">
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-title> My Modules </ion-title>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content [fullscreen]="true" *ngIf="newModules">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large"> My Modules</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <!-- filter drop down from ionic select component -->
-
-    <ion-list>
-      <ion-item lines="none">
-        <ion-label>Filter</ion-label>
-        <ion-select
-          class="ion-margin-top"
-          label="Filter by Location"
-          label-placement="floating"
-          fill="outline"
-          multiple="true"
-          aria-label="Filter by Location"
-          [(ngModel)]="selectedLocation"
-          (ionChange)="filterModulesByLocation(selectedLocation)"
-        >
-          <ion-select-option value="all">All Locations</ion-select-option>
-          <ion-select-option
-            *ngFor="let location of uniqueLocations"
-            [value]="location"
-          >
-            {{ location }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-
-    <ion-card *ngFor="let module of newModules; let i = index">
-      <ion-img
-        [routerLink]="['/tabs/tab1-details', module.moduleNo]"
-        button
-        [src]="urlRandomImages + '/300/150'"
-      ></ion-img>
-
-      <ion-card-header
-        [routerLink]="['/tabs/tab1-details', module.moduleNo]"
-        button
+  <!-- filter drop down from ionic select component -->
+  <ion-list>
+    <ion-item lines="none">
+      <ion-label>Filter</ion-label>
+      <ion-select
+        class="ion-margin-top"
+        label="Filter by Location"
+        label-placement="floating"
+        fill="outline"
+        multiple="true"
+        aria-label="Filter by Location"
+        [(ngModel)]="selectedLocation"
+        (ionChange)="filterModulesByLocation(selectedLocation)"
       >
-        <!-- Added the router link only to header and image so that edit and delete button function separately -->
-        <ion-card-subtitle>Due: {{module.dueDate}}</ion-card-subtitle>
-        <ion-card-title>{{i+1}}. {{module.moduleName}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content> </ion-card-content>
-    </ion-card>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="openMapFull()">
-        <ion-icon name="map"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </ion-content>
-</div>
+        <ion-select-option value="all">All Locations</ion-select-option>
+        <ion-select-option
+          *ngFor="let location of uniqueLocations"
+          [value]="location"
+        >
+          {{ location }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngFor="let module of newModules; let i = index">
+    <ion-img
+      [routerLink]="['/tabs/tab1-details', module.moduleNo]"
+      button
+      [src]="urlRandomImages + '/300/150'"
+    ></ion-img>
+
+    <ion-card-header
+      [routerLink]="['/tabs/tab1-details', module.moduleNo]"
+      button
+    >
+      <!-- Added the router link only to header and image so that edit and delete button function separately -->
+      <ion-card-subtitle>Due: {{module.dueDate}}</ion-card-subtitle>
+      <ion-card-title>{{i+1}}. {{module.moduleName}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content> </ion-card-content>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openMapFull()">
+      <ion-icon name="map"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

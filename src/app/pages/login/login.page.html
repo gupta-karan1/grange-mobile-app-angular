@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login/Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-title mode="md" class="ion-margin-top, ion-text-center">
+    Login/Sign Up to View Profile
+  </ion-title>
+
+  <form [formGroup]="credentials" (ngSubmit)="login()">
+    <ion-input
+      class="ion-margin-top"
+      fill="outline"
+      label="E-Mail"
+      label-placement="floating"
+      required
+      formControlName="email"
+      type="email"
+    ></ion-input>
+    <ion-note
+      color="danger"
+      slot="error"
+      *ngIf="email && (email.dirty || email.touched) && email.errors"
+      >Email is Invalid</ion-note
+    >
+
+    <ion-input
+      class="ion-margin-top"
+      label-placement="floating"
+      fill="outline"
+      label="Password"
+      required
+      formControlName="password"
+      type="password"
+    ></ion-input>
+    <ion-note
+      color="danger"
+      slot="error"
+      *ngIf="password && (password.dirty || password.touched) && password.errors"
+      >Password is Invalid. It needs to be 6 characters.</ion-note
+    >
+
+    <ion-button
+      class="ion-margin-top"
+      expand="full"
+      shape="round"
+      color="primary"
+      type="submit"
+      [disabled]="credentials.invalid"
+      [strong]="true"
+    >
+      Login
+    </ion-button>
+    <ion-button
+      fill="outline"
+      class="ion-margin-top"
+      expand="full"
+      shape="round"
+      color="primary"
+      type="button"
+      [strong]="true"
+      (click)="register()"
+    >
+      Create Account
+    </ion-button>
+  </form>
+</ion-content>

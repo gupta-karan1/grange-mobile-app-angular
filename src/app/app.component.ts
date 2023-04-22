@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddStudentPage } from './pages/add-student/add-student.page';
 import { UpdateStudentPage } from './pages/update-student/update-student.page';
+import { DiaryModalPage } from './pages/diary-modal/diary-modal.page';
+import { MapFullPage } from './pages/map-full/map-full.page';
+import { MapPage } from './pages/map/map.page';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +19,9 @@ import { UpdateStudentPage } from './pages/update-student/update-student.page';
     FormsModule,
     AddStudentPage,
     UpdateStudentPage,
+    DiaryModalPage,
+    MapFullPage,
+    MapPage,
   ],
 })
 export class AppComponent {

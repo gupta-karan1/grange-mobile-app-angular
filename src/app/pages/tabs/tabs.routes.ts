@@ -1,5 +1,14 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import {
+  redirectUnauthorizedTo,
+  canActivate,
+  redirectLoggedInTo,
+} from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () =>
+  redirectUnauthorizedTo(['tabs/login']); //if not logged in, redirect to login page
+const redirectLoggedInToHome = () => redirectLoggedInTo(['tabs/tab4']); //if logged in, redirect to tabs page
 
 export const routes: Routes = [
   {
@@ -56,6 +65,13 @@ export const routes: Routes = [
         path: 'tab4',
         loadComponent: () =>
           import('../tab4/tab4.page').then((m) => m.Tab4Page),
+        ...canActivate(redirectUnauthorizedToLogin),
+      },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('../login/login.page').then((m) => m.LoginPage),
+        ...canActivate(redirectLoggedInToHome),
       },
       {
         path: 'diary',
@@ -76,6 +92,7 @@ export const routes: Routes = [
       },
     ],
   },
+
   {
     path: '',
     redirectTo: '/tabs/tab1',
