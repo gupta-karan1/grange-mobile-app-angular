@@ -11,6 +11,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../tab1/tab1.page').then((m) => m.Tab1Page),
       },
+      {
+        path: 'map-full',
+        loadComponent: () =>
+          import('../map-full/map-full.page').then((m) => m.MapFullPage),
+      },
 
       {
         path: 'tab1-details/:moduleNo',

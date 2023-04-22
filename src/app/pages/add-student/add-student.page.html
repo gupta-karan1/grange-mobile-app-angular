@@ -12,19 +12,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list>
+  <ion-list lines="none">
     <ion-item>
       <ion-label>First Name</ion-label>
       <ion-input
         aria-label="First Name"
+        class="ion-margin-top"
         type="text"
         [(ngModel)]="newStudent.firstName"
         placeholder="First Name"
+        label="First Name"
+        label-placement="floating"
+        fill="outline"
       ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Last Name</ion-label>
       <ion-input
+        class="ion-margin-top"
+        label="Last Name"
+        label-placement="floating"
+        fill="outline"
         aria-label="Last Name"
         type="text"
         [(ngModel)]="newStudent.lastName"
@@ -34,6 +42,10 @@
     <ion-item>
       <ion-label>Student ID</ion-label>
       <ion-input
+        class="ion-margin-top"
+        label="Student ID"
+        label-placement="floating"
+        fill="outline"
         aria-label="Student ID"
         type="text"
         [(ngModel)]="newStudent.studentID"
@@ -43,6 +55,10 @@
     <ion-item>
       <ion-label>Course ID</ion-label>
       <ion-input
+        class="ion-margin-top"
+        label="Course ID"
+        label-placement="floating"
+        fill="outline"
         aria-label="Course ID"
         type="text"
         [(ngModel)]="newStudent.courseID"
@@ -52,6 +68,10 @@
     <ion-item>
       <ion-label>Module No.1</ion-label>
       <ion-input
+        class="ion-margin-top"
+        label="Module No. 1"
+        label-placement="floating"
+        fill="outline"
         aria-label="Module No. 1"
         type="text"
         [(ngModel)]="newStudent.moduleNo1"
@@ -61,6 +81,10 @@
     <ion-item>
       <ion-label>Module No. 2</ion-label>
       <ion-input
+        class="ion-margin-top"
+        label="Module No. 2"
+        label-placement="floating"
+        fill="outline"
         aria-label="Module No. 2"
         type="text"
         [(ngModel)]="newStudent.moduleNo2"

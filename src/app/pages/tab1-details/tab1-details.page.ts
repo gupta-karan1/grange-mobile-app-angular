@@ -26,7 +26,6 @@ export class Tab1DetailsPage implements OnInit {
     lat: 0,
     long: 0,
     moduleName: '',
-
     room: '',
     website: '',
     location: '',
@@ -45,14 +44,14 @@ export class Tab1DetailsPage implements OnInit {
     // the parameter map is a map of the route parameters
     // each detail page will have a different moduleNo and it will be passed in the url
     const moduleNo: any = this.activatedRoute.snapshot.paramMap.get('moduleNo');
-    console.log(moduleNo); // test
+    // console.log(moduleNo); // test
 
     // call the getModuleDetails() method and pass in the moduleNo
     // subscribe to the observable
     // result is the data emitted from the observable
     // store the data emitted from the observable into the module variable
     this.moduleService.getModuleDetails(moduleNo).subscribe((result) => {
-      console.log(result); // test
+      // console.log(result); // test
       this.module = result; // store the data emitted from the observable into the module variable
       // the module variable here is an individual object from the modules array
     });

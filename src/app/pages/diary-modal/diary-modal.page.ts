@@ -49,7 +49,6 @@ export class DiaryModalPage implements OnInit {
       duration: 2000, // set the duration
     }); // create a toast
     toast.present(); // present the toast
-
     this.modalCtrl.dismiss(); // dismiss the modal
   }
 }
