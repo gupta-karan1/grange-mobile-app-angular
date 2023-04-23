@@ -47,6 +47,7 @@
         *ngIf="profile.imageUrl; else placeholder_avatar"
         [src]="profile.imageUrl"
       ></ion-img>
+      <!-- Add a template which will be visible as placeholder if there is no uploaded file on storage database -->
       <ng-template #placeholder_avatar>
         <div class="fallback">
           <p>Upload Profile Pic</p>
