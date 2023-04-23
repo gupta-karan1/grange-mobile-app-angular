@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  signInAnonymously,
   signInWithEmailAndPassword,
+  signInWithEmailLink,
   signOut,
 } from '@angular/fire/auth';
 

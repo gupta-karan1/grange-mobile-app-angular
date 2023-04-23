@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "446380689792",
+    "project_id": "grange-mobile-karan",
+    "storage_bucket": "grange-mobile-karan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446380689792:android:c2f85745cdbaba9adf1965",
+        "android_client_info": {
+          "package_name": "com.grangeMobileKaran.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446380689792-srsikkjhkja0mg45j4u8hn25ftus1gr3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grangeMobileKaran.app",
+            "certificate_hash": "6895db7ac05109640fa60c0631c0972ba8f8f3e8"
+          }
+        },
+        {
+          "client_id": "446380689792-0aqn48mo8mq6n9onru3ps48lvcoib0l5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKyltP7yaWoj3ZLqBazxiV1G3GGBOlM9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446380689792-0aqn48mo8mq6n9onru3ps48lvcoib0l5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

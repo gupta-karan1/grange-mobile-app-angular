@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-title mode="md" class="ion-margin-top, ion-text-center">
-    Login/Sign Up to View Profile
+    Login/Sign Up
   </ion-title>
 
   <form [formGroup]="credentials" (ngSubmit)="login()">
@@ -66,4 +66,44 @@
       Create Account
     </ion-button>
   </form>
+  <br />
+  <ion-button
+    class="ion-margin-top"
+    (click)="googleLogin()"
+    expand="full"
+    fill="solid"
+    shape="round"
+    *ngIf="!googleUser"
+  >
+    <ion-icon slot="start" name="logo-google"></ion-icon>
+    Login with Google
+  </ion-button>
+  <ion-button
+    (click)="googleSignOut()"
+    expand="full"
+    fill="outline"
+    shape="round"
+    *ngIf="googleUser"
+  >
+    Logout From Google
+  </ion-button>
+  <ion-button
+    (click)="googleRefresh()"
+    expand="block"
+    fill="clear"
+    shape="round"
+    *ngIf="!googleUser"
+  >
+    Try to Refresh
+  </ion-button>
+
+  <ion-item *ngIf="googleUser">
+    <ion-avatar slot="start">
+      <img [src]="googleUser.imageUrl" />
+    </ion-avatar>
+    <ion-label>
+      {{googleUser.givenName}} {{googleUser.familyName}}
+      <p>{{googleUser.email}}</p>
+    </ion-label>
+  </ion-item>
 </ion-content>

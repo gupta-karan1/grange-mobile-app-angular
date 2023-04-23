@@ -11,8 +11,11 @@ import { CommonModule } from '@angular/common';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-
+import { GoogleAuthProvider, getAuth, provideAuth } from '@angular/fire/auth';
+import {
+  GoogleAuth,
+  GoogleAuthPlugin,
+} from '@codetrix-studio/capacitor-google-auth';
 //import leaflet
 import * as L from 'leaflet';
 import { routes } from './app/app.routes';
@@ -41,6 +44,8 @@ bootstrapApplication(AppComponent, {
       FormsModule,
       ReactiveFormsModule,
       AvatarService,
+      GoogleAuthProvider,
+
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),
       provideStorage(() => getStorage()),

@@ -7,6 +7,7 @@ import { UpdateStudentPage } from './pages/update-student/update-student.page';
 import { DiaryModalPage } from './pages/diary-modal/diary-modal.page';
 import { MapFullPage } from './pages/map-full/map-full.page';
 import { MapPage } from './pages/map/map.page';
+import { LoginPage } from './pages/login/login.page';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ import { MapPage } from './pages/map/map.page';
     DiaryModalPage,
     MapFullPage,
     MapPage,
+    LoginPage,
   ],
 })
 export class AppComponent {

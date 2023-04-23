@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { IonicModule, ToastController, isPlatform } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import '@codetrix-studio/capacitor-google-auth';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class LoginPage implements OnInit {
-  credentials!: FormGroup;
+  credentials!: FormGroup; // form group for the login form fields (email and password)
+  googleUser: any = null; // the google user object that will be returned from the google auth plugin
 
   constructor(
     private fb: FormBuilder,
@@ -25,7 +28,38 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private toastCtrl: ToastController
-  ) {}
+  ) {
+    // if (!isPlatform('capacitor')) {
+    //   GoogleAuth.initialize({
+    //     clientId:
+    //       '446380689792-0aqn48mo8mq6n9onru3ps48lvcoib0l5.apps.googleusercontent.com',
+    //     scopes: ['profile', 'email'],
+    //   });
+    // }
+    // GoogleAuth.initialize({
+    //   clientId:
+    //     '446380689792-0aqn48mo8mq6n9onru3ps48lvcoib0l5.apps.googleusercontent.com',
+    //   scopes: ['profile', 'email'],
+    // });
+    //initialize the google auth plugin
+    if (!isPlatform('capacitor')) {
+      // if the platform is not capacitor
+      GoogleAuth.initialize({
+        // initialize the google auth plugin
+        // client id
+        clientId:
+          '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+      });
+    }
+    GoogleAuth.initialize({
+      // initialize the google auth plugin
+      // client id
+      clientId:
+        '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
+      scopes: ['profile', 'email'], // scopes defined in the google api console
+    });
+  }
 
   public get email() {
     return this.credentials.get('email');
@@ -111,5 +145,40 @@ export class LoginPage implements OnInit {
       });
       await alert.present(); // present the alert message
     }
+  }
+
+  async googleLogin() {
+    this.googleUser = await GoogleAuth.signIn(); // sign in with google
+    console.log('user', this.googleUser); // log the user object to the console
+
+    // //navigate to the profile page after successful login with a setTimeout function to allow the user to see the toast message before navigating to the profile page after 3 seconds
+    // setTimeout(() => {
+    //   this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+    // }, 1500);
+
+    //display a toast message to the user
+    const toast = await this.toastCtrl.create({
+      message: 'You have been signed in with Google.',
+      duration: 3000,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
+
+  async googleSignOut() {
+    await GoogleAuth.signOut(); // sign out of google
+    this.googleUser = null; // set the google user to null
+    //display a toast message to the user
+    const toast = await this.toastCtrl.create({
+      message: 'You have been signed out.',
+      duration: 3000,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
+
+  async googleRefresh() {
+    const authCode = await GoogleAuth.refresh(); // refresh the google auth code
+    console.log('authCode', authCode); // log the auth code to the console
   }
 }

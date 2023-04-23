@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">grange-mobile-app</string>
+    <string name="title_activity_main">grange-mobile-app</string>
+    <string name="package_name">com.grangeMobileKaran.app</string>
+    <string name="custom_url_scheme">com.grangeMobileKaran.app</string>
+    <string name="server_client_id">446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com</string>
+</resources>
