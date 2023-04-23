@@ -36,7 +36,7 @@
     </ion-card-content>
   </ion-card> -->
 
-  <ion-list *ngIf="newStudents">
+  <ion-list *ngIf="newStudents" lines="full">
     <ion-item *ngFor="let student of newStudents">
       <ion-label>
         <h2>{{student.firstName}} {{student.lastName}}</h2>

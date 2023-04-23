@@ -28,7 +28,7 @@ export class Tab3Page implements OnInit {
     this.lecturerService.getLecturers().subscribe((result) => {
       // store the data emitted from the observable into the lecturers variable
       this.lecturers = result;
-      console.log(this.lecturers);
+      // console.log(this.lecturers);
 
       // store the data emitted from the observable into the newLecturers variable
       this.newLecturers = this.lecturers.lecturers;

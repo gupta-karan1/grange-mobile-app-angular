@@ -55,7 +55,7 @@ export class Tab2Page implements OnInit {
     this.studentService.getStudents().subscribe((result) => {
       // store the data emitted from the observable into the students variable
       this.students = result;
-      console.log(this.students);
+      // console.log(this.students);
 
       // store the data emitted from the observable into the newStudents variable
       this.newStudents = this.students.students;

@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AvatarService } from './app/services/avatar.service';
 
 if (environment.production) {
   enableProdMode();
@@ -39,6 +40,7 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       FormsModule,
       ReactiveFormsModule,
+      AvatarService,
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),
       provideStorage(() => getStorage()),

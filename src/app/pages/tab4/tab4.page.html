@@ -12,12 +12,51 @@
   </ion-header>
 
   <ion-title class="ion-margin-top"> My Profile </ion-title>
+  <!-- <div class="preview">
+    <ion-avatar (click)="changeImage()">
+      <img
+        *ngIf="profile?.imageUrl; else placeholder_avatar"
+        [src]="profile.imageUrl"
+      />
+      <ng-template #placeholder_avatar>
+        <div class="fallback">
+          <p>Select Avatar</p>
+        </div>
+      </ng-template>
+    </ion-avatar>
+  </div> -->
+  <!-- <div class="preview">
+    <ion-avatar (click)="changeImage()">
+      <img
+        *ngIf="profile.imageUrl; else placeholder_avatar"
+        [src]="profile.imageUrl"
+      />
+      <ng-template #placeholder_avatar>
+        <div class="fallback">
+          <p>Select Avatar</p>
+        </div>
+      </ng-template>
+    </ion-avatar>
+  </div> -->
 
   <!-- My Profile details in an ion card -->
   <ion-card>
     <!-- Add a profile image which will be uploaded and updated from firebase cloud storage -->
-    <ion-img [src]="urlRandomImages + '/300'"></ion-img>
+    <div class="preview" (click)="addCameraImage()">
+      <ion-img
+        *ngIf="profile.imageUrl; else placeholder_avatar"
+        [src]="profile.imageUrl"
+      ></ion-img>
+      <ng-template #placeholder_avatar>
+        <div class="fallback">
+          <p>Upload Profile Pic</p>
+        </div>
+      </ng-template>
+    </div>
+
     <ion-icon
+      button
+      (click)="addCameraImage()"
       name="camera-outline"
       size="large"
       class="ion-padding ion-float-right"

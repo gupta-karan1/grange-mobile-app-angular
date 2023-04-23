@@ -48,7 +48,7 @@ export class Tab1Page implements OnInit {
     this.moduleService.getModules().subscribe((result) => {
       // store the data emitted from the observable into the modules variable
       this.modules = result;
-      console.log(this.modules);
+      // console.log(this.modules);
 
       // store the data emitted from the observable into the newModules variable
       this.newModules = this.modules.modules;

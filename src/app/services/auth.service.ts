@@ -10,6 +10,8 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
+  // reference: https://www.youtube.com/watch?v=U7RvTTF9dnk&list=PLPkDKwuGmGkbO-1kiU3upvlUG9fTSTtYv&index=43&t=11s
+
   constructor(private auth: Auth) {} //inject the auth service
 
   async register({ email, password }: { email: string; password: string }) {

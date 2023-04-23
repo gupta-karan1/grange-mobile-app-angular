@@ -28,7 +28,7 @@ export class DiaryPage implements OnInit {
     private toastCtrl: ToastController
   ) {
     this.diaryDataService.getNotes().subscribe((res) => {
-      console.log(res);
+      // console.log(res);
       // subscribe to the notes observable
       this.notes = res; // assign the notes property to the array of notes returned by the observable
     });
