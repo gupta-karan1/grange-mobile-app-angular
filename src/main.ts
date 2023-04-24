@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { GoogleAuthProvider, getAuth, provideAuth } from '@angular/fire/auth';
+import { FacebookAuthProvider, GoogleAuthProvider, getAuth, provideAuth } from '@angular/fire/auth';
 
 //import leaflet
 import * as L from 'leaflet';
@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarService } from './app/services/avatar.service';
-import { HTTP } from '@awesome-cordova-plugins/http';
+
 
 if (environment.production) {
   enableProdMode();
@@ -43,7 +43,7 @@ bootstrapApplication(AppComponent, {
       ReactiveFormsModule,
       AvatarService,
       GoogleAuthProvider,
-      HTTP,
+      FacebookAuthProvider,
 
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),

@@ -7,6 +7,8 @@ import com.getcapacitor.Plugin;
 import java.util.ArrayList;
 import com.codetrixstudio.capacitor.GoogleAuth.GoogleAuth;
 
+
+
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,9 @@ public class MainActivity extends BridgeActivity {
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
       add(GoogleAuth.class);
+
+      //add facebook plugin
+      add(com.getcapacitor.community.facebooklogin.FacebookLogin.class);
     }});
   }
 }

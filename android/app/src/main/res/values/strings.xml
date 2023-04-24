@@ -4,5 +4,12 @@
     <string name="title_activity_main">grange-mobile-app</string>
     <string name="package_name">com.grangeMobileKaran.app</string>
     <string name="custom_url_scheme">com.grangeMobileKaran.app</string>
+
+    <!-- for google login use the client id here -->
     <string name="server_client_id">446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com</string>
+
+    <!-- for facebook login use the app id here -->
+
+    <string name="facebook_app_id">6367860876570694</string>
+    <string name="fb_login_protocol_scheme">fb6367860876570694</string>
 </resources>

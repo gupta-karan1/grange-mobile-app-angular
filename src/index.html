@@ -30,4 +30,28 @@
   <body>
     <app-root></app-root>
   </body>
+
+  <!-- add the facebook login script for the facebook login to work on the web app -->
+
+  <!-- referred from https://www.youtube.com/watch?v=eEBi92zOgzs&t=957s -->
+
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '6367860876570694',
+        cookie: true, // enable cookies to allow the server to access the session
+        xfbml: true, // parse social plugins on this page
+        version: 'v5.0' // use graph api current version
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 </html>
