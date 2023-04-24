@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import '@codetrix-studio/capacitor-google-auth';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -29,24 +31,13 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private toastCtrl: ToastController
   ) {
-    // if (!isPlatform('capacitor')) {
-    //   GoogleAuth.initialize({
-    //     clientId:
-    //       '446380689792-0aqn48mo8mq6n9onru3ps48lvcoib0l5.apps.googleusercontent.com',
-    //     scopes: ['profile', 'email'],
-    //   });
-    // }
-    // GoogleAuth.initialize({
-    //   clientId:
-    //     '446380689792-0aqn48mo8mq6n9onru3ps48lvcoib0l5.apps.googleusercontent.com',
-    //   scopes: ['profile', 'email'],
-    // });
     //initialize the google auth plugin
     if (!isPlatform('capacitor')) {
       // if the platform is not capacitor
       GoogleAuth.initialize({
         // initialize the google auth plugin
         // client id
+        //? Important: I had to create a new client id separate from the auto-generated one that comes from firestore and embed that within firestore whitelist as well as the google api console because the localhost:8100 was not being recognized as a valid origin
         clientId:
           '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
@@ -112,6 +103,21 @@ export class LoginPage implements OnInit {
     }
   }
 
+  async googleLogin(): Promise<any> {
+    this.googleUser = await GoogleAuth.signIn(); // sign in with google
+    // console.log('user', this.googleUser, this.googleUser.email); // log the user object to the console
+
+    //display a toast message to the user
+    const toast = await this.toastCtrl.create({
+      message: 'You have been signed in with Google.',
+      duration: 3000,
+      position: 'bottom',
+    });
+    await toast.present();
+
+    return this.googleUser;
+  }
+
   async login() {
     // login the user
     const loading = await this.loadController.create({
@@ -125,7 +131,11 @@ export class LoginPage implements OnInit {
     const user = await this.authService.login(this.credentials.value); // login the user
     await loading.dismiss(); // dismiss the loading controller
 
-    if (user) {
+    const checkGoogleUser = await this.googleLogin(); // check if the user is logged in with google
+    console.log('outside checkGoogleUser', checkGoogleUser);
+
+    if (user || checkGoogleUser) {
+      console.log('inside user', checkGoogleUser);
       // if the user is logged in, navigate to the profile page
       this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
 
@@ -147,24 +157,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async googleLogin() {
-    this.googleUser = await GoogleAuth.signIn(); // sign in with google
-    console.log('user', this.googleUser); // log the user object to the console
-
-    // //navigate to the profile page after successful login with a setTimeout function to allow the user to see the toast message before navigating to the profile page after 3 seconds
-    // setTimeout(() => {
-    //   this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
-    // }, 1500);
-
-    //display a toast message to the user
-    const toast = await this.toastCtrl.create({
-      message: 'You have been signed in with Google.',
-      duration: 3000,
-      position: 'bottom',
-    });
-    await toast.present();
-  }
-
   async googleSignOut() {
     await GoogleAuth.signOut(); // sign out of google
     this.googleUser = null; // set the google user to null
@@ -180,5 +172,10 @@ export class LoginPage implements OnInit {
   async googleRefresh() {
     const authCode = await GoogleAuth.refresh(); // refresh the google auth code
     console.log('authCode', authCode); // log the auth code to the console
+  }
+
+  async facebookLogin() {
+    // login with facebook
+    console.log('facebook login');
   }
 }

@@ -24,6 +24,7 @@ export class Tab1Page implements OnInit {
   // create 2 variables to store results emitted from observable
   modules: any = [];
   newModules: any = [];
+  copyModules: any = [];
   urlModules = environment.urlModules;
   // create a variable to store the selected location
   selectedLocation: string[] = [];
@@ -52,6 +53,7 @@ export class Tab1Page implements OnInit {
 
       // store the data emitted from the observable into the newModules variable
       this.newModules = this.modules.modules;
+      this.copyModules = this.modules.modules;
     });
   }
 
@@ -76,7 +78,7 @@ export class Tab1Page implements OnInit {
 
   get uniqueLocations() {
     const locations = Array.from(
-      new Set(this.newModules.map((module: Module) => module.location))
+      new Set(this.copyModules.map((module: Module) => module.location))
     );
     return locations;
   }
@@ -94,5 +96,9 @@ export class Tab1Page implements OnInit {
       });
     }
     this.newModules = this.filteredModules;
+  }
+
+  selectAllLocations() {
+    this.filteredModules = this.modules.modules;
   }
 }
