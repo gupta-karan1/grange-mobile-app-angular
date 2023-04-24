@@ -44,6 +44,7 @@ export class ModuleServiceService {
   //using angular pipe to filter the data
   getModuleDetails(moduleNo: string): Observable<Module> {
     return this.http.get<Module>(this.urlModules).pipe(
+      // pipe is used to chain multiple operators
       map((result) => {
         let module = result['modules'].filter(
           (m: any) => m.moduleNo == moduleNo
