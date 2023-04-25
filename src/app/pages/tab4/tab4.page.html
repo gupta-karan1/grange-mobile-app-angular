@@ -1,6 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>My Profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/tab3">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -10,34 +18,6 @@
       <ion-title size="large">My Profile</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-title class="ion-margin-top"> My Profile </ion-title>
-  <!-- <div class="preview">
-    <ion-avatar (click)="changeImage()">
-      <img
-        *ngIf="profile?.imageUrl; else placeholder_avatar"
-        [src]="profile.imageUrl"
-      />
-      <ng-template #placeholder_avatar>
-        <div class="fallback">
-          <p>Select Avatar</p>
-        </div>
-      </ng-template>
-    </ion-avatar>
-  </div> -->
-  <!-- <div class="preview">
-    <ion-avatar (click)="changeImage()">
-      <img
-        *ngIf="profile.imageUrl; else placeholder_avatar"
-        [src]="profile.imageUrl"
-      />
-      <ng-template #placeholder_avatar>
-        <div class="fallback">
-          <p>Select Avatar</p>
-        </div>
-      </ng-template>
-    </ion-avatar>
-  </div> -->
 
   <!-- My Profile details in an ion card -->
   <ion-card>
@@ -55,13 +35,13 @@
       </ng-template>
     </div>
 
-    <ion-icon
+    <!-- <ion-icon
       button
       (click)="addCameraImage()"
       name="camera-outline"
       size="large"
       class="ion-padding ion-float-right"
-    ></ion-icon>
+    ></ion-icon> -->
     <ion-card-header>
       <ion-card-subtitle>D22124440</ion-card-subtitle>
       <ion-card-title>Karan Gupta</ion-card-title>
@@ -94,9 +74,13 @@
             </ion-list>
           </div>
         </ion-accordion>
-      </ion-accordion-group></ion-card-content
-    >
+      </ion-accordion-group>
+    </ion-card-content>
   </ion-card>
 
-  <!-- Add the rest items in accordian called view more -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addCameraImage()"
+      ><ion-icon name="camera-outline"></ion-icon
+    ></ion-fab-button>
+  </ion-fab>
 </ion-content>

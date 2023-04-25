@@ -1,97 +1,37 @@
-<ion-menu contentId="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>GrangeMobile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list lines="full">
-      <ion-item detail="true" button routerLink="/tabs/tab3">
-        <ion-icon slot="start" name="people-circle-outline"></ion-icon>
-        <ion-label>My Lecturers</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/tab3">
-        <ion-icon slot="start" name="school-outline"></ion-icon>
-        <ion-label>Discover Modules</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/tab3">
-        <ion-icon slot="start" name="notifications-outline"></ion-icon>
-        <ion-label>Notifications</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/tab3">
-        <ion-icon slot="start" name="chatbubbles-outline"></ion-icon>
-        <ion-label>Class Chat</ion-label>
-      </ion-item>
-      <ion-item detail="true" button routerLink="/tabs/login">
-        <ion-icon slot="start" name="log-in-outline"></ion-icon>
-        <ion-label>Login/Register</ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-  <ion-footer>
-    <ion-list lines="none">
-      <ion-item class="ion-margin" (click)="logout()">
-        <ion-label>Logout</ion-label>
-        <ion-icon slot="end" name="log-out-outline"></ion-icon>
-      </ion-item>
-      <ion-item class="ion-margin">
-        <ion-toggle [enableOnOffLabels]="true">Switch to Dark Mode</ion-toggle>
-      </ion-item>
-    </ion-list>
-
-    <ion-toolbar>
-      <ion-label class="ion-margin"> Karan Gupta | D22124440</ion-label>
-    </ion-toolbar>
-  </ion-footer>
-</ion-menu>
-
-<div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>GrangeMobile</ion-title>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="tab1" #tab1>
-        <!-- Below is the code that changes the icon based on the selected state of
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab1" #tab1>
+      <!-- Below is the code that changes the icon based on the selected state of
       the tab.
       The icon is set to the school icon if the tab is selected and the school-outline icon if the tab is not selected. -->
-        <!-- Icon source: https://ionic.io/ionicons  -->
-        <ion-icon
-          [name]="tab1.selected ? 'library' : 'library-outline'"
-        ></ion-icon>
-        <ion-label>Modules</ion-label>
-      </ion-tab-button>
+      <!-- Icon source: https://ionic.io/ionicons  -->
+      <ion-icon
+        [name]="tab1.selected ? 'library' : 'library-outline'"
+      ></ion-icon>
+      <ion-label>Modules</ion-label>
+    </ion-tab-button>
 
-      <ion-tab-button tab="tab2" #tab2>
-        <!-- Below is the code that changes the icon based on the selected state of
+    <ion-tab-button tab="tab2" #tab2>
+      <!-- Below is the code that changes the icon based on the selected state of
       the tab.
       The icon is set to the person icon if the tab is selected and the person-outline icon if the tab is not selected. -->
-        <ion-icon
-          [name]="tab2.selected ? 'people' : 'people-outline'"
-        ></ion-icon>
-        <ion-label>Classroom</ion-label>
-      </ion-tab-button>
+      <ion-icon [name]="tab2.selected ? 'people' : 'people-outline'"></ion-icon>
+      <ion-label>Classroom</ion-label>
+    </ion-tab-button>
 
-      <ion-tab-button tab="diary" #diary>
-        <!-- Below is the code that changes the icon based on the selected state of
+    <ion-tab-button tab="diary" #diary>
+      <!-- Below is the code that changes the icon based on the selected state of
       the tab.
       The icon is set to the calendar icon if the tab is selected and the calendar-outline icon if the tab is not selected. -->
-        <ion-icon [name]="diary.selected ? 'book' : 'book-outline'"></ion-icon>
-        <ion-label>My Diary</ion-label>
-      </ion-tab-button>
+      <ion-icon [name]="diary.selected ? 'book' : 'book-outline'"></ion-icon>
+      <ion-label>Diary</ion-label>
+    </ion-tab-button>
 
-      <ion-tab-button tab="tab4" #tab4>
-        <ion-icon
-          [name]="tab4.selected ? 'person-circle' : 'person-circle-outline'"
-        ></ion-icon>
-        <ion-label>Profile</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</div>
+    <ion-tab-button tab="tab4" #tab4>
+      <ion-icon
+        [name]="tab4.selected ? 'person-circle' : 'person-circle-outline'"
+      ></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

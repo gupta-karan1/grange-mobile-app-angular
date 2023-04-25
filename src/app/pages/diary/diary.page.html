@@ -1,6 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>My Diary</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/tab3">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -38,31 +46,79 @@
     <h3>Schedule</h3>
   </div>
   <div *ngIf="selectTabs === 'tasks'">
-    <h3>Tasks</h3>
+    <ion-list lines="full">
+      <ion-list-header>
+        <ion-label>
+          Pending <ion-badge color="primary">42</ion-badge>
+        </ion-label>
+        <ion-button (click)="addTask()">Add New</ion-button>
+      </ion-list-header>
+      <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+      <!-- Casting $event to $any is a temporary fix for this bug https://github.com/ionic-team/ionic-framework/issues/24245 -->
+      <ion-reorder-group
+        [disabled]="false"
+        (ionItemReorder)="handleReorder($any($event))"
+      >
+        <ion-item *ngFor="let task of tasks">
+          <ion-label>{{task.title}}</ion-label>
+          <ion-checkbox
+            (ionChange)="markAsDone(task)"
+            slot="start"
+            [checked]="task.done"
+          ></ion-checkbox>
+          <ion-button fill="clear" (click)="deleteTask()">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+      </ion-reorder-group>
+    </ion-list>
+    <ion-list lines="full">
+      <ion-list-header>
+        <ion-label>
+          Completed <ion-badge color="primary">42</ion-badge>
+        </ion-label>
+
+        <ion-button (click)="clearAllCheckedTasks()">Clear All</ion-button>
+      </ion-list-header>
+      <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+      <!-- Casting $event to $any is a temporary fix for this bug https://github.com/ionic-team/ionic-framework/issues/24245 -->
+      <ion-reorder-group
+        [disabled]="false"
+        (ionItemReorder)="handleReorder($any($event))"
+      >
+        <ion-item *ngFor="let task of doneTasks">
+          <ion-label>{{task.title}}</ion-label>
+          <ion-checkbox slot="start" [checked]="task.done"></ion-checkbox>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+      </ion-reorder-group>
+    </ion-list>
   </div>
   <div *ngIf="selectTabs === 'notes'">
-    <h3 class="ion-margin">Notes</h3>
-    <ion-card *ngFor="let note of notes">
+    <ion-card class="ion-margin-top" *ngFor="let note of notes">
       <ion-card-header (click)="openNote(note)">
-        <ion-card-subtitle>time stamp</ion-card-subtitle>
+        <ion-card-subtitle>{{note.timestamp}}</ion-card-subtitle>
         <ion-card-title>{{note.title}}</ion-card-title>
       </ion-card-header>
-      <ion-card-content> </ion-card-content>
+      <ion-card-content (click)="openNote(note)">
+        {{note.text.slice(0, 100) + '...'}}
+      </ion-card-content>
     </ion-card>
   </div>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button>
+      <ion-fab-button color="tertiary" size="large">
         <ion-icon name="calendar-outline"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button>
+      <ion-fab-button (click)="addTask()" color="tertiary" size="large">
         <ion-icon name="checkbox-outline"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button size="large" (click)="addNote()">
+      <ion-fab-button color="tertiary" size="large" (click)="addNote()">
         <ion-icon name="document-text-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>

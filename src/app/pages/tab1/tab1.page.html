@@ -1,6 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> My Modules </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/tab3">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +19,6 @@
       <ion-title size="large"> My Modules</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-title class="ion-margin-top"> My Modules </ion-title>
 
   <!-- filter drop down from ionic select component -->
   <ion-list>

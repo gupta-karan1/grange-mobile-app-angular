@@ -9,13 +9,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import '@codetrix-studio/capacitor-google-auth';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-import { FacebookAuthProvider } from '@angular/fire/auth';
 import {
   FacebookLogin,
   FacebookLoginResponse,
 } from '@capacitor-community/facebook-login';
-import { HttpClient } from '@angular/common/http';
-import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -32,9 +29,6 @@ export class LoginPage implements OnInit {
   fbLogin!: FacebookLoginResponse;
   fbUser: any = null; // the facebook user object that will be returned from the facebook login plugin
   token: any; // the facebook token that will be returned from the facebook login plugin
-
-  provider = new FacebookAuthProvider();
-  // auth = getAuth();
 
   constructor(
     private fb: FormBuilder,
@@ -67,17 +61,10 @@ export class LoginPage implements OnInit {
     //initialize the facebook login plugin
     // this.setupFbLogin();
 
-    // this.setupFacebookLogin();
+    //initialize the facebook login plugin
     FacebookLogin.initialize({
       appId: '6367860876570694',
     });
-
-    // this.provider.addScope('email');
-    // this.provider.addScope('user_birthday');
-    // this.provider.setCustomParameters({
-    //   display: 'popup',
-    // });
-    // this.auth.useDeviceLanguage();
   }
 
   public get email() {
@@ -111,10 +98,10 @@ export class LoginPage implements OnInit {
 
     if (user) {
       // if the user is registered, navigate to the profile page
-      this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+      // this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
 
       const toast = await this.toastCtrl.create({
-        message: 'Registration Successful. Welcome to Your Profile Page!',
+        message: 'Registration Successful.',
         duration: 3000,
         position: 'bottom',
       });
@@ -150,7 +137,9 @@ export class LoginPage implements OnInit {
     if (user) {
       // console.log('inside user', checkGoogleUser);
       // if the user is logged in, navigate to the profile page
-      this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+      // this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+
+      console.log(user);
 
       const toast = await this.toastCtrl.create({
         message: 'Login Successful. Welcome to Your Profile Page!',
@@ -324,7 +313,7 @@ export class LoginPage implements OnInit {
   //   this.token = null;
   // }
 
-  // run this command in your cmd prompt to get the hash key for facebook login
+  //! run this command in your cmd prompt to get the hash key for facebook login
   //keytool -exportcert -alias androiddebugkey -keystore "C:\Users\ADMIN\.android\debug.keystore" | "C:\Program Files\OpenSSL-Win64\bin\openssl" sha1 -binary | "C:\Program Files\Git\usr\bin\base64.exe"
   //remember to download the openssl from the internet and add it to your environment variables
   //the hash key will be displayed in the cmd prompt

@@ -1,8 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> My Lecturers </ion-title>
+
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-button routerLink="/tabs/tab3">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,9 +19,6 @@
     <ion-toolbar>
       <ion-title size="large"> My Lecturers</ion-title>
     </ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
   </ion-header>
 
   <!-- <ion-list [inset]="true">
@@ -44,7 +48,7 @@
           <ion-item>
             <ion-label>staffNumber: {{lecturer.staffNumber}} </ion-label>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-icon
               slot="end"
               name="create-outline"
@@ -52,7 +56,7 @@
               size="large"
             ></ion-icon>
             <ion-icon slot="end" name="trash-outline" size="large"></ion-icon>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
       </div>
     </ion-accordion>

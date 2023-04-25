@@ -1,15 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> My Classroom </ion-title>
-    <!-- <ion-icon
-      name="person-circle"
-      slot="end"
-      size="large"
-      style="margin-right: 10px; color: #3880ff"
-      routerLink="/tabs/my-profile"
-      button
-    >
-    </ion-icon> -->
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/tab3">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,27 +19,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-title class="ion-margin-top"> My Classroom </ion-title>
-
-  <!-- <ion-card *ngFor="let student of newStudents">
-    <ion-card-header>
-      <ion-icon size="large" name="person-circle"></ion-icon>
-
-      <ion-card-title>
-        {{student.firstName}} {{student.lastName}}</ion-card-title
-      >
-    </ion-card-header>
-    <ion-card-content>
-      ID: {{student.studentID}} | Course: {{student.courseID}} | Module 1:
-      {{student.moduleNo1}} | Module 2: {{student.moduleNo2}}
-    </ion-card-content>
-  </ion-card> -->
-
   <ion-list *ngIf="newStudents" lines="full">
     <ion-item *ngFor="let student of newStudents">
       <ion-label>
         <h2>{{student.firstName}} {{student.lastName}}</h2>
-
         <p>ID: {{student.studentID}}</p>
       </ion-label>
 
@@ -57,12 +39,11 @@
       ></ion-icon>
     </ion-item>
   </ion-list>
+  <!-- below code adds a floating action button that will allow students to add a new module or a new classmate to their profile page -->
+  <!-- Source:https://ionicframework.com/docs/api/fab  -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openModal()"
+      ><ion-icon name="person-add"></ion-icon
+    ></ion-fab-button>
+  </ion-fab>
 </ion-content>
-
-<!-- below code adds a floating action button that will allow students to add a new module or a new classmate to their profile page -->
-<!-- Source:https://ionicframework.com/docs/api/fab  -->
-<ion-fab vertical="bottom" horizontal="center" slot="fixed">
-  <ion-fab-button (click)="openModal()"
-    ><ion-icon name="person-add"></ion-icon
-  ></ion-fab-button>
-</ion-fab>

@@ -1,6 +1,6 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter } from '@angular/router';
+import { RouteReuseStrategy, RouterLink, provideRouter } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
@@ -11,7 +11,12 @@ import { CommonModule } from '@angular/common';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { FacebookAuthProvider, GoogleAuthProvider, getAuth, provideAuth } from '@angular/fire/auth';
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  getAuth,
+  provideAuth,
+} from '@angular/fire/auth';
 
 //import leaflet
 import * as L from 'leaflet';
@@ -23,7 +28,6 @@ import { FormsModule } from '@angular/forms';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarService } from './app/services/avatar.service';
-
 
 if (environment.production) {
   enableProdMode();
@@ -44,6 +48,7 @@ bootstrapApplication(AppComponent, {
       AvatarService,
       GoogleAuthProvider,
       FacebookAuthProvider,
+      RouterLink,
 
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),

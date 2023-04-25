@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { AddStudentPage } from '../add-student/add-student.page';
 import { RouterLink } from '@angular/router';
 import { UpdateStudentPage } from '../update-student/update-student.page';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastController } from '@ionic/angular';
@@ -30,7 +30,7 @@ export class TabsPage {
 
   constructor(
     private loadController: LoadingController,
-    private alertController: AlertController,
+
     private router: Router,
     private authService: AuthService,
     private toastCtrl: ToastController
