@@ -1,28 +1,33 @@
 <ion-header [translucent]="true"> </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list lines="full" *ngIf="note">
+  <ion-list lines="full" *ngIf="task">
     <ion-item>
-      <ion-label>{{note.timestamp}}</ion-label>
+      <ion-label>{{task.timestamp}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Title</ion-label>
-      <ion-input aria-label="title" [(ngModel)]="note.title"></ion-input>
+      <ion-label position="stacked">Task</ion-label>
+      <ion-input aria-label="title" [(ngModel)]="task.title"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Note</ion-label>
+      <ion-label position="stacked">Details</ion-label>
       <ion-textarea
-        aria-label="note"
-        [(ngModel)]="note.text"
-        rows="8"
+        aria-label="task"
+        [(ngModel)]="task.text"
+        rows="5"
       ></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label
+        >{{task.done ? 'Task is Completed' : 'Task is Pending'}}</ion-label
+      >
     </ion-item>
 
     <ion-button
       color="danger"
       class="ion-margin"
       shape="round"
-      (click)="deleteNote()"
+      (click)="deleteTask()"
       expand="block"
     >
       <ion-icon slot="start" name="trash-outline"></ion-icon>
@@ -32,7 +37,7 @@
       shape="round"
       class="ion-margin"
       color="success"
-      (click)="updateNote()"
+      (click)="updateTask()"
       expand="block"
     >
       <ion-icon slot="start" name="save"></ion-icon> Update</ion-button

@@ -10,6 +10,7 @@ import {
 import { DiaryDataService } from 'src/app/services/diary-data.service';
 import { DiaryModalPage } from '../diary-modal/diary-modal.page';
 import { RouterLink } from '@angular/router';
+import { DiaryTaskModalPage } from '../diary-task-modal/diary-task-modal.page';
 
 import { ItemReorderEventDetail } from '@ionic/angular';
 
@@ -152,6 +153,18 @@ export class DiaryPage implements OnInit {
   }
 
   //open task modal to update task details
+  async openTask(task: any) {
+    // open the task
+    const modal = await this.modalCtrl.create({
+      // create a modal
+      component: DiaryTaskModalPage, // set the modal component
+      componentProps: { id: task.id }, // pass the id of the task to the modal
+      breakpoints: [0, 0.75, 1], // set the breakpoints
+      initialBreakpoint: 0.75, // set the initial breakpoint
+    }); // create a modal
+
+    modal.present(); // present the modal
+  }
 
   // add new task to the list
   async addTask() {
@@ -187,7 +200,7 @@ export class DiaryPage implements OnInit {
           text: 'Save', // button text
           handler: (task) => {
             // button handler
-            console.log(task);
+            // console.log(task);
             // const timestamp = new Date().getTime(); // get current timestamp
             //get the current date and time
             //create a standard date time format
@@ -210,6 +223,8 @@ export class DiaryPage implements OnInit {
               timestamp: timestamp, // add timestamp property to the note object
               done: false, // set the done property to false
             }); // add the task to the firestore
+
+            // console.log(task);
             const toast = this.toastCtrl.create({
               // create a toast
               message: 'Task Added', // set the message
@@ -226,21 +241,41 @@ export class DiaryPage implements OnInit {
   // delete a task from the list
   async deleteTask() {}
 
-  // mark a task as done
-  markAsDone(index: number) {
-    // get the task from the tasks array
-    const task = this.tasks[index];
+  // update the done property of the task
+  async toggleDone(id: string, event: any) {
+    // console.log(id);
+    // console.log(event.detail.checked); // get the checked property of the event
+    this.diaryDataService.updateTaskById(id, event); // update the done property of the task
 
-    // add the task to the done tasks collection
-    this.diaryDataService.addDoneTask(task);
+    //create a toast saying the task is completed
 
-    // delete the task from the tasks collection
-    this.diaryDataService.deleteTaskById(task.id);
+    if (event.detail.checked == true) {
+      // if the task is marked as done create a toast saying the task is completed
+      const toast = this.toastCtrl.create({
+        // create a toast
+        message: 'Task Completed', // set the message
+        duration: 2000, // set the duration
+      }); // create a toast
+      toast.then((toast) => toast.present()); // present the toast
+    } else if (event.detail.checked == false) {
+      // if the task is marked as undone create a toast saying the task is undone
+      const toast = this.toastCtrl.create({
+        // create a toast
+        message: 'Task Pending', // set the message
+        duration: 2000, // set the duration
+      }); // create a toast
+      toast.then((toast) => toast.present()); // present the toast
+    }
   }
 
-  // mark a task as undone
-  markAsUndone(index: number) {}
-
   //clear all completed tasks from completed tasks list
-  clearAllCheckedTasks() {}
+  clearAllCheckedTasks() {
+    this.diaryDataService.deleteDoneTasks(); // delete all the tasks that are marked as done
+    const toast = this.toastCtrl.create({
+      // create a toast
+      message: 'All Completed Tasks Cleared', // set the message
+      duration: 2000, // set the duration
+    }); // create a toast
+    toast.then((toast) => toast.present()); // present the toast
+  }
 }

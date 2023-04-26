@@ -49,7 +49,7 @@
     <ion-list lines="full">
       <ion-list-header>
         <ion-label>
-          Pending <ion-badge color="primary">42</ion-badge>
+          Pending <ion-badge color="primary">{{tasks.length}}</ion-badge>
         </ion-label>
         <ion-button (click)="addTask()">Add New</ion-button>
       </ion-list-header>
@@ -60,15 +60,13 @@
         (ionItemReorder)="handleReorder($any($event))"
       >
         <ion-item *ngFor="let task of tasks">
-          <ion-label>{{task.title}}</ion-label>
+          <ion-label (click)="openTask(task)">{{task.title}}</ion-label>
           <ion-checkbox
-            (ionChange)="markAsDone(task)"
+            (ionChange)="toggleDone(task.id, $any($event))"
             slot="start"
             [checked]="task.done"
+            aria-label="task.title"
           ></ion-checkbox>
-          <ion-button fill="clear" (click)="deleteTask()">
-            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          </ion-button>
           <ion-reorder slot="end"></ion-reorder>
         </ion-item>
       </ion-reorder-group>
@@ -76,7 +74,7 @@
     <ion-list lines="full">
       <ion-list-header>
         <ion-label>
-          Completed <ion-badge color="primary">42</ion-badge>
+          Completed <ion-badge color="primary">{{doneTasks.length}}</ion-badge>
         </ion-label>
 
         <ion-button (click)="clearAllCheckedTasks()">Clear All</ion-button>
@@ -88,8 +86,18 @@
         (ionItemReorder)="handleReorder($any($event))"
       >
         <ion-item *ngFor="let task of doneTasks">
-          <ion-label>{{task.title}}</ion-label>
-          <ion-checkbox slot="start" [checked]="task.done"></ion-checkbox>
+          <ion-label
+            [style.color]="task.done ? 'grey' : 'inherit'"
+            [style.textDecoration]="task.done ? 'line-through' : 'none'"
+            (click)="openTask(task)"
+            >{{task.title}}</ion-label
+          >
+          <ion-checkbox
+            aria-label="task.title"
+            slot="start"
+            [checked]="task.done"
+            (ionChange)="toggleDone(task.id, $any($event))"
+          ></ion-checkbox>
           <ion-reorder slot="end"></ion-reorder>
         </ion-item>
       </ion-reorder-group>

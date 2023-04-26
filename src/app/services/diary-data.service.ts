@@ -9,6 +9,7 @@ import {
   deleteDoc,
   updateDoc,
   DocumentData,
+  getDocs,
   query,
   where,
 } from '@angular/fire/firestore';
@@ -85,11 +86,13 @@ export class DiaryDataService {
   //   return collectionData(tasksRef, { idField: 'id' }) as Observable<Task[]>; // return the tasks
   // }
 
+  //getTasks from the firestore and filter the tasks that are not done yet and return them as an observable
   getTasks(): Observable<Task[]> {
-    const tasksRef = collection(this.firestore, 'tasks');
-    const taskQuery = query(tasksRef, where('done', '==', false));
-    const taskOptions = { idField: 'id' };
-    return collectionData(taskQuery, taskOptions) as Observable<Task[]>;
+    // return an observable of type Task[]
+    const tasksRef = collection(this.firestore, 'tasks'); // create a reference to the tasks collection
+    const taskQuery = query(tasksRef, where('done', '==', false)); // filter the tasks that are not done yet
+    const taskOptions = { idField: 'id' }; // added the idField option to the collectionData operator to get the id of the document
+    return collectionData(taskQuery, taskOptions) as Observable<Task[]>; // return the tasks that are not done yet
   }
 
   // get Task by id from the firestore
@@ -102,7 +105,9 @@ export class DiaryDataService {
   // add Task to the firestore and mark it as not done
   addTask(task: Task) {
     const tasksRef = collection(this.firestore, 'tasks'); // create a reference to the tasks collection
-    return addDoc(tasksRef, { ...task, done: false }); // add the task to the firestore and mark it as not done
+    // return addDoc(tasksRef, { ...task, done: false }); // add the task to the firestore and mark it as not done
+    //add the task to the firestore
+    return addDoc(tasksRef, task);
   }
 
   // delete task from the firestore
@@ -111,22 +116,42 @@ export class DiaryDataService {
     return deleteDoc(taskDocRef); // delete the task from the firestore
   }
 
-  // update task in the firestore
-  updateTaskById(task: Task) {
+  // update task details like the title and text in the firestore
+  updateSingleTaskById(task: Task) {
     const taskDocRef = doc(this.firestore, `tasks/${task.id}`); // create a reference to the task document
-    return updateDoc(taskDocRef, { title: task.title, done: task.done }); // update the task in the firestore with the new title and done passed in the task object
+    return updateDoc(taskDocRef, {
+      // update the task in the firestore with the new title and text passed in the task object
+      title: task.title,
+      text: task.text,
+      done: task.done, // update the done status of the task
+    }); // update the task in the firestore with the new title and done passed in the task object
   }
 
-  //get done tasks from the firestore
+  //get done tasks from the firestore and return them as an observable of type Task[] to be displayed in the done tasks section
   getDoneTasks(): Observable<Task[]> {
-    const tasksRef = collection(this.firestore, 'tasks');
-    const taskQuery = query(tasksRef, where('done', '==', true));
-    const taskOptions = { idField: 'id' };
-    return collectionData(taskQuery, taskOptions) as Observable<Task[]>;
+    // return an observable of type Task[]
+    const tasksRef = collection(this.firestore, 'tasks'); // create a reference to the tasks collection
+    const taskQuery = query(tasksRef, where('done', '==', true)); // filter the tasks that are done already
+    const taskOptions = { idField: 'id' }; // added the idField option to the collectionData operator to get the id of the document
+    return collectionData(taskQuery, taskOptions) as Observable<Task[]>; // return the tasks that are done already
   }
 
-  addDoneTask(task: Task) {
+  //update the done status of the task in the firestore by passing the task id and event to toggle the done status of the task in the firestore
+  updateTaskById(taskId: string, event: any) {
+    const taskDocRef = doc(this.firestore, `tasks/${taskId}`); // create a reference to the task document
+    return updateDoc(taskDocRef, { done: event.detail.checked }); // update the done status of the task in the firestore // remember to pass the event.detail.checked to the updateDoc method and not just event.detail
+  }
+
+  //delete all the tasks that are done from the firestore by passing the task id and event to toggle the done status of the task in the firestore
+  async deleteDoneTasks() {
     const tasksRef = collection(this.firestore, 'tasks'); // create a reference to the tasks collection
-    return addDoc(tasksRef, { ...task, done: true }); // add the task to the firestore and mark it as done
+    const taskQuery = query(tasksRef, where('done', '==', true)); // filter the tasks that are done already
+    return getDocs(taskQuery).then((querySnapshot) => {
+      // get the tasks that are done already
+      querySnapshot.forEach((doc) => {
+        // loop through the tasks that are done already
+        deleteDoc(doc.ref); // delete the task from the firestore
+      });
+    });
   }
 }
