@@ -3,8 +3,10 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from '@angular/fire/auth';
+import { TwitterAuthProvider } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -46,5 +48,20 @@ export class AuthService {
   logout() {
     //sign out the user
     return signOut(this.auth);
+  }
+
+  //login with twitter using firebase
+  async loginWithTwitter() {
+    const provider = new TwitterAuthProvider();
+    const user = await signInWithPopup(this.auth, provider);
+    // console.log(user);
+    return user;
+  }
+
+  // logout with twitter using firebase
+  async logoutWithTwitter() {
+    const user = await signOut(this.auth);
+    // console.log(user);
+    return user;
   }
 }

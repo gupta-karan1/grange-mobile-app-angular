@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>Login/Sign Up</ion-title>
     <ion-buttons slot="start">
@@ -11,10 +11,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-title mode="md" class="ion-margin-top, ion-text-center">
-    Login/Sign Up
-  </ion-title>
-
   <form [formGroup]="credentials" (ngSubmit)="login()">
     <ion-input
       class="ion-margin-top"
@@ -116,6 +112,7 @@
     </ion-item>
   </ion-card>
 
+  <!-- Facebook Login -->
   <ion-card class="ion-padding">
     <ion-button
       class="ion-margin-top"
@@ -150,6 +147,40 @@
         <p>{{fbUser.name}}</p>
         <p>{{fbUser.email}}</p>
         <p>DOB: {{fbUser.birthday}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <!-- Twitter Login -->
+  <ion-card class="ion-padding">
+    <ion-button
+      class="ion-margin-top"
+      (click)="twitterLogin()"
+      expand="full"
+      fill="solid"
+      shape="round"
+      *ngIf="!twitterUser"
+    >
+      <ion-icon slot="start" name="logo-twitter"></ion-icon>
+      Twitter Login
+    </ion-button>
+
+    <ion-button
+      *ngIf="twitterUser"
+      (click)="twitterLogout()"
+      expand="block"
+      fill="outline"
+      shape="round"
+    >
+      Twitter Logout
+    </ion-button>
+
+    <ion-item *ngIf="twitterUser" lines="none">
+      <ion-avatar slot="start">
+        <img [src]="twitterUser.user.photoURL" />
+      </ion-avatar>
+      <ion-label>
+        <p>{{twitterUser.user.displayName}}</p>
       </ion-label>
     </ion-item>
   </ion-card>

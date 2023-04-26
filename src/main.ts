@@ -14,6 +14,7 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
+  TwitterAuthProvider,
   getAuth,
   provideAuth,
 } from '@angular/fire/auth';
@@ -49,6 +50,7 @@ bootstrapApplication(AppComponent, {
       GoogleAuthProvider,
       FacebookAuthProvider,
       RouterLink,
+      TwitterAuthProvider,
 
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),

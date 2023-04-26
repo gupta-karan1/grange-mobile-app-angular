@@ -13,13 +13,30 @@ import { RouterLink } from '@angular/router';
 import { DiaryTaskModalPage } from '../diary-task-modal/diary-task-modal.page';
 
 import { ItemReorderEventDetail } from '@ionic/angular';
+import { CalModalPage } from '../cal-modal/cal-modal.page';
+import { CalendarComponent } from 'ionic2-calendar/calendar';
+
+import { ViewChild } from '@angular/core';
+import { NgCalendarModule } from 'ionic2-calendar';
+import { CalendarMode } from 'ionic2-calendar/calendar.interface';
+import { Step } from 'ionic2-calendar/calendar.interface';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.page.html',
   styleUrls: ['./diary.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, DiaryModalPage, RouterLink],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    DiaryModalPage,
+    RouterLink,
+    CalModalPage,
+    DiaryTaskModalPage,
+    NgCalendarModule,
+  ],
 })
 export class DiaryPage implements OnInit {
   selectTabs: string = 'notes'; // set the default tab
@@ -45,7 +62,8 @@ export class DiaryPage implements OnInit {
     private diaryDataService: DiaryDataService,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private navController: NavController
   ) {
     this.diaryDataService.getNotes().subscribe((res) => {
       // get the notes from the diary data service
@@ -230,7 +248,7 @@ export class DiaryPage implements OnInit {
               message: 'Task Added', // set the message
               duration: 2000, // set the duration
             }); // create a toast
-            toast.then((toast) => toast.present()); // present the toast
+            toast.then((toast: any) => toast.present()); // present the toast
           },
         },
       ],
@@ -278,4 +296,165 @@ export class DiaryPage implements OnInit {
     }); // create a toast
     toast.then((toast) => toast.present()); // present the toast
   }
+
+  //for ionic calendar
+  eventSource = [];
+  viewTitle!: string;
+  vewTitle!: string;
+  isToday!: boolean;
+
+  calendar = {
+    mode: 'month' as CalendarMode,
+    currentDate: new Date(),
+    step: 30 as Step,
+    dateFormatter: {
+      formatMonthViewDay: function (date: Date) {
+        return date.getDate().toString();
+      },
+      formatMonthViewDayHeader: function (date: Date) {
+        return 'MonMH';
+      },
+      formatMonthViewTitle: function (date: Date) {
+        return 'testMT';
+      },
+      formatWeekViewDayHeader: function (date: Date) {
+        return 'MonWH';
+      },
+      formatWeekViewTitle: function (date: Date) {
+        return 'testWT';
+      },
+      formatWeekViewHourColumn: function (date: Date) {
+        return 'testWH';
+      },
+      formatDayViewHourColumn: function (date: Date) {
+        return 'testDH';
+      },
+      formatDayViewTitle: function (date: Date) {
+        return 'testDT';
+      },
+    },
+  };
+
+  // @ViewChild(CalendarComponent) myCal!: CalendarComponent;
+  // @ViewChild(CalendarComponent) myCal!: CalendarComponent;
+
+  // next() {}
+
+  onViewTitleChanged(title: any) {
+    this.viewTitle = title;
+  }
+
+  // createRandomEvents() {
+  //   var events = [];
+  //   for (var i = 0; i < 50; i += 1) {
+  //     var date = new Date();
+  //     var eventType = Math.floor(Math.random() * 2);
+  //     var startDay = Math.floor(Math.random() * 90) - 45;
+  //     var endDay = Math.floor(Math.random() * 2) + startDay;
+  //     var startTime;
+  //     var endTime;
+  //     if (eventType === 0) {
+  //       startTime = new Date(
+  //         Date.UTC(
+  //           date.getUTCFullYear(),
+  //           date.getUTCMonth(),
+  //           date.getUTCDate() + startDay
+  //         )
+  //       );
+  //       if (endDay === startDay) {
+  //         endDay += 1;
+  //       }
+  //       endTime = new Date(
+  //         Date.UTC(
+  //           date.getUTCFullYear(),
+  //           date.getUTCMonth(),
+  //           date.getUTCDate() + endDay
+  //         )
+  //       );
+  //       events.push({
+  //         title: 'All Day - ' + i,
+  //         startTime: startTime,
+  //         endTime: endTime,
+  //         allDay: true,
+  //       });
+  //     } else {
+  //       var startMinute = Math.floor(Math.random() * 24 * 60);
+  //       var endMinute = Math.floor(Math.random() * 180) + startMinute;
+  //       startTime = new Date(
+  //         date.getFullYear(),
+  //         date.getMonth(),
+  //         date.getDate() + startDay,
+  //         0,
+  //         date.getMinutes() + startMinute
+  //       );
+  //       endTime = new Date(
+  //         date.getFullYear(),
+  //         date.getMonth(),
+  //         date.getDate() + endDay,
+  //         0,
+  //         date.getMinutes() + endMinute
+  //       );
+  //       events.push({
+  //         title: 'Event - ' + i,
+  //         startTime: startTime,
+  //         endTime: endTime,
+  //         allDay: false,
+  //       });
+  //     }
+  //   }
+  //   return events;
+  // }
+
+  loadEvents() {
+    // this.eventSource = this.createRandomEvents();
+  }
+
+  onEventSelected(event: any) {
+    console.log(
+      'Event selected:' +
+        event.startTime +
+        '-' +
+        event.endTime +
+        ',' +
+        event.title
+    );
+  }
+
+  changeMode(mode: any) {
+    this.calendar.mode = mode;
+  }
+
+  today() {
+    this.calendar.currentDate = new Date();
+  }
+
+  onTimeSelected(ev: any) {
+    console.log(
+      'Selected time: ' +
+        ev.selectedTime +
+        ', hasEvents: ' +
+        (ev.events !== undefined && ev.events.length !== 0) +
+        ', disabled: ' +
+        ev.disabled
+    );
+  }
+
+  onCurrentDateChanged(event: Date) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    event.setHours(0, 0, 0, 0);
+    this.isToday = today.getTime() === event.getTime();
+  }
+
+  onRangeChanged(ev: any) {
+    console.log(
+      'range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime
+    );
+  }
+
+  markDisabled = (date: Date) => {
+    var current = new Date();
+    current.setHours(0, 0, 0);
+    return date < current;
+  };
 }

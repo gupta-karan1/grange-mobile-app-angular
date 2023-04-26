@@ -29,6 +29,7 @@ export class LoginPage implements OnInit {
   fbLogin!: FacebookLoginResponse;
   fbUser: any = null; // the facebook user object that will be returned from the facebook login plugin
   token: any; // the facebook token that will be returned from the facebook login plugin
+  twitterUser: any = null; // the twitter user object that will be returned from the twitter login plugin
 
   constructor(
     private fb: FormBuilder,
@@ -65,6 +66,9 @@ export class LoginPage implements OnInit {
     FacebookLogin.initialize({
       appId: '6367860876570694',
     });
+
+    //twitter client id: dnZfeUd1aHdqNDBsUU4tTURXZXE6MTpjaQ
+    //twitter client secret: OTpsVGTdaFA-ptkhqQdRorvBfCKJvYUPsQLOZVlIeoX1Tizd6G
   }
 
   public get email() {
@@ -203,7 +207,9 @@ export class LoginPage implements OnInit {
   // }
 
   async facebookLogin() {
+    // login with facebook using the facebook login plugin
     const FACEBOOK_PERMISSIONS = [
+      // permissions to request from the user
       'email',
       'user_birthday',
       'user_photos',
@@ -211,37 +217,43 @@ export class LoginPage implements OnInit {
     ];
 
     const result = await FacebookLogin.login({
-      permissions: FACEBOOK_PERMISSIONS,
+      // login with facebook
+      permissions: FACEBOOK_PERMISSIONS, // permissions to request from the user
     });
 
     console.log('result', result);
     if (result.accessToken) {
+      // if the access token is returned from facebook
       // Login successful.
-      console.log(`Facebook access token is ${result.accessToken.token}`);
-      this.getCurrentAccessToken();
+      // console.log(`Facebook access token is ${result.accessToken.token}`);
+      this.getCurrentAccessToken(); // get the current access token from facebook method is defined below
       // this.getCurrentUserProfile();
     }
   }
 
   async getCurrentAccessToken() {
-    const result = await FacebookLogin.getCurrentAccessToken();
+    // get the current access token from facebook
+    const result = await FacebookLogin.getCurrentAccessToken(); // get the current access token from facebook using the get current access token method in built in the facebook login plugin
     if (result.accessToken) {
-      console.log(`Facebook access token is ${result.accessToken.token}`);
-      this.token = result.accessToken.token;
-      this.getCurrentUserProfile();
+      // if the access token is returned from facebook
+      // console.log(`Facebook access token is ${result.accessToken.token}`);
+      this.token = result.accessToken.token; // set the token to the access token returned from facebook
+      this.getCurrentUserProfile(); //get the current user profile method is defined below
     }
   }
 
   async getCurrentUserProfile() {
+    // get the current user profile from facebook
     const result = await FacebookLogin.getProfile<{
+      // get the current user profile from facebook using the get current user profile method in built in the facebook login plugin
       email: string;
       name: string;
       picture: { data: { url: string } };
       birthday: string;
-    }>({ fields: ['email', 'name', 'picture', 'birthday'] });
-    console.log(`Facebook user's email is ${result.email}`);
-    console.log(result);
-    this.fbUser = result;
+    }>({ fields: ['email', 'name', 'picture', 'birthday'] }); // fields to request from the user from facebook by defining the type of the result
+    // console.log(`Facebook user's email is ${result.email}`);
+    // console.log(result);
+    this.fbUser = result; // set the fbUser to the result returned from facebook
 
     //display a toast message to the user
     const toast = await this.toastCtrl.create({
@@ -253,9 +265,10 @@ export class LoginPage implements OnInit {
   }
 
   async facebookLogout() {
-    await FacebookLogin.logout();
-    this.fbUser = null;
-    this.token = null;
+    // logout of facebook using the facebook login plugin
+    await FacebookLogin.logout(); // logout of facebook using the logout method in built in the facebook login plugin
+    this.fbUser = null; // set the fbUser to null
+    this.token = null; // set the token to null
 
     //display a toast message to the user
     const toast = await this.toastCtrl.create({
@@ -317,4 +330,36 @@ export class LoginPage implements OnInit {
   //keytool -exportcert -alias androiddebugkey -keystore "C:\Users\ADMIN\.android\debug.keystore" | "C:\Program Files\OpenSSL-Win64\bin\openssl" sha1 -binary | "C:\Program Files\Git\usr\bin\base64.exe"
   //remember to download the openssl from the internet and add it to your environment variables
   //the hash key will be displayed in the cmd prompt
+  // the hash key is used to configure the facebook login in the facebook developer console for your app to work properly on android devices
+
+  // twitter login  from auth service
+  async twitterLogin() {
+    const user = await this.authService.loginWithTwitter();
+    if (user) {
+      this.twitterUser = user;
+      // console.log('twitterUser', this.twitterUser);
+
+      //display a toast message to the user
+      const toast = await this.toastCtrl.create({
+        message: 'You are signed in with Twitter.',
+        duration: 3000,
+        position: 'bottom',
+      });
+      await toast.present();
+    }
+  }
+
+  // twitter logout from auth service
+  async twitterLogout() {
+    await this.authService.logout();
+    this.twitterUser = null;
+
+    //display a toast message to the user
+    const toast = await this.toastCtrl.create({
+      message: 'You are signed out of Twitter.',
+      duration: 3000,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
 }

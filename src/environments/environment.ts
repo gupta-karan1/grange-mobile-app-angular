@@ -29,6 +29,12 @@ export const environment = {
     messagingSenderId: '446380689792',
     appId: '1:446380689792:web:ff8bbbaa88af2b27df1965',
   },
+
+  //supabase API key - supabase is a postgres database with a rest api  - https://supabase.io/npc
+
+  supabaseUrl: 'https://gxefmaykzhiqjsmnxvlb.supabase.co',
+  supabaseKey:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4ZWZtYXlremhpcWpzbW54dmxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODI1MTIxNzIsImV4cCI6MTk5ODA4ODE3Mn0.amObRTjDoPqEQzGOCO0lwXlvmvJ_wq9Vpp6UjSq4Bs4',
 };
 
 /*

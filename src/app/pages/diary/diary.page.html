@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>My Diary</ion-title>
     <ion-buttons slot="start">
@@ -42,9 +42,48 @@
   </ion-segment>
 
   <!-- Added ngIf below to display data specific to the selected segment -->
-  <div *ngIf="selectTabs === 'schedule'">
-    <h3>Schedule</h3>
-  </div>
+  <ion-content class="ion-padding-top" *ngIf="selectTabs === 'schedule'">
+    <ion-segment [(ngModel)]="calendar.mode">
+      <ion-segment-button value="month">
+        <ion-label>Month</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="week">
+        <ion-label>Week</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="day">
+        <ion-label>Day</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <!-- <ion-buttons slot="end"> -->
+
+    <!-- </ion-buttons> -->
+
+    <ion-list-header class="ion-padding">
+      <ion-label>{{viewTitle}}</ion-label>
+
+      <ion-button
+        (click)="loadEvents()"
+        expand="block"
+        fill="outline"
+        shape="round"
+      >
+        Events
+      </ion-button>
+      <ion-button [disabled]="isToday" (click)="today()">Today</ion-button>
+    </ion-list-header>
+    <ion-content>
+      <calendar
+        [eventSource]="eventSource"
+        [calendarMode]="calendar.mode"
+        [currentDate]="calendar.currentDate"
+        (onCurrentDateChanged)="onCurrentDateChanged($event)"
+        (onEventSelected)="onEventSelected($event)"
+        (onTitleChanged)="onViewTitleChanged($event)"
+        (onTimeSelected)="onTimeSelected($event)"
+      >
+      </calendar>
+    </ion-content>
+  </ion-content>
   <div *ngIf="selectTabs === 'tasks'">
     <ion-list lines="full">
       <ion-list-header>
@@ -65,7 +104,7 @@
             (ionChange)="toggleDone(task.id, $any($event))"
             slot="start"
             [checked]="task.done"
-            aria-label="task.title"
+            aria-label="task"
           ></ion-checkbox>
           <ion-reorder slot="end"></ion-reorder>
         </ion-item>
@@ -93,7 +132,7 @@
             >{{task.title}}</ion-label
           >
           <ion-checkbox
-            aria-label="task.title"
+            aria-label="task"
             slot="start"
             [checked]="task.done"
             (ionChange)="toggleDone(task.id, $any($event))"
