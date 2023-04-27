@@ -76,6 +76,7 @@
       <calendar
         [eventSource]="eventSource"
         [step]="calendar.step"
+        noEventsLabel="No Event Today"
         [calendarMode]="calendar.mode"
         [currentDate]="calendar.currentDate"
         (onCurrentDateChanged)="onCurrentDateChanged($event)"
@@ -85,22 +86,17 @@
       >
       </calendar>
     </ion-content>
-    <ion-list>
-      <ion-item *ngFor="let event of eventSource">
-        <ion-label>{{event.title}}</ion-label>
-        <ion-label>{{event.startTime}}</ion-label>
-        <ion-label>{{event.endTime}}</ion-label>
-      </ion-item>
-    </ion-list>
-    <!-- <ion-card *ngFor="let event of events">
+    <ion-title>All Events</ion-title>
+    <ion-card *ngFor="let event of eventSource">
       <ion-card-header>
         <ion-card-subtitle
-          >{{event.startTime}} - {{event.endTime}}</ion-card-subtitle
+          >{{event.startTime | date: 'MMM d, y, h:mm a'}} - {{event.endTime |
+          date: 'MMM d, y, h:mm a'}}</ion-card-subtitle
         >
         <ion-card-title>{{event.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content> {{event.description}} </ion-card-content>
-    </ion-card> -->
+    </ion-card>
   </ion-content>
   <div *ngIf="selectTabs === 'tasks'">
     <ion-list lines="full">
@@ -177,7 +173,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="tertiary" size="large">
+      <ion-fab-button (click)="addNewEvent()" color="tertiary" size="large">
         <ion-icon name="calendar-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="addTask()" color="tertiary" size="large">

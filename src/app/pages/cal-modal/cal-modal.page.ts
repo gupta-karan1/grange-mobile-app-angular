@@ -15,7 +15,6 @@ import { DiaryDataService, Event } from 'src/app/services/diary-data.service';
 })
 export class CalModalPage implements OnInit {
   newEvent: Event = {
-    id: '',
     title: '',
     description: '',
     startTime: new Date(),
@@ -29,4 +28,46 @@ export class CalModalPage implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  updateStartTime(event: any) {
+    // update the startTime property of the newEvent object with the value from the ion-datetime
+    // console.log('startTime: ' + event.detail.value);
+    this.newEvent.startTime = new Date(event.detail.value);
+  }
+
+  updateEndTime(event: any) {
+    // update the endTime property of the newEvent object with the value from the ion-datetime
+    // console.log('endTime: ' + event.detail.value);
+    this.newEvent.endTime = new Date(event.detail.value);
+  }
+
+  async saveEvent() {
+    // save the event to the firestore database
+    // create a new event object
+    // const event = this.newEvent;
+    // console.log(event);
+    // add the event to the firestore
+    await this.diaryDataService.addEvent(this.newEvent);
+    // show a toast message
+    const toast = await this.toastCtrl.create({
+      message: 'Event added',
+      duration: 2000,
+    });
+    toast.present();
+    // dismiss the modal
+    await this.modalCtrl.dismiss();
+
+    // reset the newEvent object
+    this.newEvent = {
+      title: '',
+      description: '',
+      startTime: new Date(),
+      endTime: new Date(),
+    };
+  }
+
+  //dismiss the modal
+  async cancelEvent() {
+    await this.modalCtrl.dismiss();
+  }
 }

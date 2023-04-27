@@ -7,7 +7,7 @@ import {
   ModalController,
   ToastController,
 } from '@ionic/angular';
-import { DiaryDataService } from 'src/app/services/diary-data.service';
+import { DiaryDataService, Event } from 'src/app/services/diary-data.service';
 import { DiaryModalPage } from '../diary-modal/diary-modal.page';
 import { RouterLink } from '@angular/router';
 import { DiaryTaskModalPage } from '../diary-task-modal/diary-task-modal.page';
@@ -48,8 +48,6 @@ export class DiaryPage implements OnInit {
   vewTitle!: string;
   isToday!: boolean;
   showAddEvent: boolean = false;
-
-  events: any = []; // array of events
 
   // Ion Reorder Group Event referred from original ionic documentation
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
@@ -95,18 +93,10 @@ export class DiaryPage implements OnInit {
       // get the events from the diary data service
       // console.log(res);
       // subscribe to the events observable
-      this.events = res; // assign the events property to the array of events returned by the observable
+      this.eventSource = res; // assign the event Source property to the array of events returned by the observable so that they are visible on the calendar
     });
   }
-  ngOnInit() {
-    // this.eventSource = this.events;
-    // console.log(this.eventSource);
-    // this.loadEvents();
-    console.log('myDate' + this.myData);
-    this.eventSource = this.myData;
-    // this.eventSource = this.events;
-    // console.log(this.eventSource);
-  }
+  ngOnInit() {}
 
   //------------------Notes------------------//
 
@@ -319,35 +309,37 @@ export class DiaryPage implements OnInit {
 
   // ------------------CALENDAR------------------
 
-  newEvent: any = {
+  newEvent: Event = {
+    // create a new event object with default values
     title: '',
     description: '',
-    startTime: '',
-    endTime: '',
+    startTime: new Date(),
+    endTime: new Date(),
   };
 
   calendar = {
-    mode: 'month' as CalendarMode,
-    currentDate: new Date(),
+    // set the calendar properties
+    mode: 'month' as CalendarMode, // set the calendar mode
+    currentDate: new Date(), // set the current date
     step: 30 as Step,
   };
 
-  // use temporary data for now, we can update this from firebase later
-  myData = [
-    {
-      title: 'My First Event',
-      description: 'This is my first event',
-      startTime: new Date(2023, 4, 26, 12, 11, 11), // format is new Date(year, month, day, hour, minute, second)
+  // // use temporary data for now, we can update this from firebase later
+  // myData = [
+  //   {
+  //     title: 'My First Event',
+  //     description: 'This is my first event',
+  //     startTime: new Date(2023, 4, 26, 12, 11, 11), // format is new Date(year, month, day, hour, minute, second)
 
-      endTime: new Date(2023, 4, 26, 14, 11, 11),
-    },
-    {
-      title: 'My Second Event',
-      description: 'This is my second event',
-      startTime: new Date(2023, 4, 27, 12, 11, 11), // format is new Date(year, month, day, hour, minute, second)
-      endTime: new Date(2023, 4, 27, 14, 11, 11),
-    },
-  ];
+  //     endTime: new Date(2023, 4, 26, 14, 11, 11),
+  //   },
+  //   {
+  //     title: 'My Second Event',
+  //     description: 'This is my second event',
+  //     startTime: new Date(2023, 4, 27, 12, 11, 11), // format is new Date(year, month, day, hour, minute, second)
+  //     endTime: new Date(2023, 4, 27, 14, 11, 11),
+  //   },
+  // ];
 
   onViewTitleChanged(title: any) {
     this.viewTitle = title;
@@ -356,129 +348,17 @@ export class DiaryPage implements OnInit {
   //add new event to the calendar and firebase database using the add event modal
   async addNewEvent() {
     const modal = await this.modalCtrl.create({
-      component: CalModalPage,
-      cssClass: 'add-event-modal',
+      // create a modal controller
+      component: CalModalPage, // set the component to the modal page
+      cssClass: 'add-event-modal', // set the css class
       componentProps: {
-        title: this.newEvent.title,
-        description: this.newEvent.description,
-        startTime: this.newEvent.startTime,
-        endTime: this.newEvent.endTime,
+        id: this.newEvent.id, // set the component props
       },
       breakpoints: [0, 0.75, 1], // set the breakpoints
       initialBreakpoint: 0.75, // set the initial breakpoint
     });
 
-    modal.onDidDismiss().then((result) => {
-      console.log(result.data);
-      if (result.data && result.data.event) {
-        let event = result.data.event;
-        this.myData.push(event);
-        this.diaryDataService.addEvent(event);
-      }
-    });
-
-    return await modal.present();
-  }
-
-  //add new event to the calendar using alert controller
-  // const alert = await this.alertCtrl.create({
-  //   header: 'Add Event',
-  //   inputs: [
-  //     {
-  //       name: 'title',
-  //       type: 'text',
-  //       placeholder: 'Event Title',
-  //     },
-  //     {
-  //       name: 'description',
-  //       type: 'text',
-  //       placeholder: 'Event Description',
-  //     },
-  //     {
-  //       name: 'startTime',
-  //       type: 'datetime-local',
-  //       min: new Date().toISOString(),
-  //       placeholder: 'Start Time',
-  //     },
-  //     {
-  //       name: 'endTime',
-  //       type: 'datetime-local',
-  //       min: new Date().toISOString(),
-  //       placeholder: 'End Time',
-  //     },
-  //   ],
-  //   buttons: [
-  //     {
-  //       text: 'Cancel',
-  //       role: 'cancel',
-  //       handler: () => {
-  //         console.log('Cancelled');
-  //       },
-  //     },
-  //     {
-  //       text: 'Add',
-  //       handler: (event) => {
-  //         console.log(event);
-
-  //         // need to convert the date and time to a standard format using the parse method of the date object and assign it to the startTime and endTime properties of the event object before adding it to the calendar and firebase database otherwise it will not work properly in the calendar
-  //         // convert startTime and endTime to Date objects
-  //         // const startTime = new Date(Date.parse(event.startTime));
-  //         // const startTime = new Date(Date.parse('2023-12-13T11:11'));
-
-  //         //! Try to match the format of the date and time here to the one accepted by the calendar or use a date time picker to get the date and time in the correct format and assign it to the startTime and endTime properties of the event object
-
-  //         // const standardDateTimeFormat = new Intl.DateTimeFormat('en-US', {
-  //         //   year: 'numeric',
-  //         //   month: '2-digit',
-  //         //   day: '2-digit',
-  //         //   hour: '2-digit',
-  //         //   minute: '2-digit',
-  //         //   second: '2-digit',
-  //         // });
-
-  //         // const currentDate = new Date(); // get the current date and time
-
-  //         // const timestamp = standardDateTimeFormat.format(currentDate); // format the date and time to a standard format and assign it to the timestamp variable
-
-  //         // // const endTime = new Date(Date.parse(event.endTime));
-  //         // const endTime = new Date(Date.parse('2023-12-13T11:11'));
-  //         const startTime = new Date(event.startTime);
-  //         const endTime = new Date(event.endTime);
-  //         // const start = new Date(standardDateTimeFormat.format(startTime));
-  //         // const end = new Date(standardDateTimeFormat.format(endTime));
-
-  //         this.diaryDataService.addEvent({
-  //           title: event.title,
-  //           description: event.description,
-  //           startTime: startTime,
-  //           endTime: endTime,
-  //         });
-  //         console.log('Start Time:', event.startTime);
-
-  //         const toast = this.toastCtrl.create({
-  //           // create a toast
-  //           message: 'Event Added', // set the message
-  //           duration: 2000, // set the duration
-  //         }); // create a toast
-
-  //         toast.then((toast: any) => toast.present()); // present the toast
-  //       },
-  //     },
-  //   ],
-  // });
-  // await alert.present();
-  // }
-
-  async loadEvents() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Please wait...',
-    });
-    await loading.present();
-
-    this.diaryDataService.getEvents().subscribe((events) => {
-      this.events = events;
-      loading.dismiss();
-    });
+    return await modal.present(); // present the modal
   }
 
   onEventSelected(event: any) {

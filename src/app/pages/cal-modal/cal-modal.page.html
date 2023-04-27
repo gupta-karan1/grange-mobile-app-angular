@@ -11,39 +11,82 @@
     </ion-toolbar>
   </ion-header> -->
 
-  <ion-list>
+  <ion-list lines="none">
     <ion-item>
-      <ion-label position="floating">Event Title</ion-label>
+      <!-- <ion-label position="floating">Event Title</ion-label> -->
       <ion-input
+        class="ion-margin-top"
         aria-label="title"
         type="text"
         [(ngModel)]="newEvent.title"
+        label-placement="floating"
+        label="Event Title"
+        fill="outline"
       ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Event Description</ion-label>
+      <!-- <ion-label position="floating">Event Description</ion-label> -->
       <ion-input
+        class="ion-margin-top"
         aria-label="description"
+        label="Event Description"
         type="text"
         [(ngModel)]="newEvent.description"
+        label-placement="floating"
+        fill="outline"
       ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Start Date</ion-label>
-      <ion-datetime
-        displayFormat="MMM DD, YYYY"
-        [(ngModel)]="newEvent.startTime"
-      ></ion-datetime>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            [showDefaultTitle]="true"
+            [showDefaultButtons]="true"
+            id="datetime"
+            (ionChange)="updateStartTime($any($event))"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
     </ion-item>
 
     <ion-item>
       <ion-label>End Date</ion-label>
-      <ion-datetime
-        displayFormat="MMM DD, YYYY"
-        [(ngModel)]="newEvent.endTime"
-      ></ion-datetime>
+      <ion-datetime-button datetime="datetime2"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            [showDefaultTitle]="true"
+            [showDefaultButtons]="true"
+            id="datetime2"
+            (ionChange)="updateEndTime($any($event))"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
     </ion-item>
+
+    <ion-button
+      class="ion-padding ion-margin"
+      expand="full"
+      fill="solid"
+      shape="round"
+      color="primary"
+      (click)="saveEvent()"
+    >
+      Save Event
+    </ion-button>
+    <ion-button
+      class="ion-padding ion-margin"
+      expand="full"
+      fill="outline"
+      shape="round"
+      color="primary"
+      (click)="cancelEvent()"
+    >
+      Cancel
+    </ion-button>
   </ion-list>
 </ion-content>

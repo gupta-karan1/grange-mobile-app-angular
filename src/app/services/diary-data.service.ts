@@ -16,7 +16,7 @@ import {
 
 //using the latest imports from angular firestore 7.5 version to add, delete and update documents
 
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 // create an interface for the note
 export interface Note {
@@ -83,16 +83,6 @@ export class DiaryDataService {
     const noteDocRef = doc(this.firestore, `notes/${note.id}`); // create a reference to the note document
     return updateDoc(noteDocRef, { title: note.title, text: note.text }); // update the note in the firestore with the new title and text passed in the note object
   }
-
-  // //getTasks from the firestore
-  // getTasks(): Observable<Task[]> {
-  //   // return an observable of type Task[]
-  //   // create a reference to the tasks collection
-  //   const tasksRef = collection(this.firestore, 'tasks');
-  //   // added the idField option to the collectionData operator
-  //   // to get the id of the document
-  //   return collectionData(tasksRef, { idField: 'id' }) as Observable<Task[]>; // return the tasks
-  // }
 
   //getTasks from the firestore and filter the tasks that are not done yet and return them as an observable
   getTasks(): Observable<Task[]> {
@@ -169,13 +159,52 @@ export class DiaryDataService {
     return addDoc(eventsRef, event); // add the event to the firestore
   }
 
-  // get the events from the firestore
+  // // get the events from the firestore
+  // getEvents(): Observable<Event[]> {
+  //   // return an observable of type Event[]
+  //   // create a reference to the events collection
+  //   const eventsRef = collection(this.firestore, 'events');
+  //   // added the idField option to the collectionData operator
+  //   // to get the id of the document
+  //   return collectionData(eventsRef, { idField: 'id' }) as Observable<Event[]>; // return the events
+  // }
+
+  //get events from firestore and map the Firestore Timestamp objects to Date objects with the appropriate format
   getEvents(): Observable<Event[]> {
     // return an observable of type Event[]
     // create a reference to the events collection
     const eventsRef = collection(this.firestore, 'events');
     // added the idField option to the collectionData operator
     // to get the id of the document
-    return collectionData(eventsRef, { idField: 'id' }) as Observable<Event[]>; // return the events
+    return collectionData(eventsRef, { idField: 'id' }).pipe(
+      map((events) =>
+        events.map((event) => {
+          // convert the Firestore Timestamp objects to Date objects with the appropriate format
+          return {
+            id: event['id'],
+            title: event['title'],
+            description: event['description'],
+            startTime: new Date(event['startTime'].seconds * 1000), // convert the Firestore Timestamp objects to Date objects with the appropriate format
+            endTime: new Date(event['endTime'].seconds * 1000), // convert the Firestore Timestamp objects to Date objects with the appropriate format
+          };
+        })
+      )
+    );
   }
+
+  // // update an existing event in the firestore
+  // async updateEvent(event: Event) {
+  //   // create a reference to the event document
+  //   const eventRef = this.firestore.doc(`events/${event.id}`);
+  //   // update the event document
+  //   await eventRef.update(event);
+  // }
+
+  // // delete an existing event from the firestore
+  // async deleteEvent(event: Event) {
+  //   // create a reference to the event document
+  //   const eventRef = this.firestore.doc(`events/${event.id}`);
+  //   // delete the event document
+  //   await eventRef.delete();
+  // }
 }
