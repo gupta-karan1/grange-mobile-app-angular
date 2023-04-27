@@ -62,18 +62,20 @@
       <ion-label>{{viewTitle}}</ion-label>
 
       <ion-button
-        (click)="loadEvents()"
+        (click)="addNewEvent()"
         expand="block"
         fill="outline"
         shape="round"
       >
-        Events
+        Add Event
       </ion-button>
+
       <ion-button [disabled]="isToday" (click)="today()">Today</ion-button>
     </ion-list-header>
     <ion-content>
       <calendar
         [eventSource]="eventSource"
+        [step]="calendar.step"
         [calendarMode]="calendar.mode"
         [currentDate]="calendar.currentDate"
         (onCurrentDateChanged)="onCurrentDateChanged($event)"
@@ -83,6 +85,22 @@
       >
       </calendar>
     </ion-content>
+    <ion-list>
+      <ion-item *ngFor="let event of eventSource">
+        <ion-label>{{event.title}}</ion-label>
+        <ion-label>{{event.startTime}}</ion-label>
+        <ion-label>{{event.endTime}}</ion-label>
+      </ion-item>
+    </ion-list>
+    <!-- <ion-card *ngFor="let event of events">
+      <ion-card-header>
+        <ion-card-subtitle
+          >{{event.startTime}} - {{event.endTime}}</ion-card-subtitle
+        >
+        <ion-card-title>{{event.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content> {{event.description}} </ion-card-content>
+    </ion-card> -->
   </ion-content>
   <div *ngIf="selectTabs === 'tasks'">
     <ion-list lines="full">

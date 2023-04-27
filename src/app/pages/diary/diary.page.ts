@@ -21,6 +21,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
 import { CalendarMode } from 'ionic2-calendar/calendar.interface';
 import { Step } from 'ionic2-calendar/calendar.interface';
 import { NavController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-diary',
@@ -39,12 +40,21 @@ import { NavController } from '@ionic/angular';
   ],
 })
 export class DiaryPage implements OnInit {
-  selectTabs: string = 'notes'; // set the default tab
+  selectTabs: string = 'schedule'; // set the default tab
   notes: any = []; // array of notes
 
   checked: boolean = false; // set the default value of the checked property to false
   tasks: any = []; // array of tasks
   doneTasks: any = []; // array of done tasks
+
+  //for ionic calendar
+  eventSource: any = [];
+  viewTitle!: string;
+  vewTitle!: string;
+  isToday!: boolean;
+  showAddEvent: boolean = false;
+
+  events: any = []; // array of events
 
   // Ion Reorder Group Event referred from original ionic documentation
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
@@ -63,7 +73,7 @@ export class DiaryPage implements OnInit {
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
-    private navController: NavController
+    private loadingCtrl: LoadingController
   ) {
     this.diaryDataService.getNotes().subscribe((res) => {
       // get the notes from the diary data service
@@ -85,9 +95,25 @@ export class DiaryPage implements OnInit {
       // subscribe to the done tasks observable
       this.doneTasks = res; // assign the done tasks property to the array of done tasks returned by the observable
     });
+
+    this.diaryDataService.getEvents().subscribe((res) => {
+      // get the events from the diary data service
+      // console.log(res);
+      // subscribe to the events observable
+      this.events = res; // assign the events property to the array of events returned by the observable
+    });
+  }
+  ngOnInit() {
+    // this.eventSource = this.events;
+    // console.log(this.eventSource);
+    // this.loadEvents();
+    console.log('myDate' + this.myData);
+    this.eventSource = this.myData;
+    // this.eventSource = this.events;
+    // console.log(this.eventSource);
   }
 
-  ngOnInit() {}
+  //------------------Notes------------------//
 
   async openNote(note: any) {
     // open the note
@@ -162,13 +188,15 @@ export class DiaryPage implements OnInit {
               message: 'Note Added', // set the message
               duration: 2000, // set the duration
             }); // create a toast
-            toast.then((toast) => toast.present()); // present the toast
+            toast.then((toast: any) => toast.present()); // present the toast
           },
         },
       ],
     }); // create an alert
     alert.present(); // present the alert
   }
+
+  //----------------------Task----------------------//
 
   //open task modal to update task details
   async openTask(task: any) {
@@ -256,9 +284,6 @@ export class DiaryPage implements OnInit {
     alert.present(); // present the alert
   }
 
-  // delete a task from the list
-  async deleteTask() {}
-
   // update the done property of the task
   async toggleDone(id: string, event: any) {
     // console.log(id);
@@ -274,7 +299,7 @@ export class DiaryPage implements OnInit {
         message: 'Task Completed', // set the message
         duration: 2000, // set the duration
       }); // create a toast
-      toast.then((toast) => toast.present()); // present the toast
+      toast.then((toast: any) => toast.present()); // present the toast
     } else if (event.detail.checked == false) {
       // if the task is marked as undone create a toast saying the task is undone
       const toast = this.toastCtrl.create({
@@ -282,7 +307,7 @@ export class DiaryPage implements OnInit {
         message: 'Task Pending', // set the message
         duration: 2000, // set the duration
       }); // create a toast
-      toast.then((toast) => toast.present()); // present the toast
+      toast.then((toast: any) => toast.present()); // present the toast
     }
   }
 
@@ -294,122 +319,150 @@ export class DiaryPage implements OnInit {
       message: 'All Completed Tasks Cleared', // set the message
       duration: 2000, // set the duration
     }); // create a toast
-    toast.then((toast) => toast.present()); // present the toast
+    toast.then((toast: any) => toast.present()); // present the toast
   }
 
-  //for ionic calendar
-  eventSource = [];
-  viewTitle!: string;
-  vewTitle!: string;
-  isToday!: boolean;
+  // ------------------CALENDAR------------------
+
+  newEvent: any = {
+    title: '',
+    description: '',
+    startTime: '',
+    endTime: '',
+  };
 
   calendar = {
     mode: 'month' as CalendarMode,
     currentDate: new Date(),
     step: 30 as Step,
-    dateFormatter: {
-      formatMonthViewDay: function (date: Date) {
-        return date.getDate().toString();
-      },
-      formatMonthViewDayHeader: function (date: Date) {
-        return 'MonMH';
-      },
-      formatMonthViewTitle: function (date: Date) {
-        return 'testMT';
-      },
-      formatWeekViewDayHeader: function (date: Date) {
-        return 'MonWH';
-      },
-      formatWeekViewTitle: function (date: Date) {
-        return 'testWT';
-      },
-      formatWeekViewHourColumn: function (date: Date) {
-        return 'testWH';
-      },
-      formatDayViewHourColumn: function (date: Date) {
-        return 'testDH';
-      },
-      formatDayViewTitle: function (date: Date) {
-        return 'testDT';
-      },
-    },
   };
 
-  // @ViewChild(CalendarComponent) myCal!: CalendarComponent;
-  // @ViewChild(CalendarComponent) myCal!: CalendarComponent;
+  // use temporary data for now, we can update this from firebase later
+  myData = [
+    {
+      title: 'My First Event',
+      description: 'This is my first event',
+      startTime: new Date(2023, 4, 26, 12, 11, 11), // format is new Date(year, month, day, hour, minute, second)
 
-  // next() {}
+      endTime: new Date(2023, 4, 26, 14, 11, 11),
+    },
+    {
+      title: 'My Second Event',
+      description: 'This is my second event',
+      startTime: new Date(2023, 4, 27, 12, 11, 11), // format is new Date(year, month, day, hour, minute, second)
+      endTime: new Date(2023, 4, 27, 14, 11, 11),
+    },
+  ];
 
   onViewTitleChanged(title: any) {
     this.viewTitle = title;
   }
 
-  // createRandomEvents() {
-  //   var events = [];
-  //   for (var i = 0; i < 50; i += 1) {
-  //     var date = new Date();
-  //     var eventType = Math.floor(Math.random() * 2);
-  //     var startDay = Math.floor(Math.random() * 90) - 45;
-  //     var endDay = Math.floor(Math.random() * 2) + startDay;
-  //     var startTime;
-  //     var endTime;
-  //     if (eventType === 0) {
-  //       startTime = new Date(
-  //         Date.UTC(
-  //           date.getUTCFullYear(),
-  //           date.getUTCMonth(),
-  //           date.getUTCDate() + startDay
-  //         )
-  //       );
-  //       if (endDay === startDay) {
-  //         endDay += 1;
-  //       }
-  //       endTime = new Date(
-  //         Date.UTC(
-  //           date.getUTCFullYear(),
-  //           date.getUTCMonth(),
-  //           date.getUTCDate() + endDay
-  //         )
-  //       );
-  //       events.push({
-  //         title: 'All Day - ' + i,
-  //         startTime: startTime,
-  //         endTime: endTime,
-  //         allDay: true,
-  //       });
-  //     } else {
-  //       var startMinute = Math.floor(Math.random() * 24 * 60);
-  //       var endMinute = Math.floor(Math.random() * 180) + startMinute;
-  //       startTime = new Date(
-  //         date.getFullYear(),
-  //         date.getMonth(),
-  //         date.getDate() + startDay,
-  //         0,
-  //         date.getMinutes() + startMinute
-  //       );
-  //       endTime = new Date(
-  //         date.getFullYear(),
-  //         date.getMonth(),
-  //         date.getDate() + endDay,
-  //         0,
-  //         date.getMinutes() + endMinute
-  //       );
-  //       events.push({
-  //         title: 'Event - ' + i,
-  //         startTime: startTime,
-  //         endTime: endTime,
-  //         allDay: false,
-  //       });
-  //     }
-  //   }
-  //   return events;
-  // }
+  //add new event to the calendar and firebase database using the add event modal
+  async addNewEvent() {
+    //add new event to the calendar using alert controller
+    const alert = await this.alertCtrl.create({
+      header: 'Add Event',
+      inputs: [
+        {
+          name: 'title',
+          type: 'text',
+          placeholder: 'Event Title',
+        },
+        {
+          name: 'description',
+          type: 'text',
+          placeholder: 'Event Description',
+        },
+        {
+          name: 'startTime',
+          type: 'datetime-local',
+          min: new Date().toISOString(),
+          placeholder: 'Start Time',
+        },
+        {
+          name: 'endTime',
+          type: 'datetime-local',
+          min: new Date().toISOString(),
+          placeholder: 'End Time',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelled');
+          },
+        },
+        {
+          text: 'Add',
+          handler: (event) => {
+            console.log(event);
 
-  loadEvents() {
-    // this.eventSource = this.createRandomEvents();
+            // need to convert the date and time to a standard format using the parse method of the date object and assign it to the startTime and endTime properties of the event object before adding it to the calendar and firebase database otherwise it will not work properly in the calendar
+            // convert startTime and endTime to Date objects
+            // const startTime = new Date(Date.parse(event.startTime));
+            // const startTime = new Date(Date.parse('2023-12-13T11:11'));
+
+            //! Try to match the format of the date and time here to the one accepted by the calendar or use a date time picker to get the date and time in the correct format and assign it to the startTime and endTime properties of the event object
+
+            // const standardDateTimeFormat = new Intl.DateTimeFormat('en-US', {
+            //   year: 'numeric',
+            //   month: '2-digit',
+            //   day: '2-digit',
+            //   hour: '2-digit',
+            //   minute: '2-digit',
+            //   second: '2-digit',
+            // });
+
+            // const currentDate = new Date(); // get the current date and time
+
+            // const timestamp = standardDateTimeFormat.format(currentDate); // format the date and time to a standard format and assign it to the timestamp variable
+
+            // // const endTime = new Date(Date.parse(event.endTime));
+            // const endTime = new Date(Date.parse('2023-12-13T11:11'));
+            const startTime = new Date(event.startTime);
+            const endTime = new Date(event.endTime);
+            // const start = new Date(standardDateTimeFormat.format(startTime));
+            // const end = new Date(standardDateTimeFormat.format(endTime));
+
+            this.diaryDataService.addEvent({
+              title: event.title,
+              description: event.description,
+              startTime: startTime,
+              endTime: endTime,
+            });
+            console.log('Start Time:', event.startTime);
+
+            const toast = this.toastCtrl.create({
+              // create a toast
+              message: 'Event Added', // set the message
+              duration: 2000, // set the duration
+            }); // create a toast
+
+            toast.then((toast: any) => toast.present()); // present the toast
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+  async loadEvents() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+    await loading.present();
+
+    this.diaryDataService.getEvents().subscribe((events) => {
+      this.events = events;
+      loading.dismiss();
+    });
   }
 
   onEventSelected(event: any) {
+    this.newEvent = event;
+
     console.log(
       'Event selected:' +
         event.startTime +

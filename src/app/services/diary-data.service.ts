@@ -35,6 +35,14 @@ export interface Task {
   timestamp?: string;
 }
 
+export interface Event {
+  id?: string;
+  title: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -153,5 +161,21 @@ export class DiaryDataService {
         deleteDoc(doc.ref); // delete the task from the firestore
       });
     });
+  }
+
+  //add event to the firestore
+  addEvent(event: Event) {
+    const eventsRef = collection(this.firestore, 'events'); // create a reference to the events collection
+    return addDoc(eventsRef, event); // add the event to the firestore
+  }
+
+  // get the events from the firestore
+  getEvents(): Observable<Event[]> {
+    // return an observable of type Event[]
+    // create a reference to the events collection
+    const eventsRef = collection(this.firestore, 'events');
+    // added the idField option to the collectionData operator
+    // to get the id of the document
+    return collectionData(eventsRef, { idField: 'id' }) as Observable<Event[]>; // return the events
   }
 }
