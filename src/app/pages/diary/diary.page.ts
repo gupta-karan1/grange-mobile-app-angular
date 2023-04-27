@@ -11,16 +11,11 @@ import { DiaryDataService } from 'src/app/services/diary-data.service';
 import { DiaryModalPage } from '../diary-modal/diary-modal.page';
 import { RouterLink } from '@angular/router';
 import { DiaryTaskModalPage } from '../diary-task-modal/diary-task-modal.page';
-
 import { ItemReorderEventDetail } from '@ionic/angular';
 import { CalModalPage } from '../cal-modal/cal-modal.page';
-import { CalendarComponent } from 'ionic2-calendar/calendar';
-
-import { ViewChild } from '@angular/core';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { CalendarMode } from 'ionic2-calendar/calendar.interface';
 import { Step } from 'ionic2-calendar/calendar.interface';
-import { NavController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -360,94 +355,120 @@ export class DiaryPage implements OnInit {
 
   //add new event to the calendar and firebase database using the add event modal
   async addNewEvent() {
-    //add new event to the calendar using alert controller
-    const alert = await this.alertCtrl.create({
-      header: 'Add Event',
-      inputs: [
-        {
-          name: 'title',
-          type: 'text',
-          placeholder: 'Event Title',
-        },
-        {
-          name: 'description',
-          type: 'text',
-          placeholder: 'Event Description',
-        },
-        {
-          name: 'startTime',
-          type: 'datetime-local',
-          min: new Date().toISOString(),
-          placeholder: 'Start Time',
-        },
-        {
-          name: 'endTime',
-          type: 'datetime-local',
-          min: new Date().toISOString(),
-          placeholder: 'End Time',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancelled');
-          },
-        },
-        {
-          text: 'Add',
-          handler: (event) => {
-            console.log(event);
-
-            // need to convert the date and time to a standard format using the parse method of the date object and assign it to the startTime and endTime properties of the event object before adding it to the calendar and firebase database otherwise it will not work properly in the calendar
-            // convert startTime and endTime to Date objects
-            // const startTime = new Date(Date.parse(event.startTime));
-            // const startTime = new Date(Date.parse('2023-12-13T11:11'));
-
-            //! Try to match the format of the date and time here to the one accepted by the calendar or use a date time picker to get the date and time in the correct format and assign it to the startTime and endTime properties of the event object
-
-            // const standardDateTimeFormat = new Intl.DateTimeFormat('en-US', {
-            //   year: 'numeric',
-            //   month: '2-digit',
-            //   day: '2-digit',
-            //   hour: '2-digit',
-            //   minute: '2-digit',
-            //   second: '2-digit',
-            // });
-
-            // const currentDate = new Date(); // get the current date and time
-
-            // const timestamp = standardDateTimeFormat.format(currentDate); // format the date and time to a standard format and assign it to the timestamp variable
-
-            // // const endTime = new Date(Date.parse(event.endTime));
-            // const endTime = new Date(Date.parse('2023-12-13T11:11'));
-            const startTime = new Date(event.startTime);
-            const endTime = new Date(event.endTime);
-            // const start = new Date(standardDateTimeFormat.format(startTime));
-            // const end = new Date(standardDateTimeFormat.format(endTime));
-
-            this.diaryDataService.addEvent({
-              title: event.title,
-              description: event.description,
-              startTime: startTime,
-              endTime: endTime,
-            });
-            console.log('Start Time:', event.startTime);
-
-            const toast = this.toastCtrl.create({
-              // create a toast
-              message: 'Event Added', // set the message
-              duration: 2000, // set the duration
-            }); // create a toast
-
-            toast.then((toast: any) => toast.present()); // present the toast
-          },
-        },
-      ],
+    const modal = await this.modalCtrl.create({
+      component: CalModalPage,
+      cssClass: 'add-event-modal',
+      componentProps: {
+        title: this.newEvent.title,
+        description: this.newEvent.description,
+        startTime: this.newEvent.startTime,
+        endTime: this.newEvent.endTime,
+      },
+      breakpoints: [0, 0.75, 1], // set the breakpoints
+      initialBreakpoint: 0.75, // set the initial breakpoint
     });
-    await alert.present();
+
+    modal.onDidDismiss().then((result) => {
+      console.log(result.data);
+      if (result.data && result.data.event) {
+        let event = result.data.event;
+        this.myData.push(event);
+        this.diaryDataService.addEvent(event);
+      }
+    });
+
+    return await modal.present();
   }
+
+  //add new event to the calendar using alert controller
+  // const alert = await this.alertCtrl.create({
+  //   header: 'Add Event',
+  //   inputs: [
+  //     {
+  //       name: 'title',
+  //       type: 'text',
+  //       placeholder: 'Event Title',
+  //     },
+  //     {
+  //       name: 'description',
+  //       type: 'text',
+  //       placeholder: 'Event Description',
+  //     },
+  //     {
+  //       name: 'startTime',
+  //       type: 'datetime-local',
+  //       min: new Date().toISOString(),
+  //       placeholder: 'Start Time',
+  //     },
+  //     {
+  //       name: 'endTime',
+  //       type: 'datetime-local',
+  //       min: new Date().toISOString(),
+  //       placeholder: 'End Time',
+  //     },
+  //   ],
+  //   buttons: [
+  //     {
+  //       text: 'Cancel',
+  //       role: 'cancel',
+  //       handler: () => {
+  //         console.log('Cancelled');
+  //       },
+  //     },
+  //     {
+  //       text: 'Add',
+  //       handler: (event) => {
+  //         console.log(event);
+
+  //         // need to convert the date and time to a standard format using the parse method of the date object and assign it to the startTime and endTime properties of the event object before adding it to the calendar and firebase database otherwise it will not work properly in the calendar
+  //         // convert startTime and endTime to Date objects
+  //         // const startTime = new Date(Date.parse(event.startTime));
+  //         // const startTime = new Date(Date.parse('2023-12-13T11:11'));
+
+  //         //! Try to match the format of the date and time here to the one accepted by the calendar or use a date time picker to get the date and time in the correct format and assign it to the startTime and endTime properties of the event object
+
+  //         // const standardDateTimeFormat = new Intl.DateTimeFormat('en-US', {
+  //         //   year: 'numeric',
+  //         //   month: '2-digit',
+  //         //   day: '2-digit',
+  //         //   hour: '2-digit',
+  //         //   minute: '2-digit',
+  //         //   second: '2-digit',
+  //         // });
+
+  //         // const currentDate = new Date(); // get the current date and time
+
+  //         // const timestamp = standardDateTimeFormat.format(currentDate); // format the date and time to a standard format and assign it to the timestamp variable
+
+  //         // // const endTime = new Date(Date.parse(event.endTime));
+  //         // const endTime = new Date(Date.parse('2023-12-13T11:11'));
+  //         const startTime = new Date(event.startTime);
+  //         const endTime = new Date(event.endTime);
+  //         // const start = new Date(standardDateTimeFormat.format(startTime));
+  //         // const end = new Date(standardDateTimeFormat.format(endTime));
+
+  //         this.diaryDataService.addEvent({
+  //           title: event.title,
+  //           description: event.description,
+  //           startTime: startTime,
+  //           endTime: endTime,
+  //         });
+  //         console.log('Start Time:', event.startTime);
+
+  //         const toast = this.toastCtrl.create({
+  //           // create a toast
+  //           message: 'Event Added', // set the message
+  //           duration: 2000, // set the duration
+  //         }); // create a toast
+
+  //         toast.then((toast: any) => toast.present()); // present the toast
+  //       },
+  //     },
+  //   ],
+  // });
+  // await alert.present();
+  // }
+
   async loadEvents() {
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...',
