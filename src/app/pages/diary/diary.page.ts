@@ -17,6 +17,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
 import { CalendarMode } from 'ionic2-calendar/calendar.interface';
 import { Step } from 'ionic2-calendar/calendar.interface';
 import { LoadingController } from '@ionic/angular';
+import { CalUpdateModalPage } from '../cal-update-modal/cal-update-modal.page';
 
 @Component({
   selector: 'app-diary',
@@ -32,6 +33,7 @@ import { LoadingController } from '@ionic/angular';
     CalModalPage,
     DiaryTaskModalPage,
     NgCalendarModule,
+    CalUpdateModalPage,
   ],
 })
 export class DiaryPage implements OnInit {
@@ -361,17 +363,27 @@ export class DiaryPage implements OnInit {
     return await modal.present(); // present the modal
   }
 
-  onEventSelected(event: any) {
+  async onEventSelected(event: any) {
     this.newEvent = event;
+    console.log('Event Selected:' + event.startTime + '-' + event.endTime);
+    //create a modal to show the event details when the event is clicked and allow users to update and delete the event from the modal
+    const modal = await this.modalCtrl.create({
+      // create a modal controller
+      component: CalUpdateModalPage, // set the component to the modal page
+      cssClass: 'update-event-modal', // set the css class
+      componentProps: {
+        event: this.newEvent, // set the component props
+        id: this.newEvent.id, // set the component props
+        title: this.newEvent.title, // set the component props
+        description: this.newEvent.description, // set the component props
+        startTime: this.newEvent.startTime, // set the component props
+        endTime: this.newEvent.endTime, // set the component props
+      },
+      breakpoints: [0, 0.75, 1], // set the breakpoints
+      initialBreakpoint: 0.75, // set the initial breakpoint
+    });
 
-    console.log(
-      'Event selected:' +
-        event.startTime +
-        '-' +
-        event.endTime +
-        ',' +
-        event.title
-    );
+    return await modal.present(); // present the modal
   }
 
   changeMode(mode: any) {

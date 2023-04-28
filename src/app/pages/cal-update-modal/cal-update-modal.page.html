@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Add New Event</ion-title>
+    <ion-title>Update Event</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
         class="ion-margin-top"
         aria-label="title"
         type="text"
-        [(ngModel)]="newEvent.title"
+        [(ngModel)]="event.title"
         label-placement="floating"
         label="Event Title"
         fill="outline"
@@ -26,7 +26,7 @@
         aria-label="description"
         label="Event Description"
         type="text"
-        [(ngModel)]="newEvent.description"
+        [(ngModel)]="event.description"
         label-placement="floating"
         fill="outline"
       ></ion-input>
@@ -41,7 +41,9 @@
             [showDefaultTitle]="true"
             [showDefaultButtons]="true"
             id="datetime"
-            (ionChange)="updateStartTime($any($event))"
+            (ionChange)="updateStartTime($event)"
+            [value]="event.startTime.toISOString()"
+            timezone="Europe/Dublin"
           ></ion-datetime>
         </ng-template>
       </ion-modal>
@@ -49,14 +51,16 @@
 
     <ion-item>
       <ion-label>End Date</ion-label>
-      <ion-datetime-button datetime="datetime2"></ion-datetime-button>
+      <ion-datetime-button datetime="datetime3"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
           <ion-datetime
             [showDefaultTitle]="true"
             [showDefaultButtons]="true"
-            id="datetime2"
-            (ionChange)="updateEndTime($any($event))"
+            id="datetime3"
+            (ionChange)="updateEndTime($event)"
+            [value]="event.endTime.toISOString()"
+            timezone="Europe/Dublin"
           ></ion-datetime>
         </ng-template>
       </ion-modal>
@@ -68,14 +72,24 @@
       fill="solid"
       shape="round"
       color="primary"
-      (click)="saveEvent()"
+      (click)="updateEvent()"
     >
-      Save Event
+      Update Event
     </ion-button>
     <ion-button
       class="ion-padding ion-margin"
       expand="full"
       fill="outline"
+      shape="round"
+      color="primary"
+      (click)="deleteEvent()"
+    >
+      Delete Event
+    </ion-button>
+    <ion-button
+      class="ion-padding ion-margin"
+      expand="full"
+      fill="clear"
       shape="round"
       color="primary"
       (click)="cancelEvent()"

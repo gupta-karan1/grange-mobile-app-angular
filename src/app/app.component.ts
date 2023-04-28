@@ -15,6 +15,7 @@ import { ToastController } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
 import { DiaryTaskModalPage } from './pages/diary-task-modal/diary-task-modal.page';
 import { CalModalPage } from './pages/cal-modal/cal-modal.page';
+import { CalUpdateModalPage } from './pages/cal-update-modal/cal-update-modal.page';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +35,7 @@ import { CalModalPage } from './pages/cal-modal/cal-modal.page';
     RouterLink,
     DiaryTaskModalPage,
     CalModalPage,
+    CalUpdateModalPage,
   ],
 })
 export class AppComponent {

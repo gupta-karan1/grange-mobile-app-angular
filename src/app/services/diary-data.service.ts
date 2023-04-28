@@ -192,6 +192,48 @@ export class DiaryDataService {
     );
   }
 
+  //get event by id from the firestore
+  // getEventById(id: string): Observable<Event> {
+  //   // return an observable of type Event
+  //   const eventDocRef = doc(this.firestore, `events/${id}`); // create a reference to the event document
+  //   return docData(eventDocRef, { idField: 'id' }) as Observable<Event>; // return the event by id
+  // }
+
+  // get event by id and map the Firestore Timestamp objects to Date objects with the appropriate format
+  getEventById(id: string): Observable<Event> {
+    // return an observable of type Event
+    const eventDocRef = doc(this.firestore, `events/${id}`); // create a reference to the event document
+    return docData(eventDocRef, { idField: 'id' }).pipe(
+      map((event) => {
+        // convert the Firestore Timestamp objects to Date objects with the appropriate format
+        return {
+          id: event['id'],
+          title: event['title'],
+          description: event['description'],
+          startTime: new Date(event['startTime'].seconds * 1000), // convert the Firestore Timestamp objects to Date objects with the appropriate format
+          endTime: new Date(event['endTime'].seconds * 1000), // convert the Firestore Timestamp objects to Date objects with the appropriate format
+        };
+      })
+    );
+  }
+
+  async updateEvent(event: Event) {
+    const eventDocRef = doc(this.firestore, `events/${event.id}`); // create a reference to the event document
+    return updateDoc(eventDocRef, {
+      // update the event in the firestore with the new title and text passed in the event object
+      title: event.title,
+      description: event.description,
+      startTime: event.startTime,
+      endTime: event.endTime,
+    }); // update the event in the firestore
+  }
+
+  //delete event from the firestore
+  deleteEventById(event: Event) {
+    const eventDocRef = doc(this.firestore, `events/${event.id}`); // create a reference to the event document
+    return deleteDoc(eventDocRef); // delete the event from the firestore by passing the event id to the deleteDoc method to delete the event document
+  }
+
   // // update an existing event in the firestore
   // async updateEvent(event: Event) {
   //   // create a reference to the event document
