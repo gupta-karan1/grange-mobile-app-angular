@@ -6,7 +6,11 @@ import {
   signInWithPopup,
   signOut,
 } from '@angular/fire/auth';
+import { AUTH_PROVIDER_NAME } from '@angular/fire/auth/auth';
 import { TwitterAuthProvider } from 'firebase/auth';
+import { FacebookAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { GithubAuthProvider } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -45,9 +49,9 @@ export class AuthService {
     }
   }
 
-  logout() {
+  async logout() {
     //sign out the user
-    return signOut(this.auth);
+    return await signOut(this.auth);
   }
 
   //login with twitter using firebase
@@ -60,6 +64,44 @@ export class AuthService {
 
   // logout with twitter using firebase
   async logoutWithTwitter() {
+    const user = await signOut(this.auth);
+    // console.log(user);
+    return user;
+  }
+
+  async firebaseLoginWithFacebook() {
+    const provider = new FacebookAuthProvider();
+    const user = await signInWithPopup(this.auth, provider);
+    // console.log(user);
+    return user;
+  }
+  async firebaseLogoutWithFacebook() {
+    const user = await signOut(this.auth);
+    // console.log(user);
+    return user;
+  }
+
+  async firebaseLoginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const user = await signInWithPopup(this.auth, provider);
+    // console.log(user);
+    return user;
+  }
+
+  async firebaseLogoutWithGoogle() {
+    const user = await signOut(this.auth);
+    // console.log(user);
+    return user;
+  }
+
+  async firebaseLoginWithGithub() {
+    const provider = new GithubAuthProvider();
+    const user = await signInWithPopup(this.auth, provider);
+    // console.log(user);
+    return user;
+  }
+
+  async firebaseLogoutWithGithub() {
     const user = await signOut(this.auth);
     // console.log(user);
     return user;

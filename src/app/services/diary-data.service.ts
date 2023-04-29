@@ -217,6 +217,28 @@ export class DiaryDataService {
     );
   }
 
+  // //get event by ida and map the Firestore Timestamp objects to Date objects with the local format and return an observable of type Event
+  // getEventById(id: string): Observable<Event> {
+  //   // return an observable of type Event
+  //   const eventDocRef = doc(this.firestore, `events/${id}`); // create a reference to the event document
+  //   return docData(eventDocRef, { idField: 'id' }).pipe(
+  //     map((event) => {
+  //       // convert the Firestore Timestamp objects to Date objects with the local format
+  //       return {
+  //         id: event['id'],
+  //         title: event['title'],
+  //         description: event['description'],
+  //         startTime: new Date(
+  //           event['startTime'].seconds * 1000
+  //         ).toLocaleString(), // convert the Firestore Timestamp objects to Date objects with the local format
+  //         endTime: new Date(event['endTime'].seconds * 1000).toLocaleString(
+  //           'en-GB'
+  //         ), // convert the Firestore Timestamp objects to Date objects with the local format
+  //       };
+  //     })
+  //   ) as Observable<Event>;
+  // }
+
   async updateEvent(event: Event) {
     const eventDocRef = doc(this.firestore, `events/${event.id}`); // create a reference to the event document
     return updateDoc(eventDocRef, {

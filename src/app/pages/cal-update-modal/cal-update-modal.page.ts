@@ -6,7 +6,10 @@ import { Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DiaryDataService, Event } from 'src/app/services/diary-data.service';
 import { ToastController } from '@ionic/angular';
-import { Timestamp } from 'firebase/firestore';
+import { format, utcToZonedTime } from 'date-fns-tz';
+
+//install date-fns-tz
+//npm install date-fns-tz --save
 
 @Component({
   selector: 'app-cal-update-modal',
@@ -19,6 +22,18 @@ export class CalUpdateModalPage implements OnInit {
   @Input() id!: string; // id of the event taken from the modal component props
   @Input() event!: Event; // event object
   // input decorator is used here to pass the id of the event to the modal component
+
+  formattedStartTime!: string;
+  formattedEndTime!: string;
+  // newEndTime: string = new Date(
+  //   this.event.endTime.setUTCMinutes(this.event.endTime.getUTCMinutes() + 60)
+  // ).toISOString();
+
+  // newStartTime: string = new Date(
+  //   this.event.startTime.setUTCMinutes(
+  //     this.event.startTime.getUTCMinutes() + 60
+  //   )
+  // ).toISOString();
 
   // newStartTime: string = new Date(
   //   this.event.startTime.getSeconds() * 1000
@@ -39,6 +54,46 @@ export class CalUpdateModalPage implements OnInit {
     });
 
     console.log(this.event.startTime);
+
+    const userTimeZone = 'Europe/Dublin';
+    const zonedStartTime = utcToZonedTime(this.event.startTime, userTimeZone);
+    const formattedStartTime = format(
+      zonedStartTime,
+      'yyyy-MM-dd HH:mm:ss zzzz',
+      {
+        timeZone: userTimeZone,
+      }
+    );
+    const formattedEndTime = format(
+      this.event.endTime,
+      'yyyy-MM-dd HH:mm:ss zzzz',
+      {
+        timeZone: userTimeZone,
+      }
+    );
+    console.log(formattedStartTime);
+    console.log(formattedEndTime);
+
+    // Get the time zone set on the user's device
+    // const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // const userTimeZone = 'Europe/Dublin';
+    // // Use date-fns-tz to convert from UTC to a zoned time
+    // this.zonedStartTime = utcToZonedTime(
+    //   this.event.startTime,
+    //   userTimeZone
+    // ).toISOString();
+    // console.log(this.zonedStartTime);
+    // this.zonedEndTime = utcToZonedTime(this.event.endTime, userTimeZone);
+    // this.event.startTime = new Date(
+    //   this.event.startTime.setUTCMinutes(
+    //     this.event.startTime.getUTCMinutes() + 60
+    //   )
+    // );
+
+    // this.event.endTime = new Date(
+    //   this.event.endTime.setUTCMinutes(this.event.endTime.getUTCMinutes() + 60)
+    // );
   }
 
   updateStartTime(event: any) {

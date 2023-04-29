@@ -43,7 +43,6 @@ export class AppComponent {
 
   constructor(
     private loadController: LoadingController,
-
     private router: Router,
     private authService: AuthService,
     private toastCtrl: ToastController
@@ -62,7 +61,7 @@ export class AppComponent {
 
     await this.authService.logout(); // logout the user
     await loading.dismiss(); // dismiss the loading controller
-    this.router.navigateByUrl('/tabs/login', { replaceUrl: true }); // navigate to the login page
+    this.router.navigateByUrl('/login', { replaceUrl: true }); // navigate to the login page
     const toast = await this.toastCtrl.create({
       message: 'You have been logged out',
       duration: 2000,

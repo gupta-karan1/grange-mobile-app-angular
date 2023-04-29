@@ -42,7 +42,7 @@
             [showDefaultButtons]="true"
             id="datetime"
             (ionChange)="updateStartTime($event)"
-            [value]="event.startTime.toISOString()"
+            [value]="this.event.startTime.toISOString()"
             timezone="Europe/Dublin"
           ></ion-datetime>
         </ng-template>
@@ -59,7 +59,7 @@
             [showDefaultButtons]="true"
             id="datetime3"
             (ionChange)="updateEndTime($event)"
-            [value]="event.endTime.toISOString()"
+            [value]="this.event.endTime.toISOString()"
             timezone="Europe/Dublin"
           ></ion-datetime>
         </ng-template>

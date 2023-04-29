@@ -7,12 +7,12 @@ import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import '@codetrix-studio/capacitor-google-auth';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-import {
-  FacebookLogin,
-  FacebookLoginResponse,
-} from '@capacitor-community/facebook-login';
+// import '@codetrix-studio/capacitor-google-auth';
+// import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+// import {
+//   FacebookLogin,
+//   FacebookLoginResponse,
+// } from '@capacitor-community/facebook-login';
 
 @Component({
   selector: 'app-login',
@@ -26,10 +26,12 @@ export class LoginPage implements OnInit {
   googleUser: any = null; // the google user object that will be returned from the google auth plugin
 
   // fbLogin!: FacebookLoginPlugin; // facebook login plugin
-  fbLogin!: FacebookLoginResponse;
+  // fbLogin!: FacebookLoginResponse;
   fbUser: any = null; // the facebook user object that will be returned from the facebook login plugin
   token: any; // the facebook token that will be returned from the facebook login plugin
   twitterUser: any = null; // the twitter user object that will be returned from the twitter login plugin
+
+  githubUser: any = null; // the github user object that will be returned from the github login plugin
 
   constructor(
     private fb: FormBuilder,
@@ -40,34 +42,32 @@ export class LoginPage implements OnInit {
     private toastCtrl: ToastController
   ) {
     //initialize the google auth plugin
-    if (!isPlatform('capacitor')) {
-      // if the platform is not capacitor
-      GoogleAuth.initialize({
-        // initialize the google auth plugin
-        // client id
-        //? Important: I had to create a new client id separate from the auto-generated one that comes from firestore and embed that within firestore whitelist as well as the google api console because the localhost:8100 was not being recognized as a valid origin
-        clientId:
-          '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
-        scopes: ['profile', 'email'],
-      });
-    }
-    GoogleAuth.initialize({
-      // initialize the google auth plugin
-      // client id
-      clientId:
-        '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
-      scopes: ['profile', 'email'], // scopes defined in the google api console
-    });
-
+    // if (!isPlatform('capacitor')) {
+    //   // if the platform is not capacitor
+    //   GoogleAuth.initialize({
+    //     // initialize the google auth plugin
+    //     // client id
+    //     //? Important: I had to create a new client id separate from the auto-generated one that comes from firestore and embed that within firestore whitelist as well as the google api console because the localhost:8100 was not being recognized as a valid origin
+    //     clientId:
+    //       '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
+    //     scopes: ['profile', 'email'],
+    //   });
+    // }
+    // GoogleAuth.initialize({
+    //   // initialize the google auth plugin
+    //   // client id
+    //   clientId:
+    //     '446380689792-1epieubs0ehbls3rsvab4kvbpqccgfpv.apps.googleusercontent.com',
+    //   scopes: ['profile', 'email'], // scopes defined in the google api console
+    // });
     //initialize the facebook login plugin
     // this.setupFbLogin();
-
-    //initialize the facebook login plugin
-    FacebookLogin.initialize({
-      appId: '6367860876570694',
-    });
-
+    // //initialize the facebook login plugin
+    // FacebookLogin.initialize({
+    //   appId: '6367860876570694',
+    // });
     //twitter client id: dnZfeUd1aHdqNDBsUU4tTURXZXE6MTpjaQ
+    //this is inserted in the firebase authentication console
     //twitter client secret: OTpsVGTdaFA-ptkhqQdRorvBfCKJvYUPsQLOZVlIeoX1Tizd6G
   }
 
@@ -102,7 +102,7 @@ export class LoginPage implements OnInit {
 
     if (user) {
       // if the user is registered, navigate to the profile page
-      // this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
 
       const toast = await this.toastCtrl.create({
         message: 'Registration Successful.',
@@ -141,7 +141,7 @@ export class LoginPage implements OnInit {
     if (user) {
       // console.log('inside user', checkGoogleUser);
       // if the user is logged in, navigate to the profile page
-      // this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
 
       console.log(user);
 
@@ -163,23 +163,42 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async googleLogin(): Promise<any> {
-    this.googleUser = await GoogleAuth.signIn(); // sign in with google
-    // console.log('user', this.googleUser, this.googleUser.email); // log the user object to the console
+  // async googleLogin(): Promise<any> {
+  //   this.googleUser = await GoogleAuth.signIn(); // sign in with google
+  //   // console.log('user', this.googleUser, this.googleUser.email); // log the user object to the console
 
-    //display a toast message to the user
-    const toast = await this.toastCtrl.create({
-      message: 'You are signed in with Google.',
-      duration: 3000,
-      position: 'bottom',
-    });
-    await toast.present();
+  //   //display a toast message to the user
+  //   const toast = await this.toastCtrl.create({
+  //     message: 'You are signed in with Google.',
+  //     duration: 3000,
+  //     position: 'bottom',
+  //   });
+  //   await toast.present();
 
-    return this.googleUser;
+  //   return this.googleUser;
+  // }
+  async googleLogin() {
+    const user = await this.authService.firebaseLoginWithGoogle(); // login the user with google using the firebase login with google method in the auth service
+    if (user) {
+      this.googleUser = user; // set the googleUser to the user returned from the firebase login with google method in the auth service
+      console.log(this.googleUser); // log the googleUser to the console
+      // if the user is logged in, navigate to the profile page
+      setTimeout(() => {
+        this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+      }, 5000);
+      //display a toast message to the user
+      const toast = await this.toastCtrl.create({
+        message: 'You are signed in with Google.',
+        duration: 3000,
+        position: 'bottom',
+      });
+      await toast.present();
+    }
   }
 
   async googleSignOut() {
-    await GoogleAuth.signOut(); // sign out of google
+    // await GoogleAuth.signOut(); // sign out of google
+    await this.authService.firebaseLogoutWithGoogle(); // logout of google using the firebase logout with google method in the auth service
     this.googleUser = null; // set the google user to null
     //display a toast message to the user
     const toast = await this.toastCtrl.create({
@@ -190,85 +209,93 @@ export class LoginPage implements OnInit {
     await toast.present();
   }
 
-  async googleRefresh() {
-    const authCode = await GoogleAuth.refresh(); // refresh the google auth code
-    console.log('authCode', authCode); // log the auth code to the console
+  async facebookLogin() {
+    const user = await this.authService.firebaseLoginWithFacebook(); // login the user with facebook using the firebase login with facebook method in the auth service
+
+    if (user) {
+      this.fbUser = user; // set the fbUser to the user returned from the firebase login with facebook method in the auth service
+      // console.log(this.fbUser); // log the fbUser to the console
+      // if the user is logged in, navigate to the profile page
+      setTimeout(() => {
+        this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
+      }, 5000);
+      //display a toast message to the user
+      const toast = await this.toastCtrl.create({
+        message: 'You are signed in with Facebook.',
+        duration: 3000,
+        position: 'bottom',
+      });
+      await toast.present();
+    }
   }
 
-  // async setupFbLogin() {
-  //   if (isPlatform('pwa')) {
-  //     //try changing the platform to see if it works
-  //     this.fbLogin = FacebookLogin;
-  //   } else {
-  //     // const { FacebookLogin } = Plugins;
-  //     this.fbLogin = FacebookLogin;
-  //     //for native implementation
+  // async facebookLogin() {
+  //   // login with facebook using the facebook login plugin
+  //   const FACEBOOK_PERMISSIONS = [
+  //     // permissions to request from the user
+  //     'email',
+  //     'user_birthday',
+  //     'user_photos',
+  //     'user_gender',
+  //   ];
+
+  //   const result = await FacebookLogin.login({
+  //     // login with facebook
+  //     permissions: FACEBOOK_PERMISSIONS, // permissions to request from the user
+  //   });
+
+  //   console.log('result', result);
+  //   if (result.accessToken) {
+  //     // if the access token is returned from facebook
+  //     // Login successful.
+  //     // console.log(`Facebook access token is ${result.accessToken.token}`);
+  //     this.getCurrentAccessToken(); // get the current access token from facebook method is defined below
+  //     // this.getCurrentUserProfile();
   //   }
   // }
 
-  async facebookLogin() {
-    // login with facebook using the facebook login plugin
-    const FACEBOOK_PERMISSIONS = [
-      // permissions to request from the user
-      'email',
-      'user_birthday',
-      'user_photos',
-      'user_gender',
-    ];
+  // async getCurrentAccessToken() {
+  //   // get the current access token from facebook
+  //   const result = await FacebookLogin.getCurrentAccessToken(); // get the current access token from facebook using the get current access token method in built in the facebook login plugin
+  //   if (result.accessToken) {
+  //     // if the access token is returned from facebook
+  //     // console.log(`Facebook access token is ${result.accessToken.token}`);
+  //     this.token = result.accessToken.token; // set the token to the access token returned from facebook
+  //     this.getCurrentUserProfile(); //get the current user profile method is defined below
+  //   }
+  // }
 
-    const result = await FacebookLogin.login({
-      // login with facebook
-      permissions: FACEBOOK_PERMISSIONS, // permissions to request from the user
-    });
+  // async getCurrentUserProfile() {
+  //   // get the current user profile from facebook
+  //   const result = await FacebookLogin.getProfile<{
+  //     // get the current user profile from facebook using the get current user profile method in built in the facebook login plugin
+  //     email: string;
+  //     name: string;
+  //     picture: { data: { url: string } };
+  //     birthday: string;
+  //   }>({ fields: ['email', 'name', 'picture', 'birthday'] }); // fields to request from the user from facebook by defining the type of the result
+  //   // console.log(`Facebook user's email is ${result.email}`);
+  //   // console.log(result);
+  //   this.fbUser = result; // set the fbUser to the result returned from facebook
 
-    console.log('result', result);
-    if (result.accessToken) {
-      // if the access token is returned from facebook
-      // Login successful.
-      // console.log(`Facebook access token is ${result.accessToken.token}`);
-      this.getCurrentAccessToken(); // get the current access token from facebook method is defined below
-      // this.getCurrentUserProfile();
-    }
-  }
-
-  async getCurrentAccessToken() {
-    // get the current access token from facebook
-    const result = await FacebookLogin.getCurrentAccessToken(); // get the current access token from facebook using the get current access token method in built in the facebook login plugin
-    if (result.accessToken) {
-      // if the access token is returned from facebook
-      // console.log(`Facebook access token is ${result.accessToken.token}`);
-      this.token = result.accessToken.token; // set the token to the access token returned from facebook
-      this.getCurrentUserProfile(); //get the current user profile method is defined below
-    }
-  }
-
-  async getCurrentUserProfile() {
-    // get the current user profile from facebook
-    const result = await FacebookLogin.getProfile<{
-      // get the current user profile from facebook using the get current user profile method in built in the facebook login plugin
-      email: string;
-      name: string;
-      picture: { data: { url: string } };
-      birthday: string;
-    }>({ fields: ['email', 'name', 'picture', 'birthday'] }); // fields to request from the user from facebook by defining the type of the result
-    // console.log(`Facebook user's email is ${result.email}`);
-    // console.log(result);
-    this.fbUser = result; // set the fbUser to the result returned from facebook
-
-    //display a toast message to the user
-    const toast = await this.toastCtrl.create({
-      message: 'You are signed in with Facebook.',
-      duration: 3000,
-      position: 'bottom',
-    });
-    await toast.present();
-  }
+  //   // if (user) {
+  //   //   this.fbUser = user; // set the fbUser to the user returned from the firebase login with facebook method in the auth service
+  //   //   // if the user is logged in, navigate to the profile page
+  //   //   //display a toast message to the user
+  //   // }
+  // }
 
   async facebookLogout() {
     // logout of facebook using the facebook login plugin
-    await FacebookLogin.logout(); // logout of facebook using the logout method in built in the facebook login plugin
+    // await FacebookLogin.logout(); // logout of facebook using the logout method in built in the facebook login plugin
+    await this.authService.firebaseLogoutWithFacebook(); // logout of firebase using the firebase logout with facebook method in the auth service
     this.fbUser = null; // set the fbUser to null
-    this.token = null; // set the token to null
+    // this.token = null; // set the token to null
+
+    //navigate to the login page
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 5000);
 
     //display a toast message to the user
     const toast = await this.toastCtrl.create({
@@ -339,6 +366,11 @@ export class LoginPage implements OnInit {
       this.twitterUser = user;
       // console.log('twitterUser', this.twitterUser);
 
+      //navigate to the tab4 page after 2 seconds of showing the data
+      setTimeout(() => {
+        this.router.navigate(['/tabs/tab4']);
+      }, 5000);
+
       //display a toast message to the user
       const toast = await this.toastCtrl.create({
         message: 'You are signed in with Twitter.',
@@ -351,12 +383,58 @@ export class LoginPage implements OnInit {
 
   // twitter logout from auth service
   async twitterLogout() {
-    await this.authService.logout();
+    await this.authService.logoutWithTwitter();
     this.twitterUser = null;
+
+    //navigate to the login page
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 3000);
 
     //display a toast message to the user
     const toast = await this.toastCtrl.create({
       message: 'You are signed out of Twitter.',
+      duration: 3000,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
+
+  //github login from auth service
+  async githubLogin() {
+    const user = await this.authService.firebaseLoginWithGithub();
+    if (user) {
+      this.githubUser = user;
+      // console.log(this.githubUser);
+
+      //navigate to the tab4 page after 2 seconds of showing the data
+      setTimeout(() => {
+        this.router.navigate(['/tabs/tab4']);
+      }, 5000);
+
+      //display a toast message to the user
+      const toast = await this.toastCtrl.create({
+        message: 'You are signed in with Github.',
+        duration: 3000,
+        position: 'bottom',
+      });
+      await toast.present();
+    }
+  }
+
+  //github logout from auth service
+  async githubLogout() {
+    await this.authService.firebaseLogoutWithGithub();
+    this.githubUser = null;
+
+    //navigate to the login page
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 3000);
+
+    //display a toast message to the user
+    const toast = await this.toastCtrl.create({
+      message: 'You are signed out of Github.',
       duration: 3000,
       position: 'bottom',
     });

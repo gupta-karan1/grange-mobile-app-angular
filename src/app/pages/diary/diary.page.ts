@@ -382,7 +382,6 @@ export class DiaryPage implements OnInit {
       breakpoints: [0, 0.75, 1], // set the breakpoints
       initialBreakpoint: 0.75, // set the initial breakpoint
     });
-
     return await modal.present(); // present the modal
   }
 

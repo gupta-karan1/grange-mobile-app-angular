@@ -91,23 +91,14 @@
     >
       Google Logout
     </ion-button>
-    <ion-button
-      (click)="googleRefresh()"
-      expand="block"
-      fill="clear"
-      shape="round"
-      *ngIf="!googleUser"
-    >
-      Try Refresh
-    </ion-button>
 
     <ion-item lines="none" *ngIf="googleUser">
       <ion-avatar slot="start">
-        <img [src]="googleUser.imageUrl" />
+        <img title="user" [src]="googleUser.user.photoURL" />
       </ion-avatar>
       <ion-label>
-        {{googleUser.givenName}} {{googleUser.familyName}}
-        <p>{{googleUser.email}}</p>
+        {{googleUser.user.displayName}}
+        <p>{{googleUser.user.email}}</p>
       </ion-label>
     </ion-item>
   </ion-card>
@@ -138,15 +129,12 @@
 
     <ion-item *ngIf="fbUser" lines="none">
       <ion-avatar slot="start">
-        <img
-          [src]="fbUser.picture.data.url"
-          [height]="fbUser.picture.data.height"
-        />
+        <img title="user" [src]="fbUser.user.photoURL" />
       </ion-avatar>
       <ion-label>
-        <p>{{fbUser.name}}</p>
-        <p>{{fbUser.email}}</p>
-        <p>DOB: {{fbUser.birthday}}</p>
+        <p>{{fbUser.user.displayName}}</p>
+        <p>{{fbUser.user.email}}</p>
+        <p>DOB: {{fbUser.user.reloadUserInfo.dateOfBirth}}</p>
       </ion-label>
     </ion-item>
   </ion-card>
@@ -177,10 +165,44 @@
 
     <ion-item *ngIf="twitterUser" lines="none">
       <ion-avatar slot="start">
-        <img [src]="twitterUser.user.photoURL" />
+        <img title="user" [src]="twitterUser.user.photoURL" />
       </ion-avatar>
       <ion-label>
         <p>{{twitterUser.user.displayName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+  <!-- GIthub Login -->
+  <ion-card class="ion-padding">
+    <ion-button
+      class="ion-margin-top"
+      (click)="githubLogin()"
+      expand="full"
+      fill="solid"
+      shape="round"
+      *ngIf="!githubUser"
+    >
+      <ion-icon slot="start" name="logo-github"></ion-icon>
+      Github Login
+    </ion-button>
+
+    <ion-button
+      *ngIf="githubUser"
+      (click)="githubLogout()"
+      expand="block"
+      fill="outline"
+      shape="round"
+    >
+      Github Logout
+    </ion-button>
+
+    <ion-item *ngIf="githubUser" lines="none">
+      <ion-avatar slot="start">
+        <img title="user" [src]="githubUser.user.photoURL" />
+      </ion-avatar>
+      <ion-label>
+        <p>{{githubUser.user.displayName}}</p>
+        <p>{{githubUser.user.email}}</p>
       </ion-label>
     </ion-item>
   </ion-card>
