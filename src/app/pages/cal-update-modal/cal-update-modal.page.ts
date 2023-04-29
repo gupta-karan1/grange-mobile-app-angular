@@ -25,6 +25,8 @@ export class CalUpdateModalPage implements OnInit {
 
   formattedStartTime!: string;
   formattedEndTime!: string;
+  isoStartTimeInIST!: string;
+
   // newEndTime: string = new Date(
   //   this.event.endTime.setUTCMinutes(this.event.endTime.getUTCMinutes() + 60)
   // ).toISOString();
@@ -54,25 +56,41 @@ export class CalUpdateModalPage implements OnInit {
     });
 
     console.log(this.event.startTime);
+    console.log('ISO Start: ' + this.event.startTime.toISOString());
+    console.log('UTC Start: ' + this.event.startTime.toUTCString());
 
-    const userTimeZone = 'Europe/Dublin';
-    const zonedStartTime = utcToZonedTime(this.event.startTime, userTimeZone);
-    const formattedStartTime = format(
-      zonedStartTime,
-      'yyyy-MM-dd HH:mm:ss zzzz',
-      {
-        timeZone: userTimeZone,
-      }
-    );
-    const formattedEndTime = format(
-      this.event.endTime,
-      'yyyy-MM-dd HH:mm:ss zzzz',
-      {
-        timeZone: userTimeZone,
-      }
-    );
-    console.log(formattedStartTime);
-    console.log(formattedEndTime);
+    // // get the current startTime of the event
+    // const startTime = this.event.startTime;
+
+    // // add 1 hour to the startTime in Irish Standard Time (GMT+1)
+    // const startTimeInIST = new Date(startTime.getTime() + 60 * 60 * 1000);
+    // console.log('IST Start: ' + startTimeInIST);
+    // startTimeInIST.setHours(startTimeInIST.getHours() + 1);
+
+    // // format the startTimeInIST as an ISO string
+    // const isoStartTimeInIST = startTimeInIST.toISOString();
+
+    // // print the ISO string to the console
+    // console.log('ISO Start in IST: ' + isoStartTimeInIST);
+
+    // const userTimeZone = 'Europe/Dublin';
+    // const zonedStartTime = utcToZonedTime(this.event.startTime, userTimeZone);
+    // const formattedStartTime = format(
+    //   zonedStartTime,
+    //   'yyyy-MM-dd HH:mm:ss zzzz',
+    //   {
+    //     timeZone: userTimeZone,
+    //   }
+    // );
+    // const formattedEndTime = format(
+    //   this.event.endTime,
+    //   'yyyy-MM-dd HH:mm:ss zzzz',
+    //   {
+    //     timeZone: userTimeZone,
+    //   }
+    // );
+    // console.log(formattedStartTime);
+    // console.log(formattedEndTime);
 
     // Get the time zone set on the user's device
     // const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

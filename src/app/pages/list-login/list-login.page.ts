@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import {
   AlertController,
+  ToastController,
   IonicModule,
   LoadingController,
 } from '@ionic/angular';
@@ -30,7 +31,8 @@ export class ListLoginPage implements OnInit {
     private fb: FormBuilder,
     private alertController: AlertController,
     private router: Router,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -48,7 +50,19 @@ export class ListLoginPage implements OnInit {
       .signIn(this.credentials.value)
       .then((res) => {
         loading.dismiss();
-        this.router.navigateByUrl('/list', { replaceUrl: true });
+        //show login success
+        this.showError('Login Successful', 'Welcome back!');
+
+        //create a toast message to show login success
+        this.toastController
+          .create({
+            message: 'Login Successful',
+            duration: 2000,
+          })
+          .then((toast) => toast.present());
+
+        this.router.navigateByUrl('/tabs/list', { replaceUrl: true }); //navigate to achievement list page
+        // this.router.navigateByUrl('/list');
       })
       .catch((err) => {
         loading.dismiss();

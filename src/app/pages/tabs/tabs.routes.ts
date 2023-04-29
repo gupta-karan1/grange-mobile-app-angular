@@ -6,7 +6,10 @@ import {
   redirectLoggedInTo,
 } from '@angular/fire/auth-guard';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']); //if not logged in, redirect to login page
+import { AuthGuard } from '../../guards/auth.guard';
+
+const redirectUnauthorizedToLogin = () =>
+  redirectUnauthorizedTo(['/tabs/login']); //if not logged in, redirect to login page
 const redirectLoggedInToHome = () => redirectLoggedInTo(['tabs/tab4']); //if logged in, redirect to tabs page
 
 export const routes: Routes = [
@@ -43,6 +46,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../tab4/tab4.page').then((m) => m.Tab4Page),
         ...canActivate(redirectUnauthorizedToLogin),
+      },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('../login/login.page').then((m) => m.LoginPage),
+        ...canActivate(redirectLoggedInToHome),
       },
       {
         path: '',
@@ -105,23 +114,20 @@ export const routes: Routes = [
             (m) => m.CalUpdateModalPage
           ),
       },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('../list/list.page').then((m) => m.ListPage),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'list-login',
+        loadComponent: () =>
+          import('../list-login/list-login.page').then((m) => m.ListLoginPage),
+      },
     ],
   },
 
-  {
-    path: 'login',
-    loadComponent: () => import('../login/login.page').then((m) => m.LoginPage),
-    ...canActivate(redirectLoggedInToHome),
-  },
-  {
-    path: 'list',
-    loadComponent: () => import('../list/list.page').then((m) => m.ListPage),
-  },
-  {
-    path: 'list-login',
-    loadComponent: () =>
-      import('../list-login/list-login.page').then((m) => m.ListLoginPage),
-  },
   {
     path: '',
     redirectTo: '/tabs/tab1',

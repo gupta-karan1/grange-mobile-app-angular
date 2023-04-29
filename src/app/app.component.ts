@@ -16,6 +16,8 @@ import { RouterLink } from '@angular/router';
 import { DiaryTaskModalPage } from './pages/diary-task-modal/diary-task-modal.page';
 import { CalModalPage } from './pages/cal-modal/cal-modal.page';
 import { CalUpdateModalPage } from './pages/cal-update-modal/cal-update-modal.page';
+import { ListLoginPage } from './pages/list-login/list-login.page';
+import { ListPage } from './pages/list/list.page';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +38,8 @@ import { CalUpdateModalPage } from './pages/cal-update-modal/cal-update-modal.pa
     DiaryTaskModalPage,
     CalModalPage,
     CalUpdateModalPage,
+    ListLoginPage,
+    ListPage,
   ],
 })
 export class AppComponent {
@@ -61,7 +65,7 @@ export class AppComponent {
 
     await this.authService.logout(); // logout the user
     await loading.dismiss(); // dismiss the loading controller
-    this.router.navigateByUrl('/login', { replaceUrl: true }); // navigate to the login page
+    this.router.navigateByUrl('/tabs/login', { replaceUrl: true }); // navigate to the login page
     const toast = await this.toastCtrl.create({
       message: 'You have been logged out',
       duration: 2000,
