@@ -34,7 +34,7 @@ export class ListPage implements OnInit {
       inputs: [
         {
           name: 'task',
-          placeholder: 'Learn Ionic',
+          placeholder: 'Mastered Ionic',
         },
       ],
       buttons: [
@@ -50,16 +50,35 @@ export class ListPage implements OnInit {
         },
       ],
     });
-
     await alert.present();
+
+    // //create a loading controller
+    // const loading = await this.loadingController.create({
+    //   message: 'Creating new achievement...',
+    //   spinner: 'crescent',
+    //   duration: 2000,
+    //   showBackdrop: true,
+    // });
+    // await loading.present();
+
+    // //dismiss the loading controller
+    // await loading.dismiss();
+
+    // //present a toast message to show success
+    // const toast = await this.toastController.create({
+    //   message: 'Achievement created',
+    //   duration: 2000,
+    //   position: 'bottom',
+    // });
+    // toast.present();
   }
 
-  delete(item: Todo) {
-    this.supabaseService.removeTodo(item.id);
+  async delete(item: Todo) {
+    await this.supabaseService.removeTodo(item.id);
   }
 
-  toggleDone(item: Todo) {
-    this.supabaseService.updateTodo(item.id, !item.is_complete);
+  async toggleDone(item: Todo) {
+    await this.supabaseService.updateTodo(item.id, !item.is_complete);
   }
 
   async supabaseLogout() {
