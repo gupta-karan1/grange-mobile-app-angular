@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-const TODO_DB = 'todos';
+const TODO_DB = 'todos'; // define the name of the table in the database
 
 export interface Todo {
   id: number;
@@ -21,9 +21,9 @@ export interface Todo {
 export class SupabaseService {
   supabase: SupabaseClient; // define supabase as a SupabaseClient type variable (from @supabase/supabase-js)
 
-  private _todos: BehaviorSubject<Todo[]> = new BehaviorSubject<any>([]); // this is a BehaviorSubject from rxjs that is used to store the todos and is initialized with an empty array as the default value
-
   private _currentUser: BehaviorSubject<any> = new BehaviorSubject<any>(null); // this is a BehaviorSubject from rxjs that is used to store the current user and is initialized with null as the default value
+
+  private _todos: BehaviorSubject<any> = new BehaviorSubject([]); // this is a BehaviorSubject from rxjs that is used to store the todos and is initialized with an empty array as the default value
 
   // Try to recover our user session
   async ngOnInit() {
@@ -130,215 +130,68 @@ export class SupabaseService {
   }
 
   get todos(): Observable<Todo[]> {
-    return this._todos.asObservable();
+    // this is a getter function that is used to return the todos BehaviorSubject as an Observable to access the private todos BehaviorSubject from outside the service
+    return this._todos.asObservable(); // return the todos BehaviorSubject as an Observable
   }
 
   async loadTodos() {
-    const query = await this.supabase.from(TODO_DB).select('*');
-    console.log('query', query);
-    console.log('query.data', query.data);
-    this._todos.next(query.data as Todo[]);
+    const query = await this.supabase.from(TODO_DB).select('*'); // select all the todos from the database table and store them in a variable called query
+    // this is async because we are using await to wait for the query to finish before continuing
+    // console.log('query: ', query);
+    this._todos.next(query.data); // pass the todos to the todos BehaviorSubject
   }
-
-  // async addTodo(task: string) {
-  //   const newTodo = {
-  //     user_id: this.currentUserValue?.id,
-  //     task,
-  //   };
-  //   const { data, error } = await this.supabase.from(TODO_DB).insert(newTodo);
-  //   if (error) {
-  //     console.log('error', error);
-  //   }
-  //   if (data) {
-  //     console.log('data', data);
-  //     const newTodo = { id: data[0].id, ...data[0] };
-  //     this._todos.next([...this._todos.value, newTodo]);
-  //   }
-  // }
 
   async addTodo(task: string) {
     const newTodo = {
-      user_id: this.currentUserValue?.id,
+      user_id: this._currentUser.value.id,
       task,
     };
-    // You could check for error, minlegth of task is 3 chars!
-    const result = await this.supabase.from(TODO_DB).insert(newTodo);
-    console.log('result', result);
-    //create a loading indicator until the result is returned and displayed on the page
-    const { data, error } = result;
-    if (error) {
-      console.log('error', error);
-    }
-    if (data) {
-      console.log('data', data);
-    }
+
+    const result = await this.supabase.from(TODO_DB).insert(newTodo); // insert the new todo into the database table
   }
 
-  async removeTodo(id: any) {
-    await this.supabase.from(TODO_DB).delete().match({ id });
-    const updatedTodos = this._todos.value.filter((todo) => todo.id !== id);
-    this._todos.next(updatedTodos);
+  async removeTodo(id: number) {
+    await this.supabase.from(TODO_DB).delete().match({ id }); // delete the todo from the database table
   }
 
-  // async removeTodo(id: any) {
-  //   await this.supabase.from(TODO_DB).delete().match({ id });
-  // }
-
-  async updateTodo(id: any, is_complete: boolean) {
-    await this.supabase.from(TODO_DB).update({ is_complete }).match({ id });
+  async updateTodo(id: number, is_complete: boolean) {
+    await this.supabase.from(TODO_DB).update({ is_complete }).match({ id }); // update the todo in the database table
   }
-
-  // async updateTodo(id: any, is_complete: boolean) {
-  //   await this.supabase.from(TODO_DB).update({ is_complete }).match({ id });
-  //   const updatedTodo = { ...this._todos.value.find((todo) => todo.id === id), is_complete };
-  //   const updatedTodos = this._todos.value.map((todo) =>
-  //     todo.id === updatedTodo.id ? updatedTodo : todo
-  //   );
-  //   this._todos.next(updatedTodos);
-  // }
 
   handleTodosChanged() {
-    const realtime = this.supabase
-      .channel(TODO_DB)
-      .on('broadcast', { event: '*' }, (payload: any) => {
-        console.log('Todos changed: ', payload);
-        const { eventType, changes } = payload;
+    // this function is used to handle changes to the todos in the database table and update the todos BehaviorSubject in real-time when the database table is updated
+    this.supabase
+      .channel(TODO_DB) // channel is a function from @supabase/supabase-js that is used to listen for changes to the database table
+      .on('postgres_changes', { event: '*', schema: '*' }, (payload: any) => {
+        // on method takes in 3 arguments: the event type, the schema, and a callback function that takes in the payload
+        //!Remember to make the above changes which are different from old version of supabase and what is on many videos. The above is the new way to do it. It took me a lot of time to read through the documentation to figure this out.
+        console.log('payload: ', payload); // log the payload to the console
 
-        if (eventType === 'INSERT') {
-          const newTodo = { id: payload.id, ...changes };
-          this._todos.next([...this._todos.value, newTodo]);
-        } else if (eventType === 'UPDATE') {
-          const updatedTodo = { id: payload.id, ...changes };
-          const updatedTodos = this._todos.value.map((todo) =>
-            todo.id === updatedTodo.id ? updatedTodo : todo
+        // if the eventType is DELETE, UPDATE, or INSERT, then update the todos BehaviorSubject with the new todos from the database table
+        if (payload.eventType === 'DELETE') {
+          //take the old todos and filter out the todo that was deleted
+          const oldItem: Todo = payload.old;
+          const newValue = this._todos.value.filter(
+            // filter out the todo that was deleted
+            (item: any) => oldItem['id'] !== item.id
           );
-          this._todos.next(updatedTodos);
-        } else if (eventType === 'DELETE') {
-          const updatedTodos = this._todos.value.filter(
-            (todo) => todo.id !== payload.id
-          );
-          this._todos.next(updatedTodos);
+          this._todos.next(newValue); // pass the new todos to the todos BehaviorSubject to update the todos
+        } else if (payload.eventType === 'UPDATE') {
+          const updatedItem: Todo = payload.new;
+          const newValue = this._todos.value.map((item: any) => {
+            // map over the todos and update the todo that was updated
+            if (updatedItem['id'] === item.id) {
+              // return updatedItem;
+              item = updatedItem;
+            }
+            return item;
+          });
+          this._todos.next(newValue); // pass the new todos to the todos BehaviorSubject to update the todos
+        } else if (payload.eventType === 'INSERT') {
+          const newItem: Todo = payload.new;
+          this._todos.next([...this._todos.value, newItem]); // pass the new todos to the todos BehaviorSubject to update the todos using the spread operator to add the new todo to the todos
         }
       })
       .subscribe();
-
-    return { realtime };
   }
-
-  // handleTodosChanged() {
-  //   // this function is used to handle changes to the todos table in the database
-  //   const realtime = this.supabase
-  //     .channel(TODO_DB)
-  //     .on('broadcast', { event: '*' }, (payload: any) => {
-  //       console.log('Todos changed: ', payload);
-  //       const { eventType, old, new: newItem } = payload;
-
-  //       if (eventType === 'INSERT') {
-  //         this._todos.next([...this._todos.value, newItem]);
-  //       } else if (eventType === 'UPDATE') {
-  //         const updatedTodos = this._todos.value.map((todo) =>
-  //           todo.id === newItem.id ? newItem : todo
-  //         );
-  //         this._todos.next(updatedTodos);
-  //       } else if (eventType === 'DELETE') {
-  //         const updatedTodos = this._todos.value.filter(
-  //           (todo) => todo.id !== old.id
-  //         );
-  //         this._todos.next(updatedTodos);
-  //       }
-
-  //       // if (payload.eventType == 'DELETE') {
-  //       //   // Filter out the removed item
-  //       //   const oldItem: Todo = payload.old;
-  //       //   const newValue = this._todos.value.filter(
-  //       //     (item) => oldItem.id != item.id
-  //       //   );
-  //       //   this._todos.next(newValue);
-  //       // } else if (payload.eventType == 'INSERT') {
-  //       //   // Add the new item
-  //       //   const newItem: Todo = payload.new;
-  //       //   this._todos.next([...this._todos.value, newItem]);
-  //       // } else if (payload.eventType == 'UPDATE') {
-  //       //   // Update one item
-  //       //   const updatedItem: Todo = payload.new;
-  //       //   const newValue = this._todos.value.map((item) => {
-  //       //     if (updatedItem.id == item.id) {
-  //       //       item = updatedItem;
-  //       //     }
-  //       //     return item;
-  //       //   });
-  //       //   this._todos.next(newValue);
-  //       // }
-  //     })
-  //     .subscribe();
-
-  //   return { realtime };
-  // }
-  // // async handleTodosChanged() {
-  //   return this.supabase
-  //     .channel(TODO_DB)
-  //     .on('broadcast', { event: '*' }, (payload: any) => {
-  //       console.log('Todos changed: ', payload);
-
-  //       if (payload.eventType == 'DELETE') {
-  //         // Filter out the removed item
-  //         const oldItem: Todo = payload.old;
-  //         const newValue = this._todos.value.filter(
-  //           (item) => oldItem.id != item.id
-  //         );
-  //         this._todos.next(newValue);
-  //       } else if (payload.eventType == 'INSERT') {
-  //         // Add the new item
-  //         const newItem: Todo = payload.new;
-  //         this._todos.next([...this._todos.value, newItem]);
-  //       } else if (payload.eventType == 'UPDATE') {
-  //         // Update one item
-  //         const updatedItem: Todo = payload.new;
-  //         const newValue = this._todos.value.map((item) => {
-  //           if (updatedItem.id == item.id) {
-  //             item = updatedItem;
-  //           }
-  //           return item;
-  //         });
-  //         this._todos.next(newValue);
-  //       }
-  //     })
-  //     .subscribe();
-  // }
-
-  // async handleTodosChanged() {
-  //   const { data: todos, error } = await this.supabase
-  //     .from(TODO_DB)
-  //     .select('*');
-
-  //   if (error) {
-  //     console.error(error);
-  //     return;
-  //   }
-
-  //   this._todos.next(todos as Todo[]);
-
-  //   const realtime = this.supabase
-  //     .channel(TODO_DB)
-  //     .on('broadcast', { event: 'sync' }, (payload) => {
-  //       const { eventType, old, new: newItem } = payload;
-
-  //       if (eventType === 'INSERT') {
-  //         this._todos.next([...this._todos.value, newItem]);
-  //       } else if (eventType === 'UPDATE') {
-  //         const updatedTodos = this._todos.value.map((todo) =>
-  //           todo.id === newItem.id ? newItem : todo
-  //         );
-  //         this._todos.next(updatedTodos);
-  //       } else if (eventType === 'DELETE') {
-  //         const updatedTodos = this._todos.value.filter(
-  //           (todo) => todo.id !== old.id
-  //         );
-  //         this._todos.next(updatedTodos);
-  //       }
-  //     })
-  //     .subscribe();
-
-  //   return { realtime };
-  // }
 }

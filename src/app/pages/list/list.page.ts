@@ -16,7 +16,7 @@ import { AlertController } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule, RouterLink],
 })
 export class ListPage implements OnInit {
-  items = this.supabaseService.todos;
+  items = this.supabaseService.todos; // define items as an array of Todo type variables from src/app/services/supabase.service.ts (this is the array of todos that will be displayed in the list)
 
   constructor(
     private router: Router,
@@ -29,7 +29,9 @@ export class ListPage implements OnInit {
   ngOnInit() {}
 
   async createTodo() {
+    // create a new todo item
     const alert = await this.alertCtrl.create({
+      // create an alert controller
       header: 'New Achievement',
       inputs: [
         {
@@ -38,6 +40,7 @@ export class ListPage implements OnInit {
         },
       ],
       buttons: [
+        // create the buttons for the alert controller
         {
           text: 'Cancel',
           role: 'cancel',
@@ -45,40 +48,43 @@ export class ListPage implements OnInit {
         {
           text: 'Add',
           handler: (data: any) => {
-            this.supabaseService.addTodo(data.task);
+            // handle the data from the alert controller
+            this.supabaseService.addTodo(data.task); // add the new todo item to the database using the addTodo function from src/app/services/supabase.service.ts
+            // present a toast message to show todo item added
+            this.toastController
+              .create({
+                message: 'Achievement added',
+                duration: 2000,
+              })
+
+              .then((toast) => {
+                toast.present();
+              });
           },
         },
       ],
     });
-    await alert.present();
-
-    // //create a loading controller
-    // const loading = await this.loadingController.create({
-    //   message: 'Creating new achievement...',
-    //   spinner: 'crescent',
-    //   duration: 2000,
-    //   showBackdrop: true,
-    // });
-    // await loading.present();
-
-    // //dismiss the loading controller
-    // await loading.dismiss();
-
-    // //present a toast message to show success
-    // const toast = await this.toastController.create({
-    //   message: 'Achievement created',
-    //   duration: 2000,
-    //   position: 'bottom',
-    // });
-    // toast.present();
+    await alert.present(); // present the alert controller
   }
 
-  async delete(item: Todo) {
-    await this.supabaseService.removeTodo(item.id);
+  delete(item: Todo) {
+    // delete the todo item from the database
+    this.supabaseService.removeTodo(item.id); // remove the todo item from the database using the removeTodo function from src/app/services/supabase.service.ts
+
+    // present a toast message to show todo item deleted
+    this.toastController
+      .create({
+        message: 'Achievement deleted',
+        duration: 2000,
+      })
+      .then((toast) => {
+        toast.present();
+      });
   }
 
-  async toggleDone(item: Todo) {
-    await this.supabaseService.updateTodo(item.id, !item.is_complete);
+  toggleDone(item: Todo) {
+    // toggle the is_complete value of the todo item
+    this.supabaseService.updateTodo(item.id, !item.is_complete); // update the todo item in the database using the updateTodo function from src/app/services/supabase.service.ts
   }
 
   async supabaseLogout() {
@@ -93,9 +99,6 @@ export class ListPage implements OnInit {
 
     //logout the user from supabase
     this.supabaseService.signOut();
-
-    // Clear the user data from local storage
-    // localStorage.removeItem('currentUser');
 
     //dismiss the loading controller
     await loading.dismiss();

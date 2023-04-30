@@ -37,7 +37,7 @@ import { UpdateStudentPage } from '../update-student/update-student.page';
 export class Tab2Page implements OnInit {
   // create 2 variables to store results emitted from observable
   students: any;
-  newStudents: any;
+  newStudents: any = [];
 
   // inject student service into the constructor
   constructor(
@@ -93,13 +93,13 @@ export class Tab2Page implements OnInit {
   deleteStudent(id: any) {
     this.studentDeleteService.deleteStudent(id).subscribe(
       (result) => {
-        console.log('SUCCESS');
+        console.log('SUCCESS' + result);
         // call the getStudentData() method
         this.getStudentData();
         this.showToast('Student Record is deleted');
       },
       (error) => {
-        console.log('ERROR');
+        console.log('ERROR' + error);
         this.showToast('Student Record is not deleted');
       }
     );
@@ -112,5 +112,10 @@ export class Tab2Page implements OnInit {
       duration: 2000,
     });
     toast.present();
+  }
+
+  handleSearchInput(event: any) {
+    const query = event.target.value.toLowerCase();
+    console.log(query);
   }
 }

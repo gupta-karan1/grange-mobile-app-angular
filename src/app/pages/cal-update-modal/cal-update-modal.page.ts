@@ -55,9 +55,9 @@ export class CalUpdateModalPage implements OnInit {
       this.event = res;
     });
 
-    console.log(this.event.startTime);
-    console.log('ISO Start: ' + this.event.startTime.toISOString());
-    console.log('UTC Start: ' + this.event.startTime.toUTCString());
+    // console.log(this.event.startTime);
+    // console.log('ISO Start: ' + this.event.startTime.toISOString());
+    // console.log('UTC Start: ' + this.event.startTime.toUTCString());
 
     // // get the current startTime of the event
     // const startTime = this.event.startTime;
@@ -153,5 +153,10 @@ export class CalUpdateModalPage implements OnInit {
   //dismiss modal
   async cancelEvent() {
     await this.modalCtrl.dismiss();
+  }
+
+  dismissModal() {
+    //dismiss the modal
+    this.modalCtrl.dismiss();
   }
 }

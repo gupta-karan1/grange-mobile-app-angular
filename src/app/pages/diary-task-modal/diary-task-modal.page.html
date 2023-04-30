@@ -4,6 +4,7 @@
   <ion-list lines="full" *ngIf="task">
     <ion-item>
       <ion-label>{{task.timestamp}}</ion-label>
+      <ion-icon slot="end" name="close" (click)="dismissModal()"></ion-icon>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Task</ion-label>

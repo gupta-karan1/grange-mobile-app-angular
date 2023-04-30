@@ -70,4 +70,9 @@ export class CalModalPage implements OnInit {
   async cancelEvent() {
     await this.modalCtrl.dismiss();
   }
+
+  dismissModal() {
+    //dismiss the modal
+    this.modalCtrl.dismiss();
+  }
 }

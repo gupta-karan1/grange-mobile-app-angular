@@ -54,4 +54,9 @@ export class DiaryTaskModalPage implements OnInit {
     toast.present(); // present the toast
     this.modalCtrl.dismiss(); // dismiss the modal
   }
+
+  dismissModal() {
+    //dismiss the modal
+    this.modalCtrl.dismiss();
+  }
 }

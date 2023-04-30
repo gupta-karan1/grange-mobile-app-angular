@@ -4,6 +4,7 @@
   <ion-list lines="full" *ngIf="note">
     <ion-item>
       <ion-label>{{note.timestamp}}</ion-label>
+      <ion-icon slot="end" name="close" (click)="dismissModal()"></ion-icon>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Title</ion-label>
@@ -26,8 +27,8 @@
       expand="block"
     >
       <ion-icon slot="start" name="trash-outline"></ion-icon>
-      Delete</ion-button
-    >
+      Delete
+    </ion-button>
     <ion-button
       shape="round"
       class="ion-margin"
@@ -35,7 +36,7 @@
       (click)="updateNote()"
       expand="block"
     >
-      <ion-icon slot="start" name="save"></ion-icon> Update</ion-button
-    >
+      <ion-icon slot="start" name="save"></ion-icon> Update
+    </ion-button>
   </ion-list>
 </ion-content>

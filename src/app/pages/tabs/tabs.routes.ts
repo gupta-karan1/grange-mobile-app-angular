@@ -82,7 +82,6 @@ export const routes: Routes = [
             (m) => m.UpdateStudentPage
           ),
       },
-
       {
         path: 'diary',
         loadComponent: () =>
@@ -124,6 +123,14 @@ export const routes: Routes = [
         path: 'list-login',
         loadComponent: () =>
           import('../list-login/list-login.page').then((m) => m.ListLoginPage),
+      },
+
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('../notifications/notifications.page').then(
+            (m) => m.NotificationsPage
+          ),
       },
     ],
   },
