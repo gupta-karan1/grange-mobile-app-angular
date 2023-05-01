@@ -9,6 +9,7 @@ import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastController } from '@ionic/angular';
+import { NotepadModalPage } from '../notepad-modal/notepad-modal.page';
 
 @Component({
   selector: 'app-tabs',
@@ -23,6 +24,7 @@ import { ToastController } from '@ionic/angular';
     RouterLink,
     UpdateStudentPage,
     ReactiveFormsModule,
+    NotepadModalPage,
   ],
 })
 export class TabsPage {

@@ -6,10 +6,11 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="clearEditor()">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="preview()">
-        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+        <ion-icon
+          slot="icon-only"
+          color="danger"
+          name="trash-outline"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
@@ -25,5 +26,15 @@
     </ion-toolbar>
   </ion-header>
 
-  <quill-editor autofocus [(ngModel)]="myText"></quill-editor>
+  <quill-editor
+    (onContentChanged)="getWordCount()"
+    [(ngModel)]="myText"
+  ></quill-editor>
+  <ion-item lines="none"> Word count: {{ wordCount }}</ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="preview()">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

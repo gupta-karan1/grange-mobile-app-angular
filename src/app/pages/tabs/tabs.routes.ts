@@ -144,6 +144,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../notepad/notepad.page').then((m) => m.NotepadPage),
       },
+
+      {
+        path: 'notepad-modal',
+        loadComponent: () =>
+          import('../notepad-modal/notepad-modal.page').then(
+            (m) => m.NotepadModalPage
+          ),
+      },
     ],
   },
 

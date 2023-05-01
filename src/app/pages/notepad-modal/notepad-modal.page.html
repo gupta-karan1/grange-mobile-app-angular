@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Preview</ion-title>
+    <ion-title>Note Preview</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="closeModal()"> Close </ion-button>
     </ion-buttons>
@@ -13,8 +13,14 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Preview</ion-title>
+      <ion-title size="large">Note Preview</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-item> Word count: {{ wordCount }} </ion-item>
   <quill-view [content]="data"></quill-view>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="saveNote()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
