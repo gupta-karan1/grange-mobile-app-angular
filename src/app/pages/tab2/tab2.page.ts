@@ -92,6 +92,7 @@ export class Tab2Page implements OnInit {
   // create a method to delete a student
   deleteStudent(id: any) {
     this.studentDeleteService.deleteStudent(id).subscribe(
+      // subscribe to the observable returned by the deleteStudent() method
       (result) => {
         console.log('SUCCESS' + result);
         // call the getStudentData() method
@@ -112,10 +113,5 @@ export class Tab2Page implements OnInit {
       duration: 2000,
     });
     toast.present();
-  }
-
-  handleSearchInput(event: any) {
-    const query = event.target.value.toLowerCase();
-    console.log(query);
   }
 }

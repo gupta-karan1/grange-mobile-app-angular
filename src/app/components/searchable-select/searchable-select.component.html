@@ -1,0 +1,60 @@
+<ion-list lines="full" *ngIf="selected.length; else placeholder">
+  <ion-item lines="none">Selected Students: </ion-item>
+
+  <ion-chip
+    class="ion-margin-start"
+    *ngFor="let item of selected"
+    outline="false"
+    color="tertiary"
+  >
+    <!-- <ion-icon name="person"></ion-icon> -->
+    <ion-avatar>
+      <img title="avatar" [src]="item.picture.thumbnail" />
+    </ion-avatar>
+    <ion-label>{{ leaf(item) }}</ion-label>
+  </ion-chip>
+</ion-list>
+
+<ng-template #placeholder>
+  <ion-item lines="none">
+    <ion-label>No Student Selected</ion-label>
+  </ion-item>
+</ng-template>
+
+<ion-modal [isOpen]="isOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancelModal()"> Cancel </ion-button>
+        </ion-buttons>
+        <ion-title>{{ title }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="select()"> Select </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-searchbar
+          aria-placeholder="Search"
+          (ionChange)="filter($any($event))"
+        ></ion-searchbar>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-item
+        lines="full"
+        *ngFor="let item of filtered"
+        (ionChange)="itemSelected()"
+      >
+        <ion-checkbox
+          aria-label="selected"
+          slot="start"
+          [(ngModel)]="item.selected"
+        ></ion-checkbox>
+        <ion-label>{{ leaf(item) }}</ion-label>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -24,7 +24,7 @@ export class Tab1Page implements OnInit {
   // create 2 variables to store results emitted from observable
   modules: any = [];
   newModules: any = [];
-  copyModules: any = [];
+  copyModules: any = []; // will use this for filtering based on location
   urlModules = environment.urlModules;
   // create a variable to store the selected location
   selectedLocation: string[] = [];

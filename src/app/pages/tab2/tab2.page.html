@@ -40,11 +40,6 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-searchbar
-    [debounce]="1000"
-    (ionInput)="handleSearchInput($event)"
-  ></ion-searchbar>
-
   <ion-list lines="full">
     <ion-item-sliding *ngFor="let student of newStudents">
       <ion-item>

@@ -18,6 +18,8 @@ import { CalModalPage } from './pages/cal-modal/cal-modal.page';
 import { CalUpdateModalPage } from './pages/cal-update-modal/cal-update-modal.page';
 import { ListLoginPage } from './pages/list-login/list-login.page';
 import { ListPage } from './pages/list/list.page';
+import { SearchStudentsPage } from './pages/search-students/search-students.page';
+import { SearchableSelectComponent } from './components/searchable-select/searchable-select.component';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +42,8 @@ import { ListPage } from './pages/list/list.page';
     CalUpdateModalPage,
     ListLoginPage,
     ListPage,
+    SearchStudentsPage,
+    SearchableSelectComponent,
   ],
 })
 export class AppComponent {

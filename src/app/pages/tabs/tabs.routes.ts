@@ -132,6 +132,13 @@ export const routes: Routes = [
             (m) => m.NotificationsPage
           ),
       },
+      {
+        path: 'search-students',
+        loadComponent: () =>
+          import('../search-students/search-students.page').then(
+            (m) => m.SearchStudentsPage
+          ),
+      },
     ],
   },
 
