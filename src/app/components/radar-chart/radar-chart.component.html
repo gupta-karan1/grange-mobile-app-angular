@@ -1,0 +1,16 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Academic Distribution</ion-card-subtitle>
+    <ion-card-title>Activities</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="radarChartData"
+      [options]="radarChartOptions"
+      [type]="radarChartType"
+    >
+    </canvas>
+  </ion-card-content>
+</ion-card>

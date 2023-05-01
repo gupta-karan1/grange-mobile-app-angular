@@ -1,0 +1,30 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Semester Wise GPA</ion-card-subtitle>
+    <ion-card-title>Progress</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [type]="lineChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+    ></canvas>
+    <!-- <table>
+      <tr>
+        <th *ngFor="let label of lineChartData.labels">{{ label }}</th>
+      </tr>
+      <tr
+        *ngFor="let d of lineChartData.datasets; let i = index"
+        [class]="'line-' + i"
+      >
+        <td *ngFor="let label of lineChartData.labels; let j = index">
+          {{ d && d.data[j] }}
+        </td>
+      </tr>
+    </table> -->
+  </ion-card-content>
+</ion-card>

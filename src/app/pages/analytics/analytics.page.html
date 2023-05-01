@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Analytics</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Analytics</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- GPA Performance over semesters in line chart. Score on y and sems on x axis. -->
+  <app-line-chart></app-line-chart>
+
+  <!-- Latest GPA Distribution in Pie Chart-->
+  <app-pie-chart></app-pie-chart>
+
+  <!-- Academic Activity Distribution in Radar Chart: Library, Labs, Lectures, Self Study  over Last Sem and Current Sem-->
+  <app-radar-chart></app-radar-chart>
+
+  <!-- Subject Wise Attendance in Polar Area Chart from 0 to 100 -->
+  <app-polar-area-chart></app-polar-area-chart>
+
+  <!-- Subject Wise Performance in Bar Chart from 0 to 100 -->
+  <app-bar-chart></app-bar-chart>
+
+  <!-- GPA vs Weekly Study time in Scatter Chart. This could help students understand how their study habits may be impacting their academic performance. -->
+  <app-scatter-chart></app-scatter-chart>
+
+  <!-- Dynamic Chart to display comparative module grades for different assignments -->
+  <app-dynamic-chart></app-dynamic-chart>
+</ion-content>

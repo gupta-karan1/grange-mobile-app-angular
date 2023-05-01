@@ -1,0 +1,16 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>GPA vs Weekly Study Time</ion-card-subtitle>
+    <ion-card-title>Efficiency</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="scatterChartData"
+      [options]="scatterChartOptions"
+      [type]="scatterChartType"
+    >
+    </canvas>
+  </ion-card-content>
+</ion-card>

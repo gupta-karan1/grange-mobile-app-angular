@@ -1,3 +1,4 @@
+import { ChartEvent } from 'chart.js';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterLink, provideRouter } from '@angular/router';
@@ -31,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarService } from './app/services/avatar.service';
 import { AuthGuard } from './app/guards/auth.guard';
 import { QuillModule, QuillModules } from 'ngx-quill';
+import { NgChartsModule, BaseChartDirective } from 'ng2-charts';
 
 //quill modules for the toolbar
 //for customizing the toolbar, see https://quilljs.com/docs/modules/toolbar/
@@ -85,6 +87,9 @@ bootstrapApplication(AppComponent, {
         theme: 'snow',
         format: 'object',
       }),
+
+      NgChartsModule.forRoot(),
+      BaseChartDirective,
 
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),

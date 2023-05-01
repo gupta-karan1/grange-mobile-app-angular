@@ -1,3 +1,4 @@
+import { NgChartsModule } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastController } from '@ionic/angular';
 import { NotepadModalPage } from '../notepad-modal/notepad-modal.page';
+import { DynamicChartComponent } from 'src/app/components/dynamic-chart/dynamic-chart.component';
 
 @Component({
   selector: 'app-tabs',
@@ -25,6 +27,8 @@ import { NotepadModalPage } from '../notepad-modal/notepad-modal.page';
     UpdateStudentPage,
     ReactiveFormsModule,
     NotepadModalPage,
+    DynamicChartComponent,
+    NgChartsModule,
   ],
 })
 export class TabsPage {

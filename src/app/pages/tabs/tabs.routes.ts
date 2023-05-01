@@ -152,6 +152,11 @@ export const routes: Routes = [
             (m) => m.NotepadModalPage
           ),
       },
+      {
+        path: 'analytics',
+        loadComponent: () =>
+          import('../analytics/analytics.page').then((m) => m.AnalyticsPage),
+      },
     ],
   },
 

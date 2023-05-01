@@ -1,0 +1,19 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Subject Wise </ion-card-subtitle>
+    <ion-card-title>Performance</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [plugins]="barChartPlugins"
+      [type]="barChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+    >
+    </canvas>
+  </ion-card-content>
+</ion-card>

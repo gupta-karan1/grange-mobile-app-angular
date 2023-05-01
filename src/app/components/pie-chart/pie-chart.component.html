@@ -1,0 +1,17 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Latest Semester GPA</ion-card-subtitle>
+    <ion-card-title>Distribution</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="pieChartData"
+      [type]="pieChartType"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+    >
+    </canvas>
+  </ion-card-content>
+</ion-card>

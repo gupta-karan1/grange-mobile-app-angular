@@ -1,3 +1,4 @@
+import { NgChartsModule } from 'ng2-charts';
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,8 @@ import { SearchStudentsPage } from './pages/search-students/search-students.page
 import { SearchableSelectComponent } from './components/searchable-select/searchable-select.component';
 import { NotepadModalPage } from './pages/notepad-modal/notepad-modal.page';
 import { NotepadPage } from './pages/notepad/notepad.page';
+import { DynamicChartComponent } from './components/dynamic-chart/dynamic-chart.component';
+import { RadarChartComponent } from './components/radar-chart/radar-chart.component';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +51,8 @@ import { NotepadPage } from './pages/notepad/notepad.page';
     SearchableSelectComponent,
     NotepadModalPage,
     NotepadPage,
+
+    NgChartsModule,
   ],
 })
 export class AppComponent {
