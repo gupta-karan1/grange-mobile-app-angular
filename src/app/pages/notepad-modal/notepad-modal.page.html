@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Preview</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()"> Close </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveNote()"> Save </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Preview</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <quill-view [content]="data"></quill-view>
+</ion-content>

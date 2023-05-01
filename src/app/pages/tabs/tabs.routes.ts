@@ -139,6 +139,11 @@ export const routes: Routes = [
             (m) => m.SearchStudentsPage
           ),
       },
+      {
+        path: 'notepad',
+        loadComponent: () =>
+          import('../notepad/notepad.page').then((m) => m.NotepadPage),
+      },
     ],
   },
 

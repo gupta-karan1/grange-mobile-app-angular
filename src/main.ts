@@ -30,6 +30,30 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarService } from './app/services/avatar.service';
 import { AuthGuard } from './app/guards/auth.guard';
+import { QuillModule, QuillModules } from 'ngx-quill';
+
+//quill modules for the toolbar
+//for customizing the toolbar, see https://quilljs.com/docs/modules/toolbar/
+
+const modules: QuillModules = {
+  toolbar: [
+    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+    ['blockquote', 'code-block'],
+    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    // [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+    // [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+    // [{ direction: 'rtl' }], // text direction
+    // [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ font: [] }],
+    [{ align: [] }],
+    ['clean'], // remove formatting button
+
+    ['link', 'image', 'video'], // link and image, video
+  ],
+};
 
 if (environment.production) {
   enableProdMode();
@@ -54,6 +78,13 @@ bootstrapApplication(AppComponent, {
       RouterLink,
       TwitterAuthProvider,
       AuthGuard,
+
+      QuillModule.forRoot({
+        modules,
+        placeholder: 'Compose an epic...',
+        theme: 'snow',
+        format: 'object',
+      }),
 
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),

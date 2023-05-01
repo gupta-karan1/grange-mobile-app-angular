@@ -20,6 +20,7 @@ import { ListLoginPage } from './pages/list-login/list-login.page';
 import { ListPage } from './pages/list/list.page';
 import { SearchStudentsPage } from './pages/search-students/search-students.page';
 import { SearchableSelectComponent } from './components/searchable-select/searchable-select.component';
+import { NotepadModalPage } from './pages/notepad-modal/notepad-modal.page';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +45,7 @@ import { SearchableSelectComponent } from './components/searchable-select/search
     ListPage,
     SearchStudentsPage,
     SearchableSelectComponent,
+    NotepadModalPage,
   ],
 })
 export class AppComponent {
