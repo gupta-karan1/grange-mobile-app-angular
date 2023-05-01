@@ -27,7 +27,7 @@ export class PolarAreaChartComponent implements OnInit {
     datasets: [
       {
         data: [36, 55, 67, 86, (36 + 55 + 67 + 73) / 4],
-        label: 'Series 1',
+        label: 'Current Sem',
       },
     ],
   };
