@@ -12,6 +12,7 @@ import { PolarAreaChartComponent } from 'src/app/components/polar-area-chart/pol
 import { BarChartComponent } from 'src/app/components/bar-chart/bar-chart.component';
 import { LineChartComponent } from 'src/app/components/line-chart/line-chart.component';
 import { ScatterChartComponent } from 'src/app/components/scatter-chart/scatter-chart.component';
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-analytics',

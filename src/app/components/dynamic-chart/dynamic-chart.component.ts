@@ -26,7 +26,14 @@ export class DynamicChartComponent implements OnInit {
     scales: {
       x: {},
       y: {
-        min: 10,
+        min: 0,
+        max: 100,
+        // suggestedMax: 100,
+        beginAtZero: true,
+
+        ticks: {
+          stepSize: 5,
+        },
       },
     },
     plugins: {
@@ -34,21 +41,21 @@ export class DynamicChartComponent implements OnInit {
     },
   };
   public barChartLabels: string[] = [
-    '2006',
-    '2007',
-    '2008',
-    '2009',
-    '2010',
-    '2011',
-    '2012',
+    'Week 1',
+    'Week 2',
+    'Week 3',
+    'Week 4',
+    'Week 5',
   ];
   public barChartType: ChartType = 'bar';
 
   public barChartData: ChartData<'bar'> = {
     labels: this.barChartLabels,
     datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+      { data: [65, 59, 80, 81, 56], label: 'Web Design' },
+      { data: [28, 48, 40, 19, 86], label: 'App Dev' },
+      { data: [35, 67, 89, 15, 20], label: 'UI Design' },
+      { data: [15, 95, 45, 63, 32], label: 'Graphics' },
     ],
   };
 

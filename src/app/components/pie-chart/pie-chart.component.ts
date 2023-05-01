@@ -34,10 +34,10 @@ export class PieChartComponent implements OnInit {
     },
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Download Sales', 'Store Sales', 'Mail Sales', 'All Sales'],
+    labels: ['Web Design', 'App Dev', 'UI Design', 'Graphics'],
     datasets: [
       {
-        data: [300, 500, 100, 100],
+        data: [24, 36, 25, 15],
       },
     ],
   };

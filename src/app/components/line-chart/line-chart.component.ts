@@ -15,6 +15,8 @@ import { default as DataLabelsPlugin } from 'chartjs-plugin-datalabels';
   styleUrls: ['./line-chart.component.scss'],
 })
 export class LineChartComponent implements OnInit {
+  //  <!-- GPA Performance over semesters in line chart. Score on y and sems on x axis. -->
+  //  <!-- https://valor-software.com/ng2-charts/#/LineChart -->
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   constructor() {}
@@ -23,8 +25,8 @@ export class LineChartComponent implements OnInit {
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series A',
+        data: [3.2, 2.5, 1.5, 2.8, 1.8, 3.8, 2.4],
+        label: '2023',
         // backgroundColor: 'rgba(148,159,177,0.2)',
         // borderColor: 'rgba(148,159,177,1)',
         // pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -34,8 +36,8 @@ export class LineChartComponent implements OnInit {
         fill: 'origin',
       },
       {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'Series B',
+        data: [1.5, 2.5, 1.2, 2.1, 3.1, 1.8, 2.3],
+        label: '2022',
         // backgroundColor: 'rgba(77,83,96,0.2)',
         // borderColor: 'rgba(77,83,96,1)',
         // pointBackgroundColor: 'rgba(77,83,96,1)',
@@ -52,12 +54,12 @@ export class LineChartComponent implements OnInit {
       //   borderColor: 'red',
       //   pointBackgroundColor: 'rgba(148,159,177,1)',
       //   pointBorderColor: '#fff',
-      //   pointHoverBackgroundColor: '#fff',
+      //   pointHverBackgroundColor: '#fff',
       //   pointHoverBorderColor: 'rgba(148,159,177,0.8)',
       //   fill: 'origin',
       // },
     ],
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 8'],
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -70,6 +72,8 @@ export class LineChartComponent implements OnInit {
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
+        beginAtZero: true,
+        max: 4.0,
       },
       // y1: {
       //   position: 'right',
@@ -84,26 +88,26 @@ export class LineChartComponent implements OnInit {
 
     plugins: {
       legend: { display: true, position: 'bottom' },
-      annotation: {
-        annotations: [
-          {
-            type: 'line',
-            scaleID: 'x',
-            value: 'March',
-            borderColor: 'orange',
-            borderWidth: 2,
-            label: {
-              display: true,
-              position: 'center',
-              color: 'orange',
-              content: 'LineAnno',
-              font: {
-                weight: 'bold',
-              },
-            },
-          },
-        ],
-      },
+      // annotation: {
+      //   annotations: [
+      //     {
+      //       type: 'line',
+      //       scaleID: 'x',
+      //       value: 'Sem 4',
+      //       borderColor: 'orange',
+      //       borderWidth: 2,
+      //       label: {
+      //         display: true,
+      //         position: 'center',
+      //         color: 'orange',
+      //         content: 'LineAnno',
+      //         font: {
+      //           weight: 'bold',
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
     },
   };
 

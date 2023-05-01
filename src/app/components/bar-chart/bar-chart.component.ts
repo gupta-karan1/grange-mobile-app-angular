@@ -22,7 +22,9 @@ export class BarChartComponent implements OnInit {
     scales: {
       x: {},
       y: {
-        min: 10,
+        min: 0,
+
+        suggestedMax: 100,
       },
     },
     plugins: {
@@ -41,10 +43,10 @@ export class BarChartComponent implements OnInit {
   public barChartPlugins = [DataLabelsPlugin];
 
   public barChartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+    labels: ['Web Design', 'App Dev', 'UI Design', 'Graphics', 'Overall'],
     datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+      { data: [65, 59, 80, 81, (65 + 59 + 80 + 81) / 4], label: 'Last Sem' },
+      { data: [28, 48, 40, 19, (28 + 48 + 40 + 19) / 4], label: 'Current Sem' },
     ],
   };
 

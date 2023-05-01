@@ -17,6 +17,20 @@ export class ScatterChartComponent implements OnInit {
   // scatter
   public scatterChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    scales: {
+      x: {
+        type: 'linear',
+        position: 'bottom',
+        suggestedMax: 50,
+        suggestedMin: 0,
+      },
+
+      y: {
+        min: 0,
+        max: 4,
+        suggestedMax: 4,
+      },
+    },
     plugins: {
       datalabels: {
         anchor: 'end',
@@ -29,29 +43,44 @@ export class ScatterChartComponent implements OnInit {
       },
     },
   };
-  public scatterChartLabels: string[] = [
-    'Eating',
-    'Drinking',
-    'Sleeping',
-    'Designing',
-    'Coding',
-    'Cycling',
-    'Running',
-  ];
+  // public scatterChartLabels: string[] = [
+  //   'App Dev',
+  //   'Web Design',
+  //   'UI Design',
+  //   'Graphics',
+  //   'Overall',
+  // ];
 
   public scatterChartData: ChartData<'scatter'> = {
-    labels: this.scatterChartLabels,
+    // labels: this.scatterChartLabels,
     datasets: [
       {
         data: [
-          { x: 1, y: 1 },
-          { x: 2, y: 3 },
-          { x: 3, y: -2 },
-          { x: 4, y: 4 },
-          { x: 5, y: -3 },
+          { x: 10, y: 1.2 },
+          { x: 25, y: 2.1 },
+          { x: 35, y: 2.8 },
+          { x: 15, y: 1.8 },
+          { x: 45, y: 3.2 },
+          { x: 5, y: 1.0 },
+          { x: 30, y: 2.7 },
+          { x: 20, y: 2.2 },
         ],
-        label: 'Series A',
-        pointRadius: 10,
+        label: 'Current Sem',
+        pointRadius: 5,
+      },
+      {
+        data: [
+          { x: 25, y: 2.5 },
+          { x: 35, y: 3.0 },
+          { x: 10, y: 2.1 },
+          { x: 40, y: 3.5 },
+          { x: 15, y: 1.5 },
+          { x: 3, y: 0.6 },
+          { x: 20, y: 1.8 },
+          { x: 45, y: 3.7 },
+        ],
+        label: 'Last Sem',
+        pointRadius: 5,
       },
     ],
   };

@@ -16,17 +16,17 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 export class PolarAreaChartComponent implements OnInit {
   // PolarArea
   public polarAreaChartLabels: string[] = [
-    'Download Sales',
-    'In-Store Sales',
-    'Mail Sales',
-    'Telesales',
-    'Corporate Sales',
+    'Web Design',
+    'App Dev',
+    'UI Design',
+    'Graphics',
+    'Overall',
   ];
   public polarAreaChartData: ChartData<'polarArea'> = {
     labels: this.polarAreaChartLabels,
     datasets: [
       {
-        data: [300, 500, 100, 40, 120],
+        data: [36, 55, 67, 86, (36 + 55 + 67 + 73) / 4],
         label: 'Series 1',
       },
     ],
@@ -39,6 +39,15 @@ export class PolarAreaChartComponent implements OnInit {
     plugins: {
       legend: {
         position: 'bottom',
+      },
+    },
+    scales: {
+      r: {
+        angleLines: {
+          display: false,
+        },
+        suggestedMin: 0,
+        suggestedMax: 100,
       },
     },
   };
