@@ -47,9 +47,14 @@ import './zone-flags';
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js';  // Included with Angular CLI.
-
+import 'zone.js'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// // Polyfill for global object for the crypto module.
+// (window as any).global = window;
+
+// // Polyfill for the url module.
+// import 'url-polyfill';

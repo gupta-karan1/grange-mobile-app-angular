@@ -23,8 +23,7 @@ import { SearchStudentsPage } from './pages/search-students/search-students.page
 import { SearchableSelectComponent } from './components/searchable-select/searchable-select.component';
 import { NotepadModalPage } from './pages/notepad-modal/notepad-modal.page';
 import { NotepadPage } from './pages/notepad/notepad.page';
-import { DynamicChartComponent } from './components/dynamic-chart/dynamic-chart.component';
-import { RadarChartComponent } from './components/radar-chart/radar-chart.component';
+import { NotificationsPage } from './pages/notifications/notifications.page';
 
 @Component({
   selector: 'app-root',
@@ -51,7 +50,7 @@ import { RadarChartComponent } from './components/radar-chart/radar-chart.compon
     SearchableSelectComponent,
     NotepadModalPage,
     NotepadPage,
-
+    NotificationsPage,
     NgChartsModule,
   ],
 })
