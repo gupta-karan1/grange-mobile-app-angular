@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Library</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Library</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- <ion-card button *ngFor="let book of books" style="width: 40%">
+    <ion-img [src]='book.formats["image/jpeg"]'></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>{{book.authors[0].name}}</ion-card-subtitle>
+      <ion-card-title>{{book.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label>
+        <ion-icon slot="start" name="download-outline"></ion-icon>
+        {{book.download_count}}</ion-label
+      >
+    </ion-card-content>
+  </ion-card> -->
+
+  <ion-list>
+    <ion-item
+      [routerLink]="['/tabs/library', book.id]"
+      detail="true"
+      lines="full"
+      button
+      *ngFor="let book of books"
+    >
+      <ion-col size="4">
+        <ion-img
+          class="ion-padding"
+          [src]='book.formats["image/jpeg"]'
+        ></ion-img>
+      </ion-col>
+      <ion-col size="8">
+        <h5><strong> {{book.title}}</strong></h5>
+        <p>{{book.authors[0].name}}</p>
+
+        <ion-label>
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          {{book.download_count}}</ion-label
+        >
+      </ion-col>
+    </ion-item>
+  </ion-list>
+
+  <!-- <ion-list>
+    <ion-item button detail="true" *ngFor="let book of books">
+      <ion-img style="width: 30px" [src]='book.formats["image/jpeg"]'></ion-img>
+      <ion-label>
+        <h2>{{book.title}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-infinite-scroll (ionInfinite)="loadData($any($event))">
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

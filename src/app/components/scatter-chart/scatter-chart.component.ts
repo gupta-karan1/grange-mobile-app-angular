@@ -16,30 +16,36 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 export class ScatterChartComponent implements OnInit {
   // scatter
   public scatterChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
+    // ChartConfiguration is a type from chart.js
+    responsive: true, // make the chart responsive
     scales: {
+      // define the scales of the chart
       x: {
-        type: 'linear',
-        position: 'bottom',
-        suggestedMax: 50,
-        suggestedMin: 0,
+        type: 'linear', // define the type of scale for the x-axis
+        position: 'bottom', // define the position of the x-axis
+        suggestedMax: 50, // define the maximum value of the x-axis
+        suggestedMin: 0, // define the minimum value of the x-axis
       },
 
       y: {
-        min: 0,
-        max: 4,
-        suggestedMax: 4,
+        // define the y-axis
+        min: 0, // define the minimum value of the y-axis
+        max: 4, // define the maximum value of the y-axis
+        suggestedMax: 4, // define the suggested maximum value of the y-axis
       },
     },
     plugins: {
+      // define the plugins of the chart
       datalabels: {
-        anchor: 'end',
-        align: 'end',
+        // define the datalabels plugin
+        anchor: 'end', // define the anchor of the datalabels
+        align: 'end', // define the alignment of the datalabels
       },
 
       legend: {
-        display: true,
-        position: 'bottom',
+        // define the legend of the chart
+        display: true, // display the legend
+        position: 'bottom', // define the position of the legend
       },
     },
   };
@@ -52,11 +58,14 @@ export class ScatterChartComponent implements OnInit {
   // ];
 
   public scatterChartData: ChartData<'scatter'> = {
+    // define the data of the chart (the data is an array of objects)
     // labels: this.scatterChartLabels,
     datasets: [
+      // define the datasets of the chart
       {
         data: [
-          { x: 10, y: 1.2 },
+          // define the data of the first dataset
+          { x: 10, y: 1.2 }, // define the data points of the first dataset
           { x: 25, y: 2.1 },
           { x: 35, y: 2.8 },
           { x: 15, y: 1.8 },
@@ -65,8 +74,8 @@ export class ScatterChartComponent implements OnInit {
           { x: 30, y: 2.7 },
           { x: 20, y: 2.2 },
         ],
-        label: 'Current Sem',
-        pointRadius: 5,
+        label: 'Current Sem', // define the label of the first dataset
+        pointRadius: 5, // define the radius of the points of the first dataset
       },
       {
         data: [
@@ -84,7 +93,7 @@ export class ScatterChartComponent implements OnInit {
       },
     ],
   };
-  public scatterChartType: ChartType = 'scatter';
+  public scatterChartType: ChartType = 'scatter'; // define the type of the chart (scatter)
 
   // events
   public chartClicked({

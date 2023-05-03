@@ -158,7 +158,7 @@ export class SupabaseService {
   async loadNotifications() {
     const query = await this.supabase.from(NOTIFICATION_DB).select('*'); // select all the notifications from the database table and store them in a variable called query
     // this is async because we are using await to wait for the query to finish before continuing
-    console.log('query: ', query);
+    // console.log('query: ', query);
     this._notifications.next(query.data); // pass the notifications to the notifications BehaviorSubject
   }
 

@@ -24,6 +24,8 @@ import { SearchableSelectComponent } from './components/searchable-select/search
 import { NotepadModalPage } from './pages/notepad-modal/notepad-modal.page';
 import { NotepadPage } from './pages/notepad/notepad.page';
 import { NotificationsPage } from './pages/notifications/notifications.page';
+import { LibraryPage } from './pages/library/library.page';
+import { LibraryDetailsPage } from './pages/library-details/library-details.page';
 
 @Component({
   selector: 'app-root',
@@ -52,6 +54,8 @@ import { NotificationsPage } from './pages/notifications/notifications.page';
     NotepadPage,
     NotificationsPage,
     NgChartsModule,
+    LibraryPage,
+    LibraryDetailsPage,
   ],
 })
 export class AppComponent {

@@ -157,6 +157,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../analytics/analytics.page').then((m) => m.AnalyticsPage),
       },
+      {
+        path: 'library',
+        loadComponent: () =>
+          import('../library/library.page').then((m) => m.LibraryPage),
+      },
+      {
+        path: 'library/:id',
+        loadComponent: () =>
+          import('../library-details/library-details.page').then(
+            (m) => m.LibraryDetailsPage
+          ),
+      },
     ],
   },
 

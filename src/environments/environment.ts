@@ -37,6 +37,8 @@ export const environment = {
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4ZWZtYXlremhpcWpzbW54dmxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODI1MTIxNzIsImV4cCI6MTk5ODA4ODE3Mn0.amObRTjDoPqEQzGOCO0lwXlvmvJ_wq9Vpp6UjSq4Bs4',
 };
 
+//gutenberg api base url
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/library"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-card>
+    <ion-img [src]='book.formats["image/jpeg"]'></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{book.authors[0].name}} | {{book.authors[0].birth_year}} -
+        {{book.authors[0].death_year}}
+      </ion-card-subtitle>
+
+      <ion-card-title> {{book.title}} </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item>Subjects: </ion-item>
+        <ion-chip
+          *ngFor="let subject of book.subjects"
+          color="tertiary"
+          outline="false"
+        >
+          <ion-label>{{subject}}</ion-label>
+        </ion-chip>
+
+        <ion-item>Bookshelves: </ion-item>
+        <ion-chip
+          outline="false"
+          color="secondary"
+          *ngFor="let bookshelf of book.bookshelves"
+        >
+          <ion-label>{{bookshelf}}</ion-label>
+        </ion-chip>
+
+        <ion-item>
+          <ion-label>Languages: </ion-label>
+          <ion-chip
+            *ngFor="let language of book.languages"
+            color="primary"
+            outline="false"
+          >
+            <ion-label>{{language}}</ion-label>
+          </ion-chip>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Copyright: {{book.copyright ? 'Yes' : 'None'}} </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Downloads: {{book.download_count}} </ion-label>
+        </ion-item>
+
+        <ion-button
+          class="ion-margin"
+          shape="round"
+          fill="solid"
+          expand="full"
+          (click)="readOnline()"
+        >
+          <ion-icon slot="start" name="book-outline"></ion-icon>
+          Read Online
+        </ion-button>
+        <ion-button
+          shape="round"
+          class="ion-margin"
+          fill="outline"
+          expand="full"
+          (click)="downloadEPUBBook()"
+        >
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          Download EPUB
+        </ion-button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
