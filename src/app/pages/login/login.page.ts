@@ -25,6 +25,8 @@ export class LoginPage implements OnInit {
   credentials!: FormGroup; // form group for the login form fields (email and password)
   googleUser: any = null; // the google user object that will be returned from the google auth plugin
 
+  public progress = 0;
+
   // fbLogin!: FacebookLoginPlugin; // facebook login plugin
   // fbLogin!: FacebookLoginResponse;
   fbUser: any = null; // the facebook user object that will be returned from the facebook login plugin
@@ -183,6 +185,18 @@ export class LoginPage implements OnInit {
       this.googleUser = user; // set the googleUser to the user returned from the firebase login with google method in the auth service
       console.log(this.googleUser); // log the googleUser to the console
       // if the user is logged in, navigate to the profile page
+
+      // display a progress bar for 5 seconds
+      setInterval(() => {
+        this.progress += 0.01;
+        // Reset the progress bar when it reaches 100%
+        // to continuously show the demo
+        if (this.progress > 1) {
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1000);
+        }
+      }, 50);
       setTimeout(() => {
         this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
       }, 5000);
@@ -216,6 +230,19 @@ export class LoginPage implements OnInit {
       this.fbUser = user; // set the fbUser to the user returned from the firebase login with facebook method in the auth service
       // console.log(this.fbUser); // log the fbUser to the console
       // if the user is logged in, navigate to the profile page
+
+      // display a progress bar for 5 seconds
+      setInterval(() => {
+        this.progress += 0.01;
+        // Reset the progress bar when it reaches 100%
+        // to continuously show the demo
+        if (this.progress > 1) {
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1000);
+        }
+      }, 50);
+
       setTimeout(() => {
         this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
       }, 5000);
@@ -366,7 +393,19 @@ export class LoginPage implements OnInit {
       this.twitterUser = user;
       // console.log('twitterUser', this.twitterUser);
 
-      //navigate to the tab4 page after 2 seconds of showing the data
+      // display a progress bar for 5 seconds
+      setInterval(() => {
+        this.progress += 0.01;
+        // Reset the progress bar when it reaches 100%
+        // to continuously show the demo
+        if (this.progress > 1) {
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1000);
+        }
+      }, 50);
+
+      //navigate to the tab4 page after 5 seconds of showing the data
       setTimeout(() => {
         this.router.navigate(['/tabs/tab4']);
       }, 5000);
@@ -407,7 +446,19 @@ export class LoginPage implements OnInit {
       this.githubUser = user;
       // console.log(this.githubUser);
 
-      //navigate to the tab4 page after 2 seconds of showing the data
+      // display a progress bar for 5 seconds
+      setInterval(() => {
+        this.progress += 0.01;
+        // Reset the progress bar when it reaches 100%
+        // to continuously show the demo
+        if (this.progress > 1) {
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1000);
+        }
+      }, 50);
+
+      //navigate to the tab4 page after 5 seconds of showing the data
       setTimeout(() => {
         this.router.navigate(['/tabs/tab4']);
       }, 5000);

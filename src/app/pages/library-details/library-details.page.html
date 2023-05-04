@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Details</ion-title>
+    <ion-title>{{book.title}}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/library"></ion-back-button>
     </ion-buttons>
@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Details</ion-title>
+      <ion-title size="large">{{book.title}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-card>
@@ -37,7 +37,7 @@
           <ion-label>{{subject}}</ion-label>
         </ion-chip>
 
-        <ion-item>Bookshelves: </ion-item>
+        <ion-item *ngIf="book.bookshelves.length">Bookshelves: </ion-item>
         <ion-chip
           outline="false"
           color="secondary"

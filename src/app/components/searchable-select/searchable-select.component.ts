@@ -51,6 +51,7 @@ export class SearchableSelectComponent implements OnChanges {
     // create a function to select the items
     const selected = this.data.filter((item) => item.selected); // this function filters the data array and returns the items that are selected
     this.selectChanged.emit(selected); // emit the selected items to the parent component
+
     // create a function to cancel the modal
     this.isOpen = false;
   }
@@ -79,7 +80,7 @@ export class SearchableSelectComponent implements OnChanges {
   }
 
   //create a function to filter and search the items
-  filter(event: SearchbarCustomEvent) {
+  filter(event: SearchbarCustomEvent): void {
     const filter = event.detail.value?.toLowerCase(); // get the value from the searchbar and convert it to lowercase
     // this.filtered = this.data.filter(
     //   (item) => this.leaf(item).toLowerCase().indexOf(filter) >= 0
@@ -87,7 +88,13 @@ export class SearchableSelectComponent implements OnChanges {
 
     this.filtered = this.data.filter((item) => {
       const itemValue = this.leaf(item).toLowerCase(); // get the value of the nested object and convert it to lowercase
-      return itemValue.indexOf(filter) >= 0; // return the items that match the search query
+      // if nothing is typed in the searchbar then return all the items
+      if (!filter) {
+        return true;
+      } else {
+        // if the searchbar is not empty then return the items that match the search query
+        return itemValue.indexOf(filter) >= 0;
+      }
     });
   }
 }

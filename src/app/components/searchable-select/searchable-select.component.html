@@ -37,8 +37,9 @@
       <ion-toolbar>
         <ion-searchbar
           aria-placeholder="Search"
-          (ionChange)="filter($any($event))"
+          (ionInput)="filter($any($event))"
         ></ion-searchbar>
+        <!-- Use ionInput instead of ionChange if you want the list to filter as you type otherwise you'll have to hit enter after typing -->
       </ion-toolbar>
     </ion-header>
 

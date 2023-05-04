@@ -37,7 +37,7 @@ import { CalUpdateModalPage } from '../cal-update-modal/cal-update-modal.page';
   ],
 })
 export class DiaryPage implements OnInit {
-  selectTabs: string = 'schedule'; // set the default tab
+  selectTabs: string = 'notes'; // set the default tab
   notes: any = []; // array of notes
 
   checked: boolean = false; // set the default value of the checked property to false
