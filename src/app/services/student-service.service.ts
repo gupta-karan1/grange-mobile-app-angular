@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 export interface Student {
-  [key: string]: any;
+  [key: string]: any; // using index signature to avoid error TS7017 (element implicitly has an 'any' type because type 'Student' has no index signature) in src\app\pages\student\student.page.ts (line 27)
   courseID: string;
   firstName: string;
   lastName: string;

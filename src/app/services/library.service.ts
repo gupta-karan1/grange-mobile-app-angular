@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 export interface ApiResult {
   page: number;
   results: any;
@@ -13,11 +14,14 @@ export interface ApiResult {
 export class LibraryService {
   constructor(private http: HttpClient) {}
 
+  //import environment variable for gutenbergUrl
+  gutenbergUrl = environment.gutenbergUrl;
+
   getBooks(page = 1): Observable<ApiResult> {
-    return this.http.get<ApiResult>(`https://gutendex.com/books?page=${page}`);
+    return this.http.get<ApiResult>(`${this.gutenbergUrl}?page=${page}`);
   }
 
   getBook(id: any) {
-    return this.http.get(`https://gutendex.com/books/${id}`);
+    return this.http.get(`${this.gutenbergUrl}/${id}`);
   }
 }

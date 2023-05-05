@@ -19,27 +19,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- <ion-list *ngIf="newStudents" lines="full">
-    <ion-item *ngFor="let student of newStudents">
-      <ion-label>
-        <h2>{{student.firstName}} {{student.lastName}}</h2>
-        <p>ID: {{student.studentID}}</p>
-      </ion-label>
-
-      <ion-icon
-        slot="end"
-        name="create-outline"
-        class="ion-padding-end"
-        [routerLink]="['/tabs/update-student', student.studentID]"
-      ></ion-icon>
-      <ion-icon
-        slot="end"
-        name="trash-outline"
-        (click)="deleteStudent(student.studentID)"
-      ></ion-icon>
-    </ion-item>
-  </ion-list> -->
-
   <ion-list lines="full">
     <ion-item-sliding *ngFor="let student of newStudents">
       <ion-item>
@@ -65,7 +44,7 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <!-- below code adds a floating action button that will allow students to add a new module or a new classmate to their profile page -->
+  <!-- below code adds a floating action button that will allow students to add a new classmate -->
   <!-- Source:https://ionicframework.com/docs/api/fab  -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="openModal()"

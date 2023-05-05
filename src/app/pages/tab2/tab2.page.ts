@@ -68,7 +68,7 @@ export class Tab2Page implements OnInit {
     this.getStudentData();
   }
 
-  // create a method to open the modal
+  // create a method to open the modal that will add a new student
   async openModal() {
     // create the modal
     const modal = await this.modalCtrl.create({

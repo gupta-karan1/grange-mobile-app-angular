@@ -34,33 +34,32 @@ import { DynamicChartComponent } from 'src/app/components/dynamic-chart/dynamic-
 export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);
 
-  constructor(
-    private loadController: LoadingController,
+  constructor() // private loadController: LoadingController,
 
-    private router: Router,
-    private authService: AuthService,
-    private toastCtrl: ToastController
-  ) {}
+  // private router: Router,
+  // private authService: AuthService,
+  // private toastCtrl: ToastController
+  {}
 
-  // for the logout button on the menu page
-  async logout() {
-    // logout the user
-    const loading = await this.loadController.create({
-      // create a loading controller
-      message: 'Logging out...',
-      spinner: 'crescent', // spinner type
-      showBackdrop: true,
-    });
-    await loading.present(); // present the loading controller
+  // // for the logout button on the menu page
+  // async logout() {
+  //   // logout the user
+  //   const loading = await this.loadController.create({
+  //     // create a loading controller
+  //     message: 'Logging out...',
+  //     spinner: 'crescent', // spinner type
+  //     showBackdrop: true,
+  //   });
+  //   await loading.present(); // present the loading controller
 
-    await this.authService.logout(); // logout the user
-    await loading.dismiss(); // dismiss the loading controller
-    this.router.navigateByUrl('/tabs/login', { replaceUrl: true }); // navigate to the login page
-    const toast = await this.toastCtrl.create({
-      message: 'You have been logged out',
-      duration: 2000,
-      position: 'bottom',
-    });
-    toast.present();
-  }
+  //   await this.authService.logout(); // logout the user
+  //   await loading.dismiss(); // dismiss the loading controller
+  //   this.router.navigateByUrl('/tabs/login', { replaceUrl: true }); // navigate to the login page
+  //   const toast = await this.toastCtrl.create({
+  //     message: 'You have been logged out',
+  //     duration: 2000,
+  //     position: 'bottom',
+  //   });
+  //   toast.present();
+  // }
 }

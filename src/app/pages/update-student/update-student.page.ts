@@ -25,6 +25,10 @@ export class UpdateStudentPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getStudents();
+  }
+
+  getStudents() {
     const studentID: any =
       this.activatedRoute.snapshot.paramMap.get('studentID');
     console.log(studentID); // test
@@ -70,5 +74,12 @@ export class UpdateStudentPage implements OnInit {
       duration: 2000,
     });
     toast.present();
+  }
+
+  cancelUpdate() {
+    this.getStudents();
+
+    // navigate to the tab2 page
+    this.router.navigate(['/tabs/tab2']);
   }
 }

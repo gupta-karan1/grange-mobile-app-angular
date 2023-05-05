@@ -35,9 +35,10 @@ export const environment = {
   supabaseUrl: 'https://gxefmaykzhiqjsmnxvlb.supabase.co',
   supabaseKey:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4ZWZtYXlremhpcWpzbW54dmxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODI1MTIxNzIsImV4cCI6MTk5ODA4ODE3Mn0.amObRTjDoPqEQzGOCO0lwXlvmvJ_wq9Vpp6UjSq4Bs4',
-};
 
-//gutenberg api base url
+  //gutenberg api base url
+  gutenbergUrl: 'https://gutendex.com/books',
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

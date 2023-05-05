@@ -53,7 +53,7 @@ export class Tab1Page implements OnInit {
 
       // store the data emitted from the observable into the newModules variable
       this.newModules = this.modules.modules;
-      this.copyModules = this.modules.modules;
+      this.copyModules = this.modules.modules; // will use this for filtering based on location
     });
   }
 
@@ -82,13 +82,13 @@ export class Tab1Page implements OnInit {
     );
     return locations;
   }
-  //   This method uses the map() method to create a new array of all location names in newModules, and then the Set object to remove duplicates. Finally, the Array.from() method is used to convert the Set object back to an array.
+  //   This method uses the map() method to create a new array of all location names in copyModules, and then the Set object to remove duplicates. Finally, the Array.from() method is used to convert the Set object back to an array.
 
   // With this, the dropdown list will now only display each location name once, even if it appears multiple times in the newModules array.
 
   // filter modules by module location
   filterModulesByLocation(locations: string[]) {
-    if (locations.includes('all')) {
+    if (locations.includes('all') || locations.length === 0) {
       this.filteredModules = this.modules.modules;
     } else {
       this.filteredModules = this.modules.modules.filter((module: Module) => {
@@ -98,7 +98,7 @@ export class Tab1Page implements OnInit {
     this.newModules = this.filteredModules;
   }
 
-  selectAllLocations() {
-    this.filteredModules = this.modules.modules;
-  }
+  // selectAllLocations() {
+  //   this.filteredModules = this.modules.modules;
+  // }
 }
