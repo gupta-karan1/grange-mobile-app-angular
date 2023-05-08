@@ -157,6 +157,14 @@
     </ion-list>
   </div>
   <div *ngIf="selectTabs === 'notes'">
+    <ion-list lines="none">
+      <ion-list-header>
+        <ion-label>
+          My Notes <ion-badge color="primary">{{notes.length}}</ion-badge>
+        </ion-label>
+        <ion-button (click)="addNote()">Add New</ion-button>
+      </ion-list-header>
+    </ion-list>
     <ion-card class="ion-margin-top" *ngFor="let note of notes">
       <ion-card-header (click)="openNote(note)">
         <ion-card-subtitle>{{note.timestamp}}</ion-card-subtitle>

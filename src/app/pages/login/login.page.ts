@@ -143,6 +143,7 @@ export class LoginPage implements OnInit {
     if (user) {
       // console.log('inside user', checkGoogleUser);
       // if the user is logged in, navigate to the profile page
+
       this.router.navigateByUrl('/tabs/tab4', { replaceUrl: true });
 
       console.log(user);

@@ -28,6 +28,7 @@ export class MapPage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
+    // this is a lifecycle hook that is called when the view is loaded into the DOM and ready to be presented to the user
     // create a spinner to show while the map is loading
     const spinner = document.createElement('ion-spinner');
     spinner.name = 'crescent';
@@ -35,6 +36,9 @@ export class MapPage implements OnInit {
     document.getElementById('map')?.appendChild(spinner);
 
     setTimeout(() => {
+      //dismiss the spinner
+      spinner.style.display = 'none';
+
       // timeout to wait for the modal to load and for the div id called map to be created in the html otherwise the the error appears that 'el' property is undefined
 
       this.map = L.map('map').setView([this.moduleLat, this.moduleLong], 16);
@@ -44,7 +48,7 @@ export class MapPage implements OnInit {
       }).addTo(this.map);
 
       const blueIcon = L.icon({
-        iconUrl: 'assets/images/marker-icon-2x.png',
+        iconUrl: 'assets/images/marker-icon-2x.png', //remember to shift the images folder from the node_modules/leaflet/dist/images to the src/assets/images folder otherwise the images will not be found
         iconSize: [25, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],

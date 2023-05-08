@@ -35,6 +35,9 @@ export class MapFullPage implements OnInit {
       // }
       // console.log(this.modules[0].lat);
 
+      //dismiss the spinner
+      spinner.style.display = 'none';
+
       //get the first module in the array and use it to set the map view
       this.map = L.map('map').setView(
         [this.modules[0].lat, this.modules[0].long],
