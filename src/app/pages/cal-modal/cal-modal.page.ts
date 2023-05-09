@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
-import { Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DiaryDataService, Event } from 'src/app/services/diary-data.service';
 

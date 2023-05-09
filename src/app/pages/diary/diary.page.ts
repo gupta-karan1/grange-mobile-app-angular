@@ -47,7 +47,6 @@ export class DiaryPage implements OnInit {
   //for ionic calendar
   eventSource: any = [];
   viewTitle!: string;
-  vewTitle!: string;
   isToday!: boolean;
   showAddEvent: boolean = false;
 
