@@ -132,10 +132,7 @@
 
     <ion-item *ngIf="fbUser" lines="none">
       <ion-avatar slot="start">
-        <img
-          title="user"
-          [src]="fbUser.user.photURL + '?access_token=' + fbUser.user.accessToken"
-        />
+        <img title="user" [src]="fbUser.user.photoURL" />
       </ion-avatar>
       <ion-label>
         <p>{{fbUser.user.displayName}}</p>
