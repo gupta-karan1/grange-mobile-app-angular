@@ -24,7 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class LoginPage implements OnInit {
   credentials!: FormGroup; // form group for the login form fields (email and password)
   googleUser: any = null; // the google user object that will be returned from the google auth plugin
-
+  fbPhoto: any = null; // the facebook user photo that will be returned from the facebook login plugin
   public progress = 0;
 
   // fbLogin!: FacebookLoginPlugin; // facebook login plugin
@@ -227,6 +227,8 @@ export class LoginPage implements OnInit {
   async facebookLogin() {
     const user = await this.authService.firebaseLoginWithFacebook(); // login the user with facebook using the firebase login with facebook method in the auth service
 
+    // this.fbPhoto = await this.authService.firebaseFacebookPhotoURL(); // get the facebook photo url using the firebase facebook photo url method in the auth service
+    // console.log(this.fbPhoto);
     if (user) {
       this.fbUser = user; // set the fbUser to the user returned from the firebase login with facebook method in the auth service
       // console.log(this.fbUser); // log the fbUser to the console

@@ -72,7 +72,7 @@ export class AuthService {
   async firebaseLoginWithFacebook() {
     const provider = new FacebookAuthProvider();
     const user = await signInWithPopup(this.auth, provider);
-    // console.log(user);
+    console.log(user);
     return user;
   }
   async firebaseLogoutWithFacebook() {
@@ -80,6 +80,19 @@ export class AuthService {
     // console.log(user);
     return user;
   }
+
+  // async firebaseFacebookPhotoURL() {
+  //   const user = this.auth.currentUser;
+
+  //   if (user != null) {
+  //     const userPhoto =
+  //       user.photoURL?.toString() +
+  //       '?access_token=' +
+  //       (await user.getIdToken());
+  //     return userPhoto;
+  //   }
+  //   return null;
+  // }
 
   async firebaseLoginWithGoogle() {
     const provider = new GoogleAuthProvider();
