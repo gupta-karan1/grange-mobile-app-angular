@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 import { NotepadPage } from '../notepad/notepad.page';
-import { DiaryDataService } from 'src/app/services/diary-data.service';
 
 @Component({
   selector: 'app-notepad-modal',
@@ -19,8 +18,7 @@ export class NotepadModalPage implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private toastCtrl: ToastController,
-    private diaryDataService: DiaryDataService
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {}
